@@ -26,16 +26,20 @@ class Invite extends Base {
     public function invites($code, $address, $mobile) {
         $hasBindResult = $this->getByMobile($mobile);
         if ($hasBindResult) {
-            throw new \Exception('该手机号已绑定以太坊钱包', 500002);
+            if ($hasBindResult['address'] != $address) {
+                throw new \Exception('该手机号已绑定以太坊钱包', 500002);
+            }
+
+            return self::genInviteUrl($hasBindResult['id']);
         }
 
         $result = $this->getByAddress($address);
-        if ($result['mobile'] != $mobile) {
+        if ($result && $result['mobile'] != $mobile) {
             throw new \Exception('该钱包已绑定手机号', 500003);
         }
 
         if ($result) {
-            return self::genInviteUrl($result->id);
+            return self::genInviteUrl($result['id']);
         }
 
         return $this->inviteDbOpt($code, $address, $mobile);
@@ -110,7 +114,7 @@ class Invite extends Base {
      * @return string
      */
     public static function genInviteUrl($id) {
-        return $_REQUEST['HTTP_HOST'].'/invite?code='.self::encode($id);
+        return env('APP_URL').'/invite?code='.self::encode($id);
     }
 
     /**
