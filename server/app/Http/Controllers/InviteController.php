@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invite;
 use Illuminate\Http\Request;
+use Service;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
@@ -11,7 +12,20 @@ class InviteController extends \App\Http\Controllers\Controller {
         return view('invite.add');
     }
 
+    public function vcode($mobile) {
+        $vcode = Service::getVcode('reg', $mobile)['data'];
+        Service::sms($mobile, '【BitCV】您的验证码为'.$vcode);
+    }
+
     public function add(Request $request) {
+        $vcode = $request->input('vcode');
+        $mobile = $request->input('mobile');
+        $ret = Service::checkVCode('reg', $mobile, $vcode);
+        if (!$ret) {
+            return ['retCode' => 1, 'msg' => $ret['msg']];
+        }
+
+
         $address    = $request->input('address');
         $code       = $request->input('code', '');
         if (!preg_match('/[0-9a-zA-Z]{30,50}/', $address)) {

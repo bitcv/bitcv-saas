@@ -35,4 +35,9 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'sms' => [
+        'id' => env('SMS.ID'),
+        'pass' => env('SMS.PASS'),
+    ],
+
 ];
