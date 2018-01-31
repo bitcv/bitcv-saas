@@ -1,0 +1,180 @@
+body {
+    font: 16px/1.5 arial, Helvetica, "Microsoft YaHei";
+    color: #fff;
+    background: #0D1129;
+}
+
+a {
+    color: #3D7AF0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.cl:after {
+    content: '';
+    display: block;
+    visibility: hidden;
+    clear: both
+}
+
+.cl {
+    *zoom: 1
+}
+
+#doc {
+    max-width: 700px;
+    min-width: 320px;
+    padding: 0 20px 40px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.header {
+    height: 60px;
+    line-height: 60px;
+    text-align: right;
+}
+
+.container {
+    text-align: center;
+}
+
+.footer {
+    margin-top: 38px;
+    text-align: center;
+}
+
+.footer a {
+    color: #999;
+}
+
+.logo img {
+    width: 136px;
+}
+
+.intro p {
+    margin-top: 32px;
+    line-height: 24px;
+}
+
+.join {
+    margin-top: 35px;
+}
+
+form {
+    margin-top: 62px;
+}
+
+.ipt-txt {
+    width: 100%;
+    height: 50px;
+    padding: 15px;
+    line-height: 100%;
+    border-radius: 6px;
+    border: none;
+    background: rgba(216,216,216,0.20);
+    color: #fff;
+    box-sizing: border-box;
+}
+.ipt-txtarea {
+    width: 100%;
+    height: 250px;
+    padding: 15px;
+    line-height: 100%;
+    border-radius: 6px;
+    border: none;
+    background: rgba(216,216,216,0.20);
+    color: #fff;
+    box-sizing: border-box;
+}
+.ipt-btn {
+    display: inline-block;
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    line-height: 100%;
+    background: #3D7AF0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.step {
+    margin-top: 30px;
+}
+
+.step fieldset {
+    margin-top: 30px;
+}
+
+.step legend {
+    color: #fff;
+    text-align: left;
+}
+
+.step .ipt-wrap {
+    position: relative;
+    margin-top: 10px;
+    padding-right: 64px;
+}
+
+.step .ipt-txt {
+    border-radius: 6px 0 0 6px;
+}
+
+.step .ipt-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 64px;
+    padding: 0;
+    margin-top: 0;
+    text-align: center;
+    background: #3D7AF0;
+    color: #fff;
+    border-color: #209cee;
+    border-radius: 0 6px 6px 0;
+}
+
+.count {
+    margin-top: 20px;
+}
+
+.count li {
+    float: left;
+    width: 48%;
+    padding: 20px 0;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.count .num {
+    font-size: 32px;
+}
+
+.count .times {
+    margin-right: 4%;
+    background: #17c5ff;
+}
+
+.count .coins {
+    background: #3e7bf1;
+}
+
+body .layer-tips-class {
+}
+
+@media screen and (max-width: 640px) {
+    .count li {
+        float: left;
+        width: 100%;
+    }
+    .count .coins {
+        margin-top: 10px;
+    }
+}
