@@ -7,22 +7,38 @@ namespace App\Models;
  * Class Invite
  * @package App\Http\Models
  */
-class Invite {
+class Invite extends Base {
 
     private static $table = 't_invite';
+
+    public function __construct() {
+        self::$encrypt_keys = array(
+            'mobile',
+        );
+    }
+
     /**
      * 邀请业务逻辑
      * @param $code
      * @param $address
      * @return bool|string
      */
-    public function invites($code, $address) {
+    public function invites($code, $address, $mobile) {
+        $hasBindResult = $this->getByMobile($mobile);
+        if ($hasBindResult) {
+            throw new \Exception('该手机号已绑定以太坊钱包', 500002);
+        }
+
         $result = $this->getByAddress($address);
+        if ($result['mobile'] != $mobile) {
+            throw new \Exception('该钱包已绑定手机号', 500003);
+        }
+
         if ($result) {
             return self::genInviteUrl($result->id);
         }
 
-        return $this->inviteDbOpt($code, $address);
+        return $this->inviteDbOpt($code, $address, $mobile);
     }
 
     /**
@@ -30,12 +46,23 @@ class Invite {
      * @param $address
      * @return mixed
      */
-    public function add($address) {
+    public function add($address, $mobile) {
         $data = array(
-            'address'  => $address,
+            'address'   => $address,
+            'mobile'    => $mobile,
         );
 
-        return \DB::table(self::$table)->insertGetId($data);
+        return \DB::table(self::$table)->insertGetId(self::encrypt($data));
+    }
+
+    public function getByMobile($mobile) {
+        $data = \DB::table(self::$table)->where('mobile', self::encrypt($mobile))->first();
+        if ($data) {
+            $data = (array)$data;
+            $data = self::decrypt($data);
+        }
+
+        return $data;
     }
 
     /**
@@ -44,7 +71,10 @@ class Invite {
      * @return mixed
      */
     public function getByAddress($address) {
-        return \DB::table(self::$table)->where('address', $address)->first();
+        $data = \DB::table(self::$table)->where('address', $address)->first();
+        $data = (array)$data;
+
+        return self::decrypt($data);
     }
 
     /**
@@ -61,8 +91,8 @@ class Invite {
      * @param $address
      * @return bool|string
      */
-    public function inviteDbOpt($code, $address) {
-        $id = $this->add($address);
+    public function inviteDbOpt($code, $address, $mobile) {
+        $id = $this->add($address, $mobile);
         if (!$id) {
             return false;
         }

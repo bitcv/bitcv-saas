@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invite;
 use Illuminate\Http\Request;
-use Service;
+use App\Utils\Service;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
@@ -22,9 +22,8 @@ class InviteController extends \App\Http\Controllers\Controller {
         $mobile = $request->input('mobile');
         $ret = Service::checkVCode('reg', $mobile, $vcode);
         if (!$ret) {
-            return ['retCode' => 1, 'msg' => $ret['msg']];
+            return ['retcode' => 1, 'msg' => $ret['msg']];
         }
-
 
         $address    = $request->input('address');
         $code       = $request->input('code', '');
@@ -38,7 +37,17 @@ class InviteController extends \App\Http\Controllers\Controller {
         }
 
         //验证address
-        $result = (new Invite())->invites($code, $address);
+        try {
+            $result = (new Invite())->invites($code, $address, $mobile);
+        } catch(\Exception $e) {
+            $data = array(
+                'retcode'   => $e->getCode(),
+                'msg'       => $e->getMessage()
+            );
+
+            return $data;
+        }
+
 
         if (!$result) {
             $data = array(
