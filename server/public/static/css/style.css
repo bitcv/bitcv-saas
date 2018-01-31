@@ -1,7 +1,7 @@
 body {
     font: 16px/1.5 arial, Helvetica, "Microsoft YaHei";
     color: #fff;
-    background: #0D1129;
+    background: #000;
 }
 
 a {
@@ -68,13 +68,14 @@ form {
 }
 
 .ipt-txt {
+    margin-top: 20px;
     width: 100%;
     height: 50px;
     padding: 15px;
     line-height: 100%;
     border-radius: 6px;
     border: none;
-    background: rgba(216,216,216,0.20);
+    /*background: rgba(216,216,216,0.20);*/
     color: #fff;
     box-sizing: border-box;
 }
@@ -95,7 +96,7 @@ form {
     height: 50px;
     margin-top: 20px;
     line-height: 100%;
-    background: #3D7AF0;
+    background: #5274ca;
     border: none;
     border-radius: 6px;
     cursor: pointer;

@@ -25,12 +25,21 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p></p>
+                <p>每个手机号和钱包地址只能申请一次</p>
             </div>
-                <fieldset>
-                    <input type="text" class="ipt-txt ipt-address" id="address" placeholder="输入你的以太坊钱包地址"/>
-                    <input type="submit" value="提 交" class='ipt-btn' id="address-btn"/>
-                </fieldset>
+            <fieldset id="info">
+                <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="输入你的手机号"/>
+                <input type="text" class="ipt-txt ipt-address" style="width:69%" id="mobile" placeholder="输入验证码"/>
+                <input type="button" class='ipt-btn' style="width:30%" value="获取验证码">                    
+                <input type="text" class="ipt-txt ipt-address" id="address" placeholder="输入你的以太坊钱包地址"/>
+                <input type="submit" value="提 交" class='ipt-btn' id="address-btn"/>
+            </fieldset>
+            <div class="intro" style="display:none" id="result">
+                <div class="join"></div>
+                <p>您已申请成功，邀请朋友成功参与，可获取额外奖励</p>
+                <input type="text" class="ipt-txt ipt-address" style="width:69%">
+                <input type="button" class='ipt-btn' style="width:30%" value="复制邀请地址">
+            </div>
         </div>
         <div class="footer">
             <div class="" style="text-align: left;padding-top: 20px;font-size: 14px;padding-bottom: 40px; color: rgba(255,255,255,0.5)">
@@ -47,6 +56,10 @@
     // 提交表单
     $(function() {
         $('#address-btn').click(function() {
+            $('#info').hide();
+            $('#result').show();
+            return;
+
             address = $('#address').val();
             var pattern = /[0-9a-zA-Z]{30,50}/;
 
