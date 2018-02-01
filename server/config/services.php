@@ -36,8 +36,8 @@ return [
     ],
 
     'sms' => [
-        'id' => env('SMS.ID'),
-        'pass' => env('SMS.PASS'),
+        'id' => env('SMS_ID'),
+        'pass' => env('SMS_PASS'),
     ],
 
 ];

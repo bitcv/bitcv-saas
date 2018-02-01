@@ -67,8 +67,8 @@ if ($vcode == '424242') {
     public static function smsGuodu($mobile, $msg) {
         $msg = iconv("UTF-8","GB2312//IGNORE", $msg);
         
-        $param['OperID'] = config('service.sms.id');
-        $param['OperPass'] = config('service.sms.pass');
+        $param['OperID'] = config('services.sms.id');
+        $param['OperPass'] = config('services.sms.pass');
         $param['SendTime'] = '';
         $param['ValidTime'] = '';
         $param['AppendID'] = '';
