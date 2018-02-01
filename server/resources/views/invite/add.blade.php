@@ -32,7 +32,7 @@
                 <input type="text" class="ipt-txt ipt-address" id="address" placeholder="输入你的以太坊钱包地址"/>
                 <input type="submit" value="提 交" class='ipt-btn' id="address-btn"/>
             </fieldset>
-            <div class="intro" style="display:none2" id="result">
+            <div class="intro" style="display:none" id="result">
                 <div class="join"></div>
                 <p id="tips">您已申请成功，邀请朋友成功参与，可获取额外奖励</p>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:69%">
@@ -121,7 +121,7 @@
             );
         });
         $('#btncopy').click(function() {
-            
+
         })
     });
 </script>
