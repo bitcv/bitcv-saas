@@ -9,7 +9,15 @@ namespace App\Models;
  */
 class Invite extends Base {
 
-    private static $table = 't_invite';
+    private static $table;
+
+    public function __construct() {
+        self::$table = 'mod_invite_'.app()->proj['proj_id'];
+    }
+
+    public function getAll() {
+        return \DB::table(self::$table)->get()->all();
+    }
 
     /**
      * 邀请业务逻辑

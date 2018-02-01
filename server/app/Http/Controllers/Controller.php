@@ -10,4 +10,15 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function test() {
+
+        $saas = new \App\Models\Saas();
+        $ret = $saas->add(1, 'bcv');
+
+        //$mod = new \App\Models\Module();
+        //$ret = $mod->add(1, 1);
+        
+        var_dump($ret);
+    }
 }

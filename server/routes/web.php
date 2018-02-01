@@ -14,6 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/test', 'Controller@test');
 
 Route::get('/invite', 'InviteController@getInvite')->name('invite');
 Route::post('/invite/vcode/{mobile}', 'InviteController@vcode');

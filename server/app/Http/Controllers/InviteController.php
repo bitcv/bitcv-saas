@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Invite;
 use Illuminate\Http\Request;
 use App\Utils\Service;
+use App\Models\Module;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
     public function getInvite(Request $request) {
+        if (!Module::check('invite')) {
+            die('err url');
+        }
         $code       = $request->input('code', '');
         return view('invite.add', ['code'=>$code]);
     }
