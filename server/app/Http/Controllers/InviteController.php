@@ -8,20 +8,25 @@ use App\Utils\Service;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
-    public function getInvite() {
-        return view('invite.add');
+    public function getInvite(Request $request) {
+        $code       = $request->input('code', '');
+        return view('invite.add', ['code'=>$code]);
     }
 
     public function vcode($mobile) {
-        $vcode = Service::getVcode('reg', $mobile)['data'];
-        Service::sms($mobile, '【BitCV】您的验证码为'.$vcode);
+        $ret = Service::getVcode('reg', $mobile);
+        if ($ret['err'] > 0) {
+            return ['retcode'=>1, 'msg'=>$ret['msg']];
+        }
+        Service::sms($mobile, '【BitCV】您的验证码为'.$ret['data']);
+        return ['retcode'=>200];
     }
 
     public function add(Request $request) {
         $vcode = $request->input('vcode');
         $mobile = $request->input('mobile');
         $ret = Service::checkVCode('reg', $mobile, $vcode);
-        if (!$ret) {
+        if ($ret['err'] > 0) {
             return ['retcode' => 1, 'msg' => $ret['msg']];
         }
 
@@ -49,19 +54,6 @@ class InviteController extends \App\Http\Controllers\Controller {
         }
 
 
-        if (!$result) {
-            $data = array(
-                'retcode'   => 50001,
-                'msg'       => '添加失败！',
-            );
-        } else {
-            $data = array(
-                'retcode'   => 200,
-                'msg'       => '添加成功！',
-                'data'      => $result,
-            );
-        }
-
-        return $data;
+        return $result;
     }
 }
