@@ -36,7 +36,7 @@
                 <div class="join"></div>
                 <p id="tips">您已申请成功，邀请朋友成功参与，可获取额外奖励</p>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:69%">
-                <input type="button" id="btncopy" class='ipt-btn' style="width:30%" value="复制邀请地址">
+                <input type="button" id="btncopy" class='ipt-btn' style="width:30%" data-clipboard-target='address' value="复制邀请地址">
             </div>
         </div>
         <div class="footer">
@@ -50,6 +50,7 @@
 </div>
 
 <script src="/static/jquery/dist/jquery.min.js"></script>
+<script src="/static/js/jquery.zclip.js"></script>
 <script>
     $.ajaxSetup(
         {
@@ -120,9 +121,12 @@
                 }
             );
         });
-        $('#btncopy').click(function() {
-
-        })
+        $('#btncopy').zclip({
+            path: "/static/js/ZeroClipboard.swf",
+            copy: function(){
+                return $('#inviteurl').val();
+            }
+        });
     });
 </script>
 </body>
