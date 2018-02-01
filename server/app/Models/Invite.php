@@ -11,12 +11,6 @@ class Invite extends Base {
 
     private static $table = 't_invite';
 
-    public function __construct() {
-        self::$encrypt_keys = array(
-            //'mobile',
-        );
-    }
-
     /**
      * 邀请业务逻辑
      * @param $code
@@ -70,9 +64,7 @@ class Invite extends Base {
      */
     public function getByAddress($address) {
         $data = \DB::table(self::$table)->where('address', $address)->first();
-        $data = (array)$data;
-
-        return $data;
+        return (array)$data;
     }
 
     /**
