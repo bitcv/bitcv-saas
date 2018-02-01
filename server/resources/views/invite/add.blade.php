@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -24,7 +23,7 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>每个手机号和钱包地址只能申请一次</p>
+                <p>每个手机号和钱包地址只能申请一次（两者都不能重复）</p>
             </div>
             <fieldset id="info">
                 <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="输入你的手机号"/>
@@ -33,17 +32,17 @@
                 <input type="text" class="ipt-txt ipt-address" id="address" placeholder="输入你的以太坊钱包地址"/>
                 <input type="submit" value="提 交" class='ipt-btn' id="address-btn"/>
             </fieldset>
-            <div class="intro" style="display:none" id="result">
+            <div class="intro" style="display:none2" id="result">
                 <div class="join"></div>
                 <p id="tips">您已申请成功，邀请朋友成功参与，可获取额外奖励</p>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:69%">
-                <input type="button" class='ipt-btn' style="width:30%" value="复制邀请地址">
+                <input type="button" id="btncopy" class='ipt-btn' style="width:30%" value="复制邀请地址">
             </div>
         </div>
         <div class="footer">
             <div class="" style="text-align: left;padding-top: 20px;font-size: 14px;padding-bottom: 40px; color: rgba(255,255,255,0.5)">
-                <p style="margin-bottom:20px"></p>
-                <p style="margin-bottom:20px"></p>
+                <p style="margin-bottom:20px">BitCV</p>
+                <p style="margin-bottom:20px">数字资产管理服务引擎</p>
             </div>
 
         </div>
@@ -95,7 +94,7 @@
             var pattern = /[0-9a-zA-Z]{30,50}/;
             //验证长度，字母数字，长度30-50
             if (!pattern.test(address)) {
-                alert('请输入正确格式的以太坊钱包地址！');
+                alert('请输入正确格式的钱包地址！');
                 return false;
             }
 
@@ -110,7 +109,7 @@
                 function(ret) {
                     if (ret.retcode == 200 || ret.retcode == 201) {
                         if (ret.retcode == 201) {
-                            $('#tips').html('您的手机或地址已申请，邀请好友参与可获更多奖励');
+                            $('#tips').html('您的手机号或钱包地址已申请，邀请好友参与可获更多奖励');
                         }
                         $('#inviteurl').val(ret.data);
                         $('#info').hide();
@@ -121,6 +120,9 @@
                 }
             );
         });
+        $('#btncopy').click(function() {
+            
+        })
     });
 </script>
 </body>
