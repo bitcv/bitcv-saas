@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Models\Saas;
 
-class InitProj
+class InitSaas
 {
     /**
      * Handle an incoming request.
