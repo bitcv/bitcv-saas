@@ -47,8 +47,9 @@ class Module {
             'mod_id' => $mod_id,
             'valid' => 1,
         ];
-        $ret = DB::table(self::$table)->insert($data);
-        if (!$ret) {
+        try {
+            $ret = DB::table(self::$table)->insert($data);
+        } catch (\Exception $e) {
             return ['err' => 2, 'msg' => 'add module error'];
         }
         $mtable = self::$mods[$mod_id]['table'];
