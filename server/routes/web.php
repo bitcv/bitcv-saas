@@ -19,3 +19,4 @@ Route::get('/test', 'Controller@test');
 Route::get('/invite', 'InviteController@getInvite')->name('invite');
 Route::post('/invite/vcode/{mobile}', 'InviteController@vcode');
 Route::post('/invite/add', 'InviteController@add');
+Route::post('/invite/verifyCode', 'InviteController@verifyCode');
