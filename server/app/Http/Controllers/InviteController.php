@@ -26,7 +26,7 @@ class InviteController extends \App\Http\Controllers\Controller {
         return ['retcode'=>200];
     }
 
-    public function add(Request $request) {
+    public function verifyCode(Request $request) {
         $vcode = $request->input('vcode');
         $mobile = $request->input('mobile');
         $ret = Service::checkVCode('reg', $mobile, $vcode);
@@ -34,6 +34,16 @@ class InviteController extends \App\Http\Controllers\Controller {
             return ['retcode' => 1, 'msg' => $ret['msg']];
         }
 
+        $data    = (new Invite())->getUidByMobile($mobile);
+        \Cookie::queue('uid', Invite::encode($data['uid']), 43200);//单位是分钟
+
+        unset($data['uid']);
+
+        return $data;
+    }
+
+    public function add(Request $request) {
+        $uid        = Invite::decode(\Cookie::get('uid'));
         $address    = $request->input('address');
         $code       = $request->input('code', '');
         if (!preg_match('/[0-9a-zA-Z]{30,50}/', $address)) {
@@ -47,7 +57,7 @@ class InviteController extends \App\Http\Controllers\Controller {
 
         //验证address
         try {
-            $result = (new Invite())->invites($code, $address, $mobile);
+            $result = (new Invite())->invites($code, $address, $uid);
         } catch(\Exception $e) {
             $data = array(
                 'retcode'   => $e->getCode(),

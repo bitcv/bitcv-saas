@@ -11,7 +11,6 @@
 |
 */
 
-Route::get('/test', 'Controller@test');
 
 Route::get('/', 'ProjController@index');
 
@@ -38,4 +37,5 @@ Route::prefix('invite', function() {
     Route::get('/', 'InviteController@getInvite')->name('invite');
     Route::post('vcode/{mobile}', 'InviteController@vcode');
     Route::post('add', 'InviteController@add');
+    Route::post('verifyCode', 'InviteController@verifyCode');
 });

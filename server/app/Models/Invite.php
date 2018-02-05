@@ -25,20 +25,22 @@ class Invite extends Base {
      * @param $address
      * @return bool|string
      */
-    public function invites($code, $address, $mobile) {
-        $hasBindMobile = $this->getByMobile($mobile);
-        if ($hasBindMobile) {
-            return ['retcode'=>201, 'data'=>self::genInviteUrl($hasBindMobile['id'])];
+    public function invites($code, $address, $uid) {
+        $inviteInfo = $this->getByUid($uid);
+        if ($inviteInfo['address']) {
+            return ['retcode'=>201, 'data'=>self::genInviteUrl($inviteInfo['id'])];
         }
+
         $hasBindAddress = $this->getByAddress($address);
         if ($hasBindAddress) {
             return ['retcode'=>201, 'data'=>self::genInviteUrl($hasBindAddress['id'])];
         }
 
-        $url = $this->inviteDbOpt($code, $address, $mobile);
+        $url = $this->inviteDbOpt($code, $address, $uid);
         if (!$url) {
             return ['retcode'=>2, 'msg' => '保存地址失败'];
         }
+
         return ['retcode'=>200, 'data'=>$url];
     }
 
@@ -47,22 +49,39 @@ class Invite extends Base {
      * @param $address
      * @return mixed
      */
-    public function add($address, $mobile) {
+    public function upAddressById($address, $uid) {
         $data = array(
             'address'   => $address,
+        );
+
+        $where = array(
+            'id'    => $uid,
+        );
+
+        return \DB::table(self::$table)->where($where)->update($data);
+    }
+
+    public function getByUid($uid) {
+        $data = \DB::table(self::$table)->where('id', $uid)->first();
+        return (array)$data;
+    }
+
+    public function getUidByMobile($mobile) {
+        $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
+        if ($data) {
+            $data   = (array)$data;
+            $uid    = $data['id'];
+
+            return ['retcode'=>202, 'data'=>self::genInviteUrl($uid), 'uid'=>$uid];
+        }
+
+        $data = array(
             'mobile'    => $mobile,
         );
 
-        return \DB::table(self::$table)->insertGetId($data);
-    }
+        $uid = \DB::table(self::$table)->insertGetId($data);
 
-    public function getByMobile($mobile) {
-        $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
-        if ($data) {
-            $data = (array)$data;
-        }
-
-        return $data;
+        return ['retcode'=>200, 'uid'=>$uid];
     }
 
     /**
@@ -90,7 +109,7 @@ class Invite extends Base {
      * @return bool|string
      */
     public function inviteDbOpt($code, $address, $mobile) {
-        $id = $this->add($address, $mobile);
+        $id = $this->upAddressById($address, $mobile);
         if (!$id) {
             return false;
         }
