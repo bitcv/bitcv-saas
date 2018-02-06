@@ -33,7 +33,7 @@ Route::group(['prefix' => 'saas'], function() {
 
 
 //应用，收集钱包地址邀请
-Route::prefix('invite', function() {
+Route::group(['prefix' => 'invite'], function() {
     Route::get('/', 'InviteController@getInvite')->name('invite');
     Route::post('vcode/{mobile}', 'InviteController@vcode');
     Route::post('add', 'InviteController@add');
