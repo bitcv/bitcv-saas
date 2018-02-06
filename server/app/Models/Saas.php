@@ -4,19 +4,19 @@ namespace App\Models;
 
 use DB;
 
-
 class Saas {
 
     private static $table = 'saas_proj';
 
-    public function add($proj_id, $subname, $data = []) {
-        if (!$proj_id || !$subname) {
+    public function add($subname, $domain, $data = []) {
+        if (!$domain || !$subname) {
             return false;
         }
-        $data['proj_id'] = $proj_id;
-        $data['subname'] = $subname;
-        $ret = DB::table(self::$table)->insert($data);
-        return $ret;
+
+        $data['subname']    = $subname;
+        $data['domain']     = $domain;
+
+        return \DB::table(self::$table)->insertGetId($data);
     }
 
     public function getBySubname($subname) {
@@ -27,4 +27,20 @@ class Saas {
         return (array)DB::table(self::$table)->where('domain', $domain)->first();
     }
 
+    public function getProj() {
+        return DB::table(self::$table)->get();
+    }
+
+    public function audit($proj_id, $status) {
+        $data   = array(
+            'status'    => $status,
+            'atime'     => date('Y-m-d H:i:s'),
+        );
+
+        $where  = array(
+            'proj_id'   => $proj_id
+        );
+
+        return DB::table(self::$table)->where($where)->update($data);
+    }
 }
