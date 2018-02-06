@@ -45,7 +45,7 @@ class Module {
         $data = [
             'proj_id' => $proj_id,
             'mod_id' => $mod_id,
-            'valid' => 1,
+            'valid' => Constant::mod_valid_use,
         ];
         try {
             $ret = DB::table(self::$table)->insert($data);
@@ -64,4 +64,23 @@ class Module {
         return ['err' => 0];
     }
 
+    public function getByProjId($proj_id) {
+        $where = array(
+            'proj_id'   => $proj_id
+        );
+
+        return DB::table(self::$table)->where($where)->get();
+    }
+
+    public function audit($proj_id, $valid) {
+        $where  = array(
+            'proj_id'   => $proj_id,
+        );
+
+        $data   = array(
+            'valid'     => $valid
+        );
+
+        return DB::update(self::$table)->where($where)->update($data);
+    }
 }

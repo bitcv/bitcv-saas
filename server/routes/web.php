@@ -19,16 +19,20 @@ Route::group(['prefix' => 'saas'], function() {
     
     //项目方申请
     Route::get('apply', 'ProjController@apply')->name('proj.apply');
+    Route::post('add', 'ProjController@add')->name('proj.add');
 
     //管理后台
     Route::get('login', 'SaasController@loginView')->name('saas.loginView');
     Route::post('login', 'SaasController@login')->name('saas.login');
     //需要管理员登录
-    Route::group(['middleware' => \App\Http\Middleware\SaasLogin::class], function() {
+    //Route::group(['middleware' => \App\Http\Middleware\SaasLogin::class], function() {
         Route::get('admin', 'SaasController@projs')->name('saas.admin');
-        Route::get('proj/{projid}', 'SaasController@proj')->name('saas.proj.detail');
-        Route::post('audit/{projid}', 'SaasController@audit')->name('saas.proj.audit');
-    });
+        //Route::get('proj/{projid}', 'SaasController@proj')->name('saas.proj.detail');
+        Route::get('module/{projid}', 'SaasController@module')->name('saas.module');
+        Route::post('audit}', 'SaasController@audit')->name('saas.proj.audit');
+        Route::post('auditmod}', 'SaasController@auditMod')->name('saas.proj.mod');
+        Route::post('addmod', 'SaasController@add')->name('saas.proj.add');
+    //});
 });
 
 
