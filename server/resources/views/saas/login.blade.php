@@ -1,4 +1,4 @@
-@extends('layouts.saas')
+@extends('layouts.proj')
 
 @section('content')
 <div class="middle-box text-center loginscreen animated fadeInDown">

@@ -8,13 +8,14 @@ class Saas {
 
     private static $table = 'saas_proj';
 
-    public function add($subname, $domain, $data = []) {
-        if (!$domain || !$subname) {
+    public function add($subname, $domain, $name, $data = []) {
+        if (!$domain || !$subname || !$name) {
             return false;
         }
 
         $data['subname']    = $subname;
         $data['domain']     = $domain;
+        $data['name']       = $name;
 
         return \DB::table(self::$table)->insertGetId($data);
     }
@@ -52,5 +53,13 @@ class Saas {
         );
 
         return DB::table(self::$table)->where($where)->update($data);
+    }
+
+    public function getProById($id) {
+        $where = array(
+            'proj_id'   => $id
+        );
+
+        return (array)\DB::table(self::$table)->where($where)->first();
     }
 }

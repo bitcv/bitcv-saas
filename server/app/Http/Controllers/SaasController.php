@@ -24,6 +24,11 @@ class SaasController extends Controller
         return ['err' => 0, 'data' => route('saas.admin')];
     }
 
+    public  function logout() {
+        session()->pull('saas_admin');
+        return view('saas.login');
+    }
+
     //SaaS列表
     public function projs() {
         $data = (new Saas())->getProj();
@@ -34,8 +39,9 @@ class SaasController extends Controller
     public function module(Request $request) {
         $proj_id    = $request->projid;
         $data = (new Module())->getByProjId($proj_id);
+        $proj = (new Saas())->getProById($proj_id);
 
-        return view('saas.module', ['data'=>$data, 'proj_id'=>$proj_id]);
+        return view('saas.module', ['data'=>$data, 'proj_id'=>$proj_id, 'proj'=>$proj]);
     }
     
     //审核SaaS申请
