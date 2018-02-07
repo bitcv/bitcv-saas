@@ -1,4 +1,4 @@
-@extends('layouts.saas')
+@extends('layouts.proj')
 
 @section('content')
     <div class="middle-box text-center loginscreen animated fadeInDown">
@@ -7,6 +7,9 @@
                 <h1 class="logo-name">Bitcv</h1>
             </div>
             <form class="m-t">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="project name" required="">
+                </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="subname" placeholder="subname" required="">
                 </div>

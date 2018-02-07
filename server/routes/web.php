@@ -24,6 +24,7 @@ Route::group(['prefix' => 'saas'], function() {
     //管理后台
     Route::get('login', 'SaasController@loginView')->name('saas.loginView');
     Route::post('login', 'SaasController@login')->name('saas.login');
+    Route::get('logout', 'SaasController@logout')->name('saas.logout');
     //需要管理员登录
     Route::group(['middleware' => \App\Http\Middleware\SaasLogin::class], function() {
         Route::get('admin', 'SaasController@projs')->name('saas.admin');

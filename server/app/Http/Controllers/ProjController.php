@@ -19,8 +19,9 @@ class ProjController extends Controller {
     public function add(Request $request) {
         $subname    = $request->input('subname');
         $domain     = $request->input('domain');
+        $name       = $request->input('name');
 
-        $pro_id     = (new Saas())->add($subname, $domain);
+        $pro_id     = (new Saas())->add($subname, $domain, $name);
         if (!$pro_id) {
             return ['retcode' => 5001, 'msg' => '申请失败，请重试！'];
         } else {
