@@ -43,3 +43,8 @@ Route::group(['prefix' => 'invite'], function() {
     Route::post('add', 'InviteController@add');
     Route::post('verifyCode', 'InviteController@verifyCode');
 });
+
+//eth
+Route::group(['prefix' => 'eth'], function() {
+    Route::get('/', 'EthController@tran');
+});
