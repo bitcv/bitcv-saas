@@ -15,7 +15,7 @@ class SaasController extends Controller
     public function login(Request $req) {
         $uname = $req->input('uname');
         $pwd = $req->input('password');
-        if ($uname == 'admin' && $pwd == 'abc') {
+        if ($uname == 'admin' && $pwd == env('ADMIN_PASS')) {
             session()->put('saas_admin', ['uid'=>1,'uname'=>'admin']);
         } else {
             return ['err' => 1, 'msg' => 'password error'];
