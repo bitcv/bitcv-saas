@@ -25,14 +25,13 @@ Route::group(['prefix' => 'saas'], function() {
     Route::get('login', 'SaasController@loginView')->name('saas.loginView');
     Route::post('login', 'SaasController@login')->name('saas.login');
     //需要管理员登录
-    //Route::group(['middleware' => \App\Http\Middleware\SaasLogin::class], function() {
+    Route::group(['middleware' => \App\Http\Middleware\SaasLogin::class], function() {
         Route::get('admin', 'SaasController@projs')->name('saas.admin');
-        //Route::get('proj/{projid}', 'SaasController@proj')->name('saas.proj.detail');
         Route::get('module/{projid}', 'SaasController@module')->name('saas.module');
         Route::post('audit}', 'SaasController@audit')->name('saas.proj.audit');
         Route::post('auditmod}', 'SaasController@auditMod')->name('saas.proj.mod');
         Route::post('addmod', 'SaasController@add')->name('saas.proj.add');
-    //});
+    });
 });
 
 

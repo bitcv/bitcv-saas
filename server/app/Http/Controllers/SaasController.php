@@ -32,11 +32,10 @@ class SaasController extends Controller
 
     //SaaS详情
     public function module(Request $request) {
-        /* todo 排查完页面的问题恢复回来
-         $proj_id    = $request->projid;
+        $proj_id    = $request->projid;
         $data = (new Module())->getByProjId($proj_id);
-*/
-        return view('saas.module', ['data'=>[]]);
+
+        return view('saas.module', ['data'=>$data, 'proj_id'=>$proj_id]);
     }
     
     //审核SaaS申请
@@ -50,16 +49,25 @@ class SaasController extends Controller
     }
 
     public function auditMod(Request $request) {
-        $proj_id    = $request->proj_id;
-        $valid      = $request->valid;
+        $proj_id    = $request->input('proj_id');
+        $valid      = $request->input('valid');
 
-        (new Module())->audit($proj_id, $valid);
+        $result = (new Module())->audit($proj_id, $valid);
+        if (!$result) {
+            return ['retcode'=>-1,'msg'=>'修改模块失败！'];
+        }
+
+        return ['retcode'=>200,'msg'=>'succ'];
     }
 
     public function add(Request $request) {
-        $proj_id    = $request->proj_id;
-        $mod_id     = $request->mod_id;
-
-        (new Module())->add($proj_id, $mod_id);
+        $proj_id    = $request->input('proj_id');
+        $mod_id     = $request->input('mod_id');
+        $data = (new Module())->add($proj_id, $mod_id);
+        if ($data['err'] == 0) {
+            return ['retcode'=>200,'msg'=>'succ'];
+        } else {
+            return ['retcode'=>$data['err'],'msg'=>$data['msg']];
+        }
     }
 }

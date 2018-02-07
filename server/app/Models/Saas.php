@@ -20,11 +20,21 @@ class Saas {
     }
 
     public function getBySubname($subname) {
-        return (array)DB::table(self::$table)->where('subname', $subname)->first();
+        $where = array(
+            'subname'   => $subname,
+            'status'    => Constant::proj_status_pass,
+        );
+
+        return (array)DB::table(self::$table)->where($where)->first();
     }
 
     public function getByDomain($domain) {
-        return (array)DB::table(self::$table)->where('domain', $domain)->first();
+        $where = array(
+            'domain'    => $domain,
+            'status'    => Constant::proj_status_pass,
+        );
+
+        return (array)DB::table(self::$table)->where($where)->first();
     }
 
     public function getProj() {
