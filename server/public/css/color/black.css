@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Color black CSS */
+.black .f-ico,.black .progress-bar .skill-in,.black .ch-grid,.black .car-prev,.black .car-next,.black .car-prev-2,.black .car-next-2,.black .scrollup,.black .list-dot,.black .p-two,.black .s-ico,.black .sl-ico,.black .prev-featured:hover,.black .next-featured:hover{background-color: #282828;}
+.black .menu a:hover,.black #nav .current a,.black .f-image .f-category,.black .t-photo .f-category,.black .half-content a,.black .contour-btn:hover, .black .second-title span {color: #282828 !important;}
+.black .f-image .f-category{background-position: -44px 0;}
+.black .t-photo .f-category {background-position: -44px -44px;}
+.black .f-single:hover .f-info,.black .btn-featured,.black .spacer,.black .folio-btn:hover,.black .p-roll,.black .contour-btn,.black .folio-btn.selected,.black .t-spacer,.black .t-element:hover .t-data,.black .logo span span{background: #282828;}
+.black .logo span{background: #282828; background: rgba(0,0,0,0.5);}
+.black .controller ul li:hover,.black .selected,.black .controller-2 ul li:hover,.black .controller-3 ul li:hover{border: 2px solid #282828 !important; background: #282828 !important;}
+.black .buy-logo{border-color: #282828;}
+.black ::selection{background-color: #282828;}

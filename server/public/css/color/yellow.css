@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Color yellow CSS */
+.yellow .prev-featured:hover,.yellow .next-featured:hover,.yellow .s-ico,.yellow .sl-ico,.yellow .progress-bar .skill-in,.yellow .ch-grid,.yellow .f-ico,.yellow .car-prev,.yellow .car-next,.yellow .car-prev-2,.yellow .car-next-2,.yellow .scrollup,.yellow .list-dot,.yellow .p-two {background-color: #f1d301;}
+.yellow .menu a:hover,.yellow #nav .current a,.yellow .f-image .f-category,.yellow .t-photo .f-category,.yellow .half-content a,.yellow .contour-btn:hover, .yellow .second-title span {color: #f1d301 !important;}
+.yellow .f-image .f-category{background-position: -308px 0;}
+.yellow .t-photo .f-category {background-position: -308px -44px;}
+.yellow .f-single:hover .f-info,.yellow .btn-featured,.yellow .spacer,.yellow .folio-btn:hover,.yellow .p-roll,.yellow .contour-btn,.yellow .folio-btn.selected,.yellow .t-spacer,.yellow .t-element:hover .t-data,.yellow .logo span span{background: #f1d301;}
+.yellow .logo span{background: #f1d301; background: rgba(241,211,1,0.5);}
+.yellow .controller ul li:hover,.yellow .selected,.yellow .controller-2 ul li:hover,.yellow .controller-3 ul li:hover{border: 2px solid #f1d301 !important; background: #f1d301 !important;}
+.yellow .buy-logo{border-color: #f1d301;}
+.yellow ::selection{background-color: #f1d301;}

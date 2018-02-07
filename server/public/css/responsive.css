@@ -1,0 +1,248 @@
+@charset "UTF-8";
+/* Responsive Layout */
+
+/* Smaller than 1180 (devices and browsers) */
+@media only screen and (max-width: 1180px) {
+	
+}
+
+/* Smaller than 1180 (devices and browsers) */
+@media only screen and (min-width: 976px) and (max-width: 1258px) {
+	.main-title ul {font-size: 65px;}
+	.full{width: 960px;}
+	.half{width: 385px; padding-bottom: 100px;}
+	.caroussel{width: 370px; height: 278px;}
+	.caroussel img{width: 370px; height: auto;}
+	.s-element{width: 320px;}
+	.f-element{width: 240px;}
+	.highlight {font-size: 75px;}
+	.milestone-details{font-size: 16px;}
+	.progress-bar{width: 397px;}
+	.car-quote{width: 370px;}
+	.caroussel-2{width: 370px; height: 270px;}
+	.comment{font-size: 13px;}
+	.q-spacer{margin: 20px 0;}
+	.logos{width: 900px; margin: 70px auto 220px}
+	.bottom-line{width: 900px;}
+	.img-spacer{width: 900px; margin-top: 190px;}
+	.img-spacer img{width: 900px;}
+	.img-item{top: -125px;}
+	.foot-third{width: 280px;}
+	.f-data{font-size: 14px;}
+	.f-data span{padding-left: 5px;}
+	.footer-container span{font-size: 13px;}
+	.footer-container{width: 959px; font-size: 15px;}
+	.project-content{width: 900px;}
+	.project-content img{width: 900px;}
+	.we-are{font-size: 110px;}
+	.s-container{width: 960px;}
+	.team-box{width: 960px; margin: auto;}
+	.sl-element{width: 192px;}
+	.team-grid{width: 574px !important;}
+	.t-element:nth-child(2),.t-element:nth-child(4),.t-element:nth-child(6),.t-element:nth-child(8),.t-element:nth-child(10) {margin-right: 0;}
+	.t-element{margin-bottom: 30px;}
+	.menu ul li {padding: 0 15px; font-size: 13px;}
+	.p-image-01 {margin-left: -470px; width: 940px;}
+	.p-image-01 img{width: 940px;}
+	.parallax.p-two { height: 555px;}
+	.container-video { height: 530px;}
+	.main-title {font-size: 60px;  height: 352px;top: 50%; margin-top:-176px;}
+	.slider-controls li a {top: 41%;}
+	.s-next {margin-right: 30px;}
+	.s-prev {margin-left: 30px;}
+	.ch-grid div span {margin: 50% 20px 0px 20px; font-size: 15px;}
+	.main-title .spacer {margin: 5px auto 25px;}
+	.main-title ul {margin: 0;}
+	.show {width: 385px;}
+	.car-prev, .car-next {top: 100px;}
+	.p-category {top: 25%;}
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 976px) {
+	.hideme, .p-image-02, .newtr{opacity: 1;}
+	.parallax .hideme-slide, .parallax .hideme-slide2{ bottom:0 !important; opacity: 1 !important;}
+	.menu{display: none;}
+	.slider-controls {display: none;}
+	.jump-menu{display: block;}
+	.main-title { height: 350px;top: 50%; margin-top:-175px;}
+	.sl-element{margin-bottom: 50px;}
+}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 796px) and (max-width: 976px) {
+	.main-title ul{ font-size:40px;}
+	.full{width: 783px;}
+	.half{float: none; margin: auto;}
+	.full .half:nth-child(2) {padding: 0px 45px 120px;}
+	.s-container{width: 603px;}
+	.team-box{width: 700px; margin: auto;}
+	.s-element{width: 200px;}
+	.team-box .s-element{width: 300px;}
+	.s-ico{width: 130px; height: 130px;}
+	.s-info{padding: 0 10px; font-size: 13px;}
+	.f-element{width: 180px; padding-left: 10px;}
+	.f-ico {margin: 0 auto;}
+	.highlight{font-size: 40px;}
+	.s-info{margin-bottom: 50px;}
+	.project-content {width: 700px;}
+	.project-content img{width: 700px;}
+	.logos{width: 680px; margin: 70px auto 150px}
+	.img-spacer{width: 700px; margin-top: 150px;}
+	.img-spacer img{width: 700px;}
+	.img-item{top: -80px;}
+	.footer-container {width: 700px; padding: 90px 0;}
+	.foot-third {width: 320px; padding: 0 0 0 30px;}
+	.foot-third:last-child {margin-top: 50px; width: 640px; padding: 0 30px;}
+	.bottom-line{width: 700px;}
+	.milestone-details{font-size: 15px; padding: 0px 0 100px;}
+	.s-info span {font-size: 17px;}
+	.sl-element{width: 200px;}
+	.t-element {margin-bottom: 30px;}
+	.team-grid{width: 574px !important;}
+	.t-element:nth-child(2),.t-element:nth-child(4),.t-element:nth-child(6),.t-element:nth-child(8),.t-element:nth-child(10) {margin-right: 0;}
+	.p-image-01 {margin-left: -380px; width: 760px;}
+	.p-image-01 img{width: 760px;}
+	.parallax.p-two {height: 520px;}
+	.container-video {height: 430px;}
+	.main-title {font-size: 50px;}
+	.main-title span {top: 100px;}
+}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 795px) {
+	.car-prev{display: none;}
+	.car-next{display: none;}
+	.car-prev-2{display: none;}
+	.car-next-2{display: none;}
+	.show {width: 385px;}
+	.main-title ul{ margin-top:0; height:80px;}
+	.main-title .spacer{ margin:20px auto;}
+	.buy-logo{ margin-top:35px;}
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 795px) {
+	.p-image-02 div{ left:50%;}
+	.p-image-first{margin-left:-225px;}
+	.p-image-first img{ width:450px}
+	.p-image-second{margin-left:-300px;}	
+	.p-image-second img{ width:600px}
+	.vegas-overlay{ display:none;}
+	.main-title ul{ font-size:20px;}
+	.main-title .second-title{ width:345px;}
+	.full{width: 466px;}
+	.half{float: none; margin: auto; width: 400px; padding: 80px 40px 120px;}
+	.half:first-child{padding-bottom: 0px;}
+	.content .full .half{ padding-left:0; padding-right:0;}
+	.next-featured{margin-left: 30px;}
+	.prev-featured{margin-right: 30px;}
+	.nav-featured{width: 311px;}
+	.title.one{font-size: 40px; padding: 80px 40px 11px;}
+	.title.two{font-size: 17px; padding: 0px 40px; width: auto;}
+	.caroussel{width: 400px; height: 270px;}
+	.p-info{width: 400px;}
+	.caroussel img{width: 400px; height: auto; margin-left:0;}
+	.team-box{width: 100%}
+	.s-container{width: 400px}
+	.f-element{width: 100%;}
+	.progress-bar{width: 400px;}
+	.caroussel-2{width: 400px; height: 300px;}
+	.car-quote {width: 400px;}
+	.comment{font-size: 13px;}
+	#filters{padding: 0 40px;}
+	.bottom-line{width: 400px;}
+	.project-content{width: 400px;}
+	.project-content img{width: 400px;}
+	.logos{width: 400px; margin: 70px auto 50px;}
+	.img-spacer{width: 400px; margin-top: 50px;}
+	.img-spacer img{width: 400px;}
+	.img-item {top: 10px;}
+	.footer-container {width: 400px;}
+	.foot-third{float: none; width: 100%; padding: 0; margin-top: 50px;}
+	.foot-third:first-child{margin-top: 0;}
+	.sl-element{width: 200px;}
+	.t-element {float: none; margin: 30px auto 0;}
+	.t-element:nth-child(2),.t-element:nth-child(4),.t-element:nth-child(6),.t-element:nth-child(8),.t-element:nth-child(10) {margin: 30px auto 0;}
+	.p-image-01 {margin-left: -230px; width: 460px;}
+	.p-image-01 img{width: 460px;}
+	.main-title {font-size: 25px;}
+	.main-title span {top: 70px;}
+	.logo {font-size: 23px;}
+	.parallax.p-one{ height:600px;}
+	.parallax.p-two {height: 400px;}
+	.container-video {height: 260px;}
+	.container-video .parallax-info{display: none;}
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+.hideme{opacity: 1;}
+.hideme-slide{opacity: 1; bottom: auto !important;}
+	.main-title { height: 300px;top: 50%; margin-top:-150px;}
+	.logo{ margin-left:20px;}
+	.color-picker{ display:none;}	
+	.p-image-02 div{ left:50%;}
+	.p-image-first img{ width:222px;}
+	.p-image-first{margin-left:-111px;}
+	.p-image-second img{ width:300px; }
+	.p-image-second{margin-left:-150px;}
+	.p-image-02 .p-image-second{ left:50%;}
+	.vegas-overlay{ display:none;}
+	.main-title ul{ font-size:20px;}
+	.main-title .second-title{ font-size:13px; width:240px;}
+	.full{width: 300px;}
+	.half{float: none; margin: auto; width: 300px; padding: 80px 10px 120px;}
+	.half:first-child{padding-bottom: 0px;}
+	.content .full .half{ padding-left:0; padding-right:0;}
+	.next-featured{margin-left: 30px;}
+	.prev-featured{margin-right: 30px;}
+	.nav-featured{width: 292px;}
+	.menu{display: none;}
+	.title.one{font-size: 19px; padding: 50px 40px 50px; width: auto;}
+	.title.two{font-size: 17px; padding: 0px 40px; width: auto;}
+	.p-title-two{ font-size:14px;}
+	.caroussel{width: 300px; height: 220px; margin-left:0;}
+	.p-info{width: 300px;}
+	.caroussel img{width: 300px; height: auto;}
+	.team-box{width: 300px; margin: auto;}
+	.s-container{width: 300px}
+	.f-element{width: 100%;}
+	.progress-bar{width: 300px;}
+	.caroussel-2{width: 300px; height: 300px;}
+	.car-quote {width: 300px;}
+	.comment{font-size: 13px;}
+	#filters{padding: 0 40px;}
+	.bottom-line{width: 300px;}
+	.project-content{width: 300px;}
+	.project-content img{width: 300px;}
+	.logos{width: 300px; margin: 70px auto 50px;}
+	.img-spacer{width: 300px; margin-top: 0;}
+	.img-spacer img{width: 300px;}
+	.img-item {display: none;}
+	.footer-container {width: 300px;}
+	.foot-third{float: none; width: 100%; padding: 0; margin-top: 50px;}
+	.foot-third:first-child{margin-top: 0;}
+	.s-element{width: 300px;}
+	.sl-element{width: 300px; margin-bottom:30px;}
+	.t-element {float: none; margin: 30px auto 0;}
+	.t-element:nth-child(2),.t-element:nth-child(4),.t-element:nth-child(6),.t-element:nth-child(8),.t-element:nth-child(10) {margin: 30px auto 0;}
+	.p-image-01 {margin-left: -150px; width: 300px;}
+	.p-image-01 img{width: 300px;}
+	.content {width: 100%;overflow: hidden;}
+	.main-title {font-size: 30px;}
+	.welcome{ font-size:13px;}
+	.main-title span {top: 100px;}
+	.parallax.p-one{ height:280px;}
+	.parallax.p-two {height: 255px;}
+	.parallax.p-two .spacer{ display:none;}
+	.p-title-one{ padding-top:40px;}
+	.container-video {height: 160px;}
+	.container-video .parallax-info{display: none;}
+	.scrollup{display: none !important;}
+	.mk-video-mask {opacity: 0.5; background:none;}
+	.f-title-one{ text-align:center;}
+	.f-title-two{ text-align:center;}
+	.list_carousel.responsive{ margin-bottom:0; margin-top:50px;}
+	#anchor5{ padding-bottom:35px;}
+}

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Color Fucsia CSS */
+.orange .prev-featured:hover,.orange .next-featured:hover,.orange .s-ico,.orange .sl-ico,.orange .progress-bar .skill-in,.orange .ch-grid,.orange .f-ico,.orange .car-prev,.orange .car-next,.orange .car-prev-2,.orange .car-next-2,.orange .scrollup,.orange .list-dot,.orange .p-two {background-color: #fda527;}
+.orange .menu a:hover,.orange #nav .current a,.orange .f-image .f-category,.orange .t-photo .f-category,.orange .half-content a,.orange .contour-btn:hover, .orange .second-title span {color: #fda527 !important;}
+.orange .f-image .f-category {background-position: -132px 0;}
+.orange .t-photo .f-category {background-position: -132px -44px;}
+.orange .f-single:hover .f-info,.orange .btn-featured,.orange .spacer,.orange .folio-btn:hover,.orange .p-roll,.orange .contour-btn,.orange .folio-btn.selected,.orange .t-spacer,.orange .t-element:hover .t-data,.orange .logo span span{background: #fda527;}
+.orange .logo span{background: #fda527; background: rgba(253,165,39,0.5);}
+.orange .controller ul li:hover,.orange .selected,.orange .controller-2 ul li:hover,.orange .controller-3 ul li:hover{border: 2px solid #fda527 !important; background: #fda527 !important;}
+.orange .buy-logo{border-color: #fda527;}
+.orange ::selection{background-color: #fda527;}

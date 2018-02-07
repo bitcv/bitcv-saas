@@ -12,13 +12,13 @@
 */
 
 
-Route::get('/', 'ProjController@index');
+Route::get('/', 'ProjController@apply');
 
 //saas.lianbi.io saas申请和审核
 Route::group(['prefix' => 'saas'], function() {
     
     //项目方申请
-    Route::get('apply', 'ProjController@apply')->name('proj.apply');
+    //Route::get('apply', 'ProjController@apply')->name('proj.apply');
     Route::post('add', 'ProjController@add')->name('proj.add');
 
     //管理后台
@@ -34,6 +34,11 @@ Route::group(['prefix' => 'saas'], function() {
         Route::post('addmod', 'SaasController@add')->name('saas.proj.add');
     });
 });
+
+Route::group(['prefix' => 'admin'], function() {
+    Route::get('/', 'ProjectController@admin');
+});
+
 
 
 //应用，收集钱包地址邀请

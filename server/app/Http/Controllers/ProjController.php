@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * project前台页面
+ */
 namespace App\Http\Controllers;
 
 use App\Models\Saas;
@@ -13,6 +15,10 @@ class ProjController extends Controller {
 
     //申请SaaS
     public function apply() {
+        //总站默认申请页面，子站显示自己的主页
+        if (isset(app()->proj['proj_id'])) {
+            return $this->index();
+        }
         return view('proj.apply');
     }
 

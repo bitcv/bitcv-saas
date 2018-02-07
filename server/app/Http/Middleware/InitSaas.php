@@ -19,6 +19,9 @@ class InitSaas
         $host = $_SERVER['HTTP_HOST'];
         $saas = new Saas();
         $saasdomain = config('app.domain');
+        if (strpos($host, ':') > 0) {
+            $host = substr($host, 0, strpos($host, ':'));
+        }
         if ($host != $saasdomain) {
             if (substr($host, -1 - strlen($saasdomain)) == '.'.$saasdomain) {
                 $subname = substr($host, 0, strlen($host)-strlen($saasdomain)-1);

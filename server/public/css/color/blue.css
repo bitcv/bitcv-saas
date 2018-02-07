@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Color Fucsia CSS */
+.blue .prev-featured:hover,.blue .next-featured:hover,.blue .s-ico,.blue .sl-ico,.blue .progress-bar .skill-in,.blue .ch-grid,.blue .f-ico,.blue .car-prev,.blue .car-next,.blue .car-prev-2,.blue .car-next-2,.blue .scrollup,.blue .list-dot,.blue .p-two {background-color: #4cddf3;}
+.blue .menu a:hover,.blue #nav .current a,.blue .f-image .f-category,.blue .t-photo .f-category,.blue .half-content a,.blue .contour-btn:hover, .blue .second-title span {color: #4cddf3 !important;}
+.blue .f-image .f-category {background-position: 0 0;}
+.blue .t-photo .f-category {background-position: 0 -44px;}
+.blue .f-single:hover .f-info,.blue .btn-featured,.blue .spacer,.blue .folio-btn:hover,.blue .p-roll,.blue .contour-btn,.blue .folio-btn.selected,.blue .t-spacer,.blue .t-element:hover .t-data,.blue .logo span span{background: #4cddf3;}
+.blue .logo span{background: #4cddf3; background: rgba(76,221,243,0.5);}
+.blue .controller ul li:hover,.blue .selected,.blue .controller-2 ul li:hover,.blue .controller-3 ul li:hover{border: 2px solid #4cddf3 !important; background: #4cddf3 !important;}
+.blue .buy-logo{border-color: #4cddf3;}
+.blue ::selection{background-color: #4cddf3;}

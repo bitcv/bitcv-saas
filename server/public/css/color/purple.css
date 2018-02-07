@@ -1,0 +1,11 @@
+@charset "UTF-8";
+/* Color Fucsia CSS */
+.purple .prev-featured:hover,.purple .next-featured:hover,.purple .s-ico,.purple .sl-ico,.purple .progress-bar .skill-in,.purple .ch-grid,.purple .f-ico,.purple .car-prev,.purple .car-next,.purple .car-prev-2,.purple .car-next-2,.purple .scrollup,.purple .list-dot,.purple .p-two {background-color: #d786fe;}
+.purple .menu a:hover,.purple #nav .current a,.purple .f-image .f-category,.purple .t-photo .f-category,.purple .half-content a,.purple .contour-btn:hover, .purple .second-title span {color: #d786fe !important;}
+.purple .f-image .f-category{background-position: -176px 0;}
+.purple .t-photo .f-category {background-position: -176px -44px;}
+.purple .f-single:hover .f-info,.purple .btn-featured,.purple .spacer,.purple .folio-btn:hover,.purple .p-roll,.purple .contour-btn,.purple .folio-btn.selected,.purple .t-spacer,.purple .t-element:hover .t-data,.purple .logo span span{background: #d786fe;}
+.purple .logo span{background: #d786fe; background: rgba(215,134,254,0.5);}
+.purple .controller ul li:hover,.purple .selected,.purple .controller-2 ul li:hover,.purple .controller-3 ul li:hover{border: 2px solid #d786fe !important; background: #d786fe !important;}
+.purple .buy-logo{border-color: #d786fe;}
+.purple ::selection{background-color: #d786fe;}

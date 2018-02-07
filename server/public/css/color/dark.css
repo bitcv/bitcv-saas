@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/* Color Dark CSS */
+.darker .header {background: #000; background-color: rgba(0,0,0,0.85);}
+.darker .logo,.darker .menu a,.darker .highlight {color: #f4f4f4;}
+.darker .slider-logo{border-color: #404040;}
+.darker .dark,.darker .progress-bar,.darker .q-spacer,.darker .peThemeContactForm .controls .span9{background: #252525;}
+.darker .dark:after {border: 30px solid #252525;}
+.darker .light,.darker .t-data,.darker .f-info,.darker .folio-btn,.darker .btn-featured:hover,.darker .color-picker,.darker .socialFooter {background: #000;}
+.darker .controller ul li,.darker .controller-2 ul li{background: #252525; border: 2px solid #252525;}
+.darker .prev-featured {background: url("img/f-prev-dark.png") no-repeat #000;}
+.darker .next-featured {background: url("img/f-next-dark.png") no-repeat #000;}
+.darker .sl-ico {background-image: url("img/sl-icons-dark.png");}
+/*.darker .s-prev {background: url("img/s-prev-dark.png") 0 0 no-repeat;}
+.darker .s-next {background:url("img/s-next-dark.png") 0 0 no-repeat;}*/
+.darker .f-ico{background-image: url("img/facts-dark.png");}
+.darker .t-name,.darker .f-info,.darker .title.one,.darker .sl-title,.darker .color-picker .pickerTitle,.darker .title-project {color: #fff;}
+.darker .bottom-line {border-bottom: solid 1px #252525;}
+.darker .project-content .img-project:first-child {border-top: solid 1px #252525;}
+.darker .slider-logo,.darker .info-skills,.darker .ch-grid div span{color: #000;}
+.darker .sl-ico:hover, .darker .color-picker .picker-btn {background-color: #000 !important;}
+.darker .car-prev,.darker .car-next,.darker .car-prev-2,.darker .car-next-2 {background-image: url('img/c-arrows-dark.png');}
+.darker #nav2 > a {background: url("img/menu-icon-wht.png") no-repeat;}
+.darker .contour-btn:hover {background: #252525 !important;}
+.darker .controller-3 ul li {border: 2px solid #000; background: #000;}
+.darker .buy-logo span{background: url('img/play-ico-dark.png') no-repeat;}
+.darker .p-category{background-position: -44px -88px}
+.darker .ts{opacity: 1;}
+.darker .w-arrows div{border-color: #444;}
+.darker .socialFooter .copy{color: #444;}
+.darker .nav-work .w-prev{background-position: bottom right;}
+.darker .nav-work .w-next{background-position: top right;}
