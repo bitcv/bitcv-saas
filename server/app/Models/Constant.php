@@ -21,4 +21,13 @@ class Constant {
         self::mod_valid_use     => '允许使用',
         self::mod_valid_unuse   => '禁止使用',
     );
+
+    //1 invite 2 代发
+    const mod_id_invite         = 1;
+    const mod_id_daifa          = 2;
+
+    static $mod_id_ch           = array(
+        self::mod_id_invite     => 'invite',
+        self::mod_id_daifa      => '代发',
+    );
 }

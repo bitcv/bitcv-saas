@@ -106,26 +106,34 @@
     $(function() {
         $('.proj-pass').click(function() {
             proj_id = $(this).attr('proj_id');
+            status = "{{\App\Models\Constant::proj_status_pass}}";
             $.post(
                 "{{route('saas.proj.audit')}}",
                 {
                     proj_id : proj_id,
-                    status  : 1
+                    status  : status
                 },
 
                 function (data) {
-                    console.log(data);
+                    if (data.retcode == 200) {
+                        alert('审核成功');
+                    } else {
+                        alert('审核失败');
+                    }
+
+                    location.reload();
                 }
             );
         });
 
         $('.proj-refuse').click(function () {
             proj_id = $(this).attr('proj_id');
+            status = "{{\App\Models\Constant::proj_status_refuse}}";
             $.post(
                 "{{route('saas.proj.audit')}}",
                 {
                     proj_id : proj_id,
-                    status  : 2
+                    status  : status
                 },
 
                 function (data) {

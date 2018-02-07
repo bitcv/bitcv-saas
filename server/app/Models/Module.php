@@ -73,6 +73,10 @@ class Module {
     }
 
     public function audit($proj_id, $valid) {
+        if (!$proj_id || !$valid) {
+            return false;
+        }
+
         $where  = array(
             'proj_id'   => $proj_id,
         );
@@ -81,6 +85,6 @@ class Module {
             'valid'     => $valid
         );
 
-        return DB::update(self::$table)->where($where)->update($data);
+        return DB::table(self::$table)->where($where)->update($data);
     }
 }
