@@ -100,8 +100,8 @@ legend {
 
 body {
     font: 16px/1.5 arial, Helvetica, "Microsoft YaHei";
-    color: #fff;
-    background: #000;
+    /*color: #fff;
+    background: #000;*/
 }
 
 a {
@@ -151,7 +151,7 @@ img {
 }
 
 .logo img {
-    width: 136px;
+    width: 100px;
 }
 
 .intro p {
@@ -174,7 +174,7 @@ form {
     padding: 15px;
     line-height: 100%;
     border-radius: 6px;
-    border: none;
+    border: 1px solid #ccc;
     /*background: rgba(216,216,216,0.20);
     color: #fff;*/
     box-sizing: border-box;
@@ -196,7 +196,7 @@ form {
     height: 50px;
     margin-top: 20px;
     line-height: 100%;
-    background: #5274ca;
+    background: #7199FF;
     border: none;
     border-radius: 6px;
     cursor: pointer;
