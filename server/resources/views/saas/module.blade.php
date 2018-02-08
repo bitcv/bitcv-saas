@@ -67,7 +67,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">项目名称：</label>
                         <div class="col-lg-10">
-                            <input class="form-control" name="proj_name" readonly type="text" value="{{$proj['name']}}">
+                            <input class="form-control" name="proj_name" readonly type="text" value="{{$proj['org']}}">
                             <input class="form-control" id="proj_id_form" name="proj_id" type="hidden" value="{{$proj_id}}">
                         </div>
                     </div>
