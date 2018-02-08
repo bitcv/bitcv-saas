@@ -139,7 +139,7 @@ export default {
           this.formData = res.data.data
           this.formData.projId = res.data.data.id
         } else {
-          location.href = '/login'
+          location.href = '/admin/login'
         }
       })
     },

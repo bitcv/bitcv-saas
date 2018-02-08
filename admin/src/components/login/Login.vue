@@ -35,7 +35,7 @@ export default {
     submit () {
       this.$http.post('/api/login', this.formData).then((res) => {
         if (res.data.errcode === 0) {
-          location.href = '/info'
+          location.href = '/admin/info'
         } else {
           this.$message({ type: 'error', message: res.data.errmsg })
         }

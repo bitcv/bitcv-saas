@@ -9,21 +9,22 @@ import EditProject from '@/components/projList/editProject/EditProject'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
-      path: '/',
+      path: '/admin',
       component: Login
     },
     {
-      path: '/info',
+      path: '/admin/info',
       component: EditProject
     },
     {
-      path: '/social',
+      path: '/admin/social',
       component: Social
     },
     {
-      path: '/media',
+      path: '/admin/media',
       component: Media
     }
   ]
