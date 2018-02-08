@@ -21,23 +21,6 @@
             <nav id="nav">
                 <ul>
                     <li><a href="/">首页</a></li>
-                    <!--li>
-                        <a href="" class="icon fa-angle-down">Layouts</a>
-                        <ul>
-                            <li><a href="generic.html">Generic</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                            <li>
-                                <a href="">Submenu</a>
-                                <ul>
-                                    <li><a href="#">Option One</a></li>
-                                    <li><a href="#">Option Two</a></li>
-                                    <li><a href="#">Option Three</a></li>
-                                    <li><a href="#">Option Four</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li-->
                     <li><a href="#cta" class="button">申请SaaS</a></li>
                 </ul>
             </nav>
@@ -129,16 +112,26 @@
             
             <form>
                 <div class="row uniform half collapse-at-2">
+                    <div class="12u">
+                        <input type="text" name="org" class="form-control" placeholder="申请机构" required>
+                    </div>
+                </div>
+                <div class="row uniform half collapse-at-2">
+                    <div class="12u">
+                        <input type="text" name="username" class="form-control" placeholder="联系人" required>
+                    </div>
+                </div>
+                <div class="row uniform half collapse-at-2">
                     <div class="6u">
-                        <input type="text" name="name" id="name" value="" placeholder="项目名称" />
+                        <input type="email" name="email" id="email" value="" placeholder="Email" required>
                     </div>
                     <div class="6u">
-                        <input type="email" name="email" id="email" value="" placeholder="Email" />
+                        <input type="text" name="mobile" class="form-control" placeholder="mobiles" required>
                     </div>
                 </div>
                 <div class="row uniform half">
                     <div class="12u">
-                        <input type="text" name="subname" value="" placeholder="子域名(3-10位，例如btc).bitcv.com" />
+                        <input type="text" name="subname" value="" placeholder="子域名(3-10位，例如btc).bitcv.com" required />
                     </div>
                 </div>
                 <div class="row uniform half">
@@ -148,7 +141,7 @@
                 </div>
                 <div class="row uniform half">
                     <div class="12u">
-                        <textarea name="message" id="message" placeholder="项目说明" rows="6"></textarea>
+                        <textarea name="desc" id="message" placeholder="项目说明" rows="6"></textarea>
                     </div>
                 </div>
                 <div class="row uniform">
@@ -202,28 +195,6 @@
         </script>
     </body>
 </html>
-
-@section('content')
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
-            <div>
-                <h1 class="logo-name">Bitcv</h1>
-            </div>
-            <form class="m-t">
-                <div class="form-group">
-                    <input type="text" class="form-control" name="name" placeholder="project name" required="">
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" name="subname" placeholder="subname" required="">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="domain" class="form-control" placeholder="domain" required="">
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">apply</button>
-            </form>
-        </div>
-    </div>
-@stop
 
 @section('js')
     <script type="text/javascript">

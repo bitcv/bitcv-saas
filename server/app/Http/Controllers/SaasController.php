@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Constant;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Models\Saas;
 
 class SaasController extends Controller
 {
+    //登录显示
     public function loginView() {
         return view('saas.login');
     }
 
+    //登录提交
     public function login(Request $req) {
         $uname = $req->input('uname');
         $pwd = $req->input('password');
@@ -24,36 +27,49 @@ class SaasController extends Controller
         return ['err' => 0, 'data' => route('saas.admin')];
     }
 
+    //退出
     public  function logout() {
         session()->pull('saas_admin');
         return view('saas.login');
     }
 
-    //SaaS列表
+    //SaaS项目列表
     public function projs() {
         $data = (new Saas())->getProj();
         return view('saas.projs', ['data'=>$data]);
     }
 
-    //SaaS详情
+    //SaaS模块详情
     public function module(Request $request) {
         $proj_id    = $request->projid;
+
         $data = (new Module())->getByProjId($proj_id);
         $proj = (new Saas())->getProById($proj_id);
 
         return view('saas.module', ['data'=>$data, 'proj_id'=>$proj_id, 'proj'=>$proj]);
     }
     
-    //审核SaaS申请
+    //审核SaaS项目申请
     public function audit(Request $request) {
         $proj_id    = $request->input('proj_id');
         $status     = $request->input('status');
-
-        (new Saas())->audit($proj_id, $status);
+        $objSass    = new Saas();
+        if ($status == Constant::proj_status_pass) {
+            $objSass->apply($proj_id);
+        } else if ($status == Constant::proj_status_refuse) {
+            $objSass->refuse($proj_id);
+        } else {
+            return ['retcode'=>-1,'msg'=>'status error'];
+        }
 
         return  ['retcode'=>200,'msg'=>'succ'];
     }
 
+    /**
+     * 模块审核
+     * @param Request $request
+     * @return array
+     */
     public function auditMod(Request $request) {
         $proj_id    = $request->input('proj_id');
         $valid      = $request->input('valid');
@@ -66,6 +82,11 @@ class SaasController extends Controller
         return ['retcode'=>200,'msg'=>'succ'];
     }
 
+    /**
+     * 添加模块
+     * @param Request $request
+     * @return array
+     */
     public function add(Request $request) {
         $proj_id    = $request->input('proj_id');
         $mod_id     = $request->input('mod_id');

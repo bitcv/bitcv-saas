@@ -138,6 +138,8 @@ export default {
         if (res.data.errcode === 0) {
           this.formData = res.data.data
           this.formData.projId = res.data.data.id
+        } else {
+          location.href = '/login'
         }
       })
     },

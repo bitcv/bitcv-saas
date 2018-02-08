@@ -40,7 +40,9 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            //增加域名解析，session登录
             \App\Http\Middleware\InitSaas::class,
+            \Illuminate\Session\Middleware\StartSession::class,
             
             'throttle:60,1',
             'bindings',

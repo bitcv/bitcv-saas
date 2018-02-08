@@ -3,10 +3,7 @@
 @section('content')
 <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
-        <div>
-            <h1 class="logo-name">Bitcv</h1>
-        </div>
-        <h3>Welcome to Bitcv</h3>
+        <h2>登录后审核SaaS项目申请</h2>
         <form class="m-t">
             <div class="form-group">
                 <input type="text" class="form-control" name="uname" placeholder="Username" required="">

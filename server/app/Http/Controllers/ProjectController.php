@@ -16,6 +16,18 @@ class ProjectController extends Controller
         return app()->proj['proj_id'];
     }
 
+    public function login(Request $req) {
+        $username = $req->input('username');
+        if ($username != 'admin') {
+            return $this->error(401);
+        }
+        session()->put('proj_admin', ['uname'=>'admin']);
+        return $this->output([]);
+    }
+    public function checkLogin() {
+        return !empty(session()->get('proj_admin'));
+    }
+
     public function admin() {
         return view('proj.admin');
     }
@@ -190,6 +202,10 @@ class ProjectController extends Controller
     }
 
     public function getProjBasicInfo (Request $request) {
+        if (!$this->checkLogin()) {
+            return $this->error(400);
+        }
+
         $params = ['projId' => $this->getProjId()];
         extract($params);
         // 获取项目基本信息

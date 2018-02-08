@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import Social from '@/components/social/Social'
 import Media from '@/components/media/Media'
-import AddProject from '@/components/projList/addProject/AddProject'
+import Login from '@/components/login/Login'
 import EditProject from '@/components/projList/editProject/EditProject'
 
 Vue.use(Router)
@@ -12,6 +12,10 @@ export default new Router({
   routes: [
     {
       path: '/',
+      component: Login
+    },
+    {
+      path: '/info',
       component: EditProject
     },
     {
@@ -21,10 +25,6 @@ export default new Router({
     {
       path: '/media',
       component: Media
-    },
-    {
-      path: '/addProject',
-      component: AddProject
     }
   ]
 })

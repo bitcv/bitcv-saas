@@ -19,15 +19,18 @@ class ProjController extends Controller {
         if (isset(app()->proj['proj_id'])) {
             return $this->index();
         }
+
         return view('proj.apply');
     }
 
     public function add(Request $request) {
-        $subname    = $request->input('subname');
-        $domain     = $request->input('domain');
-        $name       = $request->input('name');
+        $fields = ['org','username','email','mobile','subname','domain','desc'];
+        $data = [];
+        foreach ($fields as $f) {
+            $data[$f] = $request->input($f);
+        }
 
-        $pro_id     = (new Saas())->add($subname, $domain, $name);
+        $pro_id     = (new Saas())->add($data);
         if (!$pro_id) {
             return ['retcode' => 5001, 'msg' => '申请失败，请重试！'];
         } else {
