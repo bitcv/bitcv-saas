@@ -18,12 +18,12 @@
         <div class="container">
             <h1 class="logo">
                 <a href>
-                    <img src="/static/image/logo.png">
+                    <img src="{{$proj['logo_url']}}">
                 </a>
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>每个手机号和钱包地址只能申请一次（两者都不能重复）</p>
+                <p>每个手机号只能申请一次</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
@@ -50,15 +50,14 @@
         </div>
         <div class="footer">
             <div class="" style="text-align: left;padding-top: 20px;font-size: 14px;padding-bottom: 40px; color: rgba(255,255,255,0.5)">
-                <p style="margin-bottom:20px">BitCV</p>
-                <p style="margin-bottom:20px">数字资产管理服务引擎</p>
+                <p style="margin-bottom:20px">{{$proj['name_cn']}}</p>
             </div>
 
         </div>
     </div>
 </div>
 
-<script src="/static/jquery/dist/jquery.min.js"></script>
+<script src="/js/libs/jquery.min.js"></script>
 <script src="/static/js/jquery.zclip.js"></script>
 <script>
     $.ajaxSetup(

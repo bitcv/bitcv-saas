@@ -20,14 +20,6 @@ export default {
         url: '#/',
         text: '项目管理'
       }, {
-        icon: 'el-icon-menu',
-        url: '#/social',
-        text: '社群管理'
-      }, {
-        icon: 'el-icon-menu',
-        url: '#/media',
-        text: '媒体管理'
-      }, {
         icon: 'el-icon-info',
         url: '#/profile',
         text: '个人信息'

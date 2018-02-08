@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models as Model;
 use Illuminate\Support\Facades\DB;
+use Service;
 
 class ProjectController extends Controller
 {
@@ -215,15 +216,14 @@ class ProjectController extends Controller
             'nameCn' => 'required|string',
             'nameEn' => 'required|string',
             'foundDate' => 'string|nullable',
-            'logoUrl' => 'required|string',
-            'homeUrl' => 'required|string',
-            'shortDesc' => 'required|string',
+            'logoUrl' => 'string|nullable',
+            'homeUrl' => 'string|nullable',
+            'shortDesc' => 'string|nullable',
             'abstract' => 'string|nullable',
-            'region' => 'required|numeric',
-            'buzType' => 'required|numeric',
-            'stage' => 'required|numeric',
-            'fundStage' => 'required|numeric',
-            'tagList' => 'array|nullable',
+            'region' => 'numeric|nullable',
+            'buzType' => 'numeric|nullable',
+            'stage' => 'numeric|nullable',
+            'fundStage' => 'numeric|nullable',
             'whitePaperUrl' => 'string|nullable',
             'fundStartTime' => 'string|nullable',
             'fundEndTime' => 'string|nullable',
@@ -237,25 +237,16 @@ class ProjectController extends Controller
         if ($params === false) {
             return $this->error(100);
         }
-        $params['projId'] = $this->getProjId();
         extract($params);
 
-        $homeUrl = strpos($homeUrl, 'http') === 0 ? $homeUrl : 'http://' . $homeUrl;
-
-        $projInfo = [
-            'name_cn' => $nameCn,
-            'name_en' => $nameEn,
-            //'found_date' => date('Y-m-d H-i-s', strtotime($foundDate)),
-            'logo_url' => $logoUrl,
-            'home_url' => $homeUrl,
-            'short_desc' => $shortDesc,
-            //'white_paper_url' => $whitePaperUrl,
-            //'abstract' => $abstract,
-            'region' => $region,
-            'buz_type' => $buzType,
-            'stage' => $stage,
-            'fund_stage' => $fundStage,
-        ];
+        $projId = $this->getProjId();
+        $projInfo = [];
+        foreach ($params as $k => $v) {
+            if ($v) {
+                $k = Service::lineToHump($k);
+                $projInfo[$k] = $v;
+            }
+        }
 
         if (isset($tokenName) && isset($tokenSymbol)) {
             $tokenModel = Model\Token::firstOrCreate([
@@ -265,27 +256,14 @@ class ProjectController extends Controller
             ]);
             $projInfo['token_id'] = $tokenModel->id;
         }
-        if ($fundStartTime) {
-            $projInfo['fund_start_time'] = date('Y-m-d H-i-s', strtotime($fundStartTime));
-        }
-        if ($fundEndTime) {
-            $projInfo['fund_end_time'] = date('Y-m-d H-i-s', strtotime($fundEndTime));
-        }
-        if ($companyEmail) {
-            $projInfo['company_email'] = $companyEmail;
-        }
-        if ($companyAddr) {
-            $projInfo['company_addr'] = $companyAddr;
-        }
-        if ($bannerUrl) {
-            $projInfo['banner_url'] = $bannerUrl;
-        }
+        
 
         Model\Project::where('id', $projId)->update($projInfo);
-
+        /*
         foreach ($tagList as $tag) {
             Model\ProjTag::firstOrCreate(['proj_id' => $projId, 'tag' => $tag]);
         }
+        */
 
         return $this->output();
     }

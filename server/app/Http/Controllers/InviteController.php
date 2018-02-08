@@ -6,6 +6,7 @@ use App\Models\Invite;
 use Illuminate\Http\Request;
 use App\Utils\Service;
 use App\Models\Module;
+use App\Models\Project;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
@@ -14,7 +15,8 @@ class InviteController extends \App\Http\Controllers\Controller {
             die('err url');
         }
         $code       = $request->input('code', '');
-        return view('invite.add', ['code'=>$code]);
+        $proj = Project::where('id', app()->proj['proj_id'])->first()->toArray();
+        return view('invite.add', compact('code', 'proj'));
     }
 
     public function vcode($mobile) {

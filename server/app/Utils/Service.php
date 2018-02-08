@@ -104,5 +104,13 @@ if ($vcode == env('SMS_TEST_VCODE')) {
         return $result;
     }
 
+    //驼峰转下划线
+    public static function lineToHump($str) {
+        $str = preg_replace_callback('/([A-Z]{1})/',function($matches){
+            return '_'.strtolower($matches[0]);
+        }, $str);
+        return $str;
+    }
+
 
 }
