@@ -19,6 +19,10 @@ class Invite extends Base {
         return \DB::table(self::$table)->get()->all();
     }
 
+    public function getTotal($num) {
+        return 50 + $num * 10;
+    }
+
     /**
      * 邀请业务逻辑
      * @param $code
@@ -62,26 +66,31 @@ class Invite extends Base {
     }
 
     public function getByUid($uid) {
-        $data = \DB::table(self::$table)->where('id', $uid)->first();
-        return (array)$data;
+        $data = (array)\DB::table(self::$table)->where('id', $uid)->first();
+        $data['total'] = $this->getTotal($data['num']);
+        $data['url'] = self::genInviteUrl($uid);
+        return $data;
     }
 
-    public function getUidByMobile($mobile) {
+    public function getUidByMobile($mobile, $fromid = 0) {
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
             $data   = (array)$data;
             $uid    = $data['id'];
-
-            return ['retcode'=>202, 'data'=>self::genInviteUrl($uid), 'uid'=>$uid];
+            $num = $data['num'];
+        } else {
+            $data = array(
+                'mobile'    => $mobile,
+                'fromid'    => $fromid,
+            );
+            $uid = \DB::table(self::$table)->insertGetId($data);
+            $num = 0;
         }
 
-        $data = array(
-            'mobile'    => $mobile,
-        );
+        $total = $this->getTotal($num);
+        $url = self::genInviteUrl($uid);
 
-        $uid = \DB::table(self::$table)->insertGetId($data);
-
-        return ['retcode'=>200, 'uid'=>$uid];
+        return ['retcode'=>202, 'data'=>['total'=>$total,'url'=>$url, 'uid'=>$uid]];
     }
 
     /**

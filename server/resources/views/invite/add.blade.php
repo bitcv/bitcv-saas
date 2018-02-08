@@ -104,7 +104,8 @@
                 '/invite/verifyCode',
                 {
                     'mobile': mobile,
-                    'vcode': vcode
+                    'vcode': vcode,
+                    'code': '{{$code}}'
                 },
 
                 function(ret) {
@@ -112,8 +113,8 @@
                         $('#verifyCode').hide();
                         $('#addAddress').show();
                     } else if (ret.retcode == 202) {
-                        $('#inviteurl').val(ret.data);
-                        $('#tips').html('您的手机号已申请，邀请好友参与可获更多奖励');
+                        $('#inviteurl').val(ret.data['url']);
+                        $('#tips').html('申请成功，您已获得'+ret.data['total']+' BCV，邀请好友参与可获更多奖励');
                         $('#verifyCode').hide();
                         $('#result').show();
                     } else {
@@ -160,6 +161,14 @@
             }
         });
     });
+
+    @if (isset($user['id']))
+        $('#inviteurl').val("{{$user['url']}}");
+        $('#tips').html('申请成功，您已获得{{$user['total']}} BCV，邀请好友参与可获更多奖励');
+        $('#verifyCode').hide();
+        $('#result').show();
+    @endif
+    
 </script>
 </body>
 

@@ -14,9 +14,15 @@ class InviteController extends \App\Http\Controllers\Controller {
         if (!Module::check('invite')) {
             die('err url');
         }
+        $uid        = Invite::decode(\Cookie::get('uid'));
+        if ($uid) {
+            $user = (new Invite())->getByUid($uid);
+        } else {
+            $user = [];
+        }
         $code       = $request->input('code', '');
         $proj = Project::where('id', app()->proj['proj_id'])->first()->toArray();
-        return view('invite.add', compact('code', 'proj'));
+        return view('invite.add', compact('code', 'proj', 'user'));
     }
 
     public function vcode($mobile) {
@@ -31,20 +37,26 @@ class InviteController extends \App\Http\Controllers\Controller {
     public function verifyCode(Request $request) {
         $vcode = $request->input('vcode');
         $mobile = $request->input('mobile');
+        $code       = $request->input('code', '');
         $ret = Service::checkVCode('reg', $mobile, $vcode);
         if ($ret['err'] > 0) {
             return ['retcode' => 1, 'msg' => $ret['msg']];
         }
 
-        $data    = (new Invite())->getUidByMobile($mobile);
-        \Cookie::queue('uid', Invite::encode($data['uid']), 43200);//单位是分钟
+        $invite = new Invite();
+        $fromid = $code ? Invite::decode($code) : 0;
+        $ret    = $invite->getUidByMobile($mobile, $fromid);
+        \Cookie::queue('uid', Invite::encode($ret['data']['uid']), 43200);//单位是分钟
+        if ($fromid && $fromid != $ret['data']['uid']) {
+            $invite->addNumById($fromid);
+        }
+        unset($ret['data']['uid']);
 
-        unset($data['uid']);
-
-        return $data;
+        return $ret;
     }
 
     public function add(Request $request) {
+        return '';
         $uid        = Invite::decode(\Cookie::get('uid'));
         $address    = $request->input('address');
         $code       = $request->input('code', '');

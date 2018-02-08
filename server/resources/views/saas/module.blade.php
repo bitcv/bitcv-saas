@@ -99,9 +99,7 @@
     <script src="/static/admin/js/plugins/dataTables/datatables.min.js"></script>
     <script src="/static/admin/js/inspinia.js"></script>
     <script src="/static/admin/js/plugins/pace/pace.min.js"></script>
-@endsection
-<!-- todo 莫名其妙报'$'不存在，查看框架加载规则是怎么样的-->
-<script src="/js/jquery-3.2.1.min.js"></script>
+
 <script type="text/javascript">
     $(function() {
         $('.module-pass').click(function() {
@@ -173,3 +171,4 @@
         });
     });
 </script>
+@stop

@@ -38,12 +38,15 @@
                         </ul>
                     </nav>
                 </div>
+
                 @yield('content')
+                
             </div>
         </div>
     </div>
 
-    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/libs/jquery.min.js"></script>
+    <script src="/static/admin/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
@@ -52,9 +55,7 @@
         });
     </script>
 
-    <script src="/static/admin/js/bootstrap.min.js"></script>
     @yield('js')
-    <script>
-    </script>
+
 </body>
 </html>
