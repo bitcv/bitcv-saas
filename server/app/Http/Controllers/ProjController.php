@@ -19,6 +19,7 @@ class ProjController extends Controller {
         if (isset(app()->proj['proj_id'])) {
             return $this->index();
         }
+
         return view('proj.apply');
     }
 
@@ -26,8 +27,19 @@ class ProjController extends Controller {
         $subname    = $request->input('subname');
         $domain     = $request->input('domain');
         $name       = $request->input('name');
+        $org        = $request->input('org');
+        $username   = $request->input('username');
+        $email      = $request->input('email');
+        $mobile     = $request->input('mobile');
+        $desc       = $request->input('desc');
 
-        $pro_id     = (new Saas())->add($subname, $domain, $name);
+        $data = array(
+            'email' => $email,
+            'org'   => $org,
+            'desc'  => $desc
+        );
+
+        $pro_id     = (new Saas())->add($subname, $domain, $name, $mobile, $username, $data);
         if (!$pro_id) {
             return ['retcode' => 5001, 'msg' => '申请失败，请重试！'];
         } else {
