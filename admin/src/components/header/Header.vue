@@ -5,7 +5,7 @@
     </div>
     <div class="info">
       <div class="account"><span>JunderKing</span></div>
-      <div class="signout"><span>退出登录</span></div>
+      <div class="signout"><span @click="logout">退出登录</span></div>
     </div>
   </div>
 </template>
@@ -14,7 +14,21 @@
 export default {
   data () {
     return {
-
+    }
+  },
+  mounted () {
+  },
+  methods: {
+    updateData () {
+    },
+    logout () {
+        this.$http.post('/api/signout').then((res) => {
+            if (res.data.errcode === 0) {
+              this.$router.push('/login')
+            } else {
+              this.$message({ type: 'error', message: res.data.errmsg })
+            }
+          })
     }
   }
 }

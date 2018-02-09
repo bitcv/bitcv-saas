@@ -17,13 +17,21 @@ class ProjectController extends Controller
     }
 
     public function login(Request $req) {
-        $username = $req->input('username');
-        if ($username != 'admin') {
+        $username   = $req->input('username');
+        $passwd     = $req->input('password');
+        if ($username != app()->proj['adminname'] ||  $passwd != app()->proj['adminpass']) {
             return $this->error(401);
         }
-        session()->put('proj_admin', ['uname'=>'admin']);
+
+        session()->put('proj_admin', urlencode(base64_encode(app()->proj['proj_id'])));
         return $this->output([]);
     }
+
+    public function signout() {
+        session()->pull('proj_admin');
+        return $this->output([]);
+    }
+
     public function checkLogin() {
         return !empty(session()->get('proj_admin'));
     }
@@ -226,6 +234,11 @@ class ProjectController extends Controller
         return $this->output($projBasicInfo);
     }
 
+    /**
+     * 更新基本信息
+     * @param Request $request
+     * @return string
+     */
     public function updProjBasicInfo (Request $request) {
         // 获取请求参数
         $params = $this->validation($request, [
@@ -273,7 +286,11 @@ class ProjectController extends Controller
             $projInfo['token_id'] = $tokenModel->id;
         }
         
-
+        unset($projInfo['token_name']);
+        unset($projInfo['token_symbol']);
+        unset($projInfo['token_price']);
+        $projInfo['fund_start_time'] = date('Y-m-d H:i:s', strtotime($projInfo['fund_start_time']));
+        $projInfo['fund_end_time'] = date('Y-m-d H:i:s', strtotime($projInfo['fund_end_time']));
         Model\Project::where('id', $projId)->update($projInfo);
         /*
         foreach ($tagList as $tag) {
@@ -995,7 +1012,29 @@ class ProjectController extends Controller
     }
 
     public function getSocialList (Request $request) {
-        $socialList = Model\Social::select('id', 'font_class', 'name')->get()->toArray();
+        //$socialList = Model\Social::select('id', 'font_class', 'name')->get()->toArray();
+        $socialList = array(
+            array(
+                'id'    => 1,
+                'name'  => 'github',
+            ),
+            array(
+                'id'    => 2,
+                'name'  => 'facebook'
+            ),
+            array(
+                'id'    => 3,
+                'name'  => 'twitter'
+            ),
+            array(
+                'id'    => 4,
+                'name'  => 'weibo'
+            ),
+            array(
+                'id'    => 5,
+                'name'  => 'telegram'
+            )
+        );
 
         return $this->output(['dataList' => $socialList]);
     }

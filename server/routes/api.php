@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('login', 'ProjectController@login');
+Route::post('signout', 'ProjectController@signout');
+
 
 Route::any('uploadFile', 'FileController@uploadFile');
 
