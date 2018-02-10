@@ -1361,66 +1361,66 @@
 
 /* CTA */
 
-	#cta {
+	.cta {
 		background: #e89980;
 		color: #f9e5df;
 		padding: 3.5em 0 4em 0;
 		text-align: center;
 	}
 
-		#cta h2, #cta h3, #cta h4, #cta h5, #cta h6 {
+		.cta h2, .cta h3, .cta h4, .cta h5, .cta h6 {
 			color: inherit;
 		}
 
-		#cta form {
+		.cta form {
 			margin: 0 auto;
 			max-width: 100%;
-			width: 25em;
+			width: 50em;
 		}
 
-		#cta input[type="submit"],
-		#cta input[type="reset"],
-		#cta input[type="button"],
-		#cta .button {
+		.cta input[type="submit"],
+		.cta input[type="reset"],
+		.cta input[type="button"],
+		.cta .button {
 			box-shadow: none;
 			background: #fff;
 			color: #e89980;
 		}
 
-		#cta input[type="text"],
-		#cta input[type="password"],
-		#cta input[type="email"],
-		#cta select,
-		#cta textarea {
+		.cta input[type="text"],
+		.cta input[type="password"],
+		.cta input[type="email"],
+		.cta select,
+		.cta textarea {
 			color: #ffffff;
 			background: rgba(255, 255, 255, 0.15);
 			border: 0;
 		}
 
-			#cta input[type="text"]:focus,
-			#cta input[type="password"]:focus,
-			#cta input[type="email"]:focus,
-			#cta select:focus,
-			#cta textarea:focus {
+			.cta input[type="text"]:focus,
+			.cta input[type="password"]:focus,
+			.cta input[type="email"]:focus,
+			.cta select:focus,
+			.cta textarea:focus {
 				box-shadow: inset 0 0 0 2px #fff;
 			}
 
-		#cta ::-webkit-input-placeholder {
+		.cta ::-webkit-input-placeholder {
 			color: rgba(255, 255, 255, 0.75) !important;
 		}
 
-		#cta :-moz-placeholder {
+		.cta :-moz-placeholder {
 			color: rgba(255, 255, 255, 0.75) !important;
 		}
 
-		#cta ::-moz-placeholder {
+		.cta ::-moz-placeholder {
 			color: rgba(255, 255, 255, 0.75) !important;
 		}
 
-		#cta :-ms-input-placeholder {
+		.cta :-ms-input-placeholder {
 			color: rgba(255, 255, 255, 0.75) !important;
 		}
 
-		#cta .formerize-placeholder {
+		.cta .formerize-placeholder {
 			color: rgba(255, 255, 255, 0.75) !important;
 		}

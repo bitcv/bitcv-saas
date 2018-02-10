@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Service;
 
 /**
  * 邀请
@@ -86,6 +87,7 @@ class Invite extends Base {
             );
             $uid = \DB::table(self::$table)->insertGetId($data);
             $num = 0;
+            Service::sms($mobile, '恭喜您获得50BCV，详情 http://t.cn/');
         }
 
         $total = $this->getTotal($num);
