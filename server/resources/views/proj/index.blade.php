@@ -104,6 +104,7 @@
                     <li><a href="#anchor2">产品</a></li>
                     <li><a href="#anchor3">团队</a></li>
                     <li><a href="#anchor4">服务</a></li>
+                    <li><a href="#anchor7">项目发展</a></li>
                     <li><a href="#anchor5">顾问</a></li>
                     <li><a href="#anchor6">联系</a></li>
                 </ul>
@@ -114,6 +115,7 @@
                     <li><a href="#anchor2">产品</a></li>
                     <li><a href="#anchor3">团队</a></li>
                     <li><a href="#anchor4">服务</a></li>
+                    <li><a href="#anchor7">项目发展</a></li>
                     <li><a href="#anchor5">顾问</a></li>
                     <!--<li><a href="#">blog</a></li>-->
                     <li><a href="#anchor6">联系</a></li>
@@ -339,6 +341,7 @@
             <div class="spacer newtr"></div>
             <div class="p-image-01 hideme-slide2 dontHide"><img src="img/parallax/p-image-01.png" alt='img'></div>
         </article>
+
         <article id=anchor4 class="content dark">
             <header class="title one">Our Services</header>
             <div class="spacer"></div>
@@ -515,14 +518,46 @@
             <div class="clear"></div>
         </article>
         <div class="clear"></div>
-        
-        <article id=anchor5 class="content dark">
-            <header class="title one">Our Portfolio</header>
+
+
+        <article id=anchor7 class="content dark">
+            <header class="title one">项目发展</header>
             <div class="spacer"></div>
-            <div class="title two">We have been privileged to work and grow with a diverse range of clients. We have worked with brands in Canada, USA, UK, and many others.</div>
+            <div class="s-container services-container">
+                <div data-v-1b033e91="" id="Event" class="event-area">
+                    <h3 data-v-1b033e91="" class="panel-title">项目发展</h3>
+                    <div data-v-7612fa2f="" data-v-1b033e91="" class="timeline">
+                        @foreach($proj['eventList'] as $quarterlyEvent)
+                            <div data-v-7612fa2f="" class="line-wrapper">
+                                <div data-v-7612fa2f="" class="event-item">
+                                    <div data-v-7612fa2f="" class="event-time-container">
+                                        <div data-v-7612fa2f="" class="event-time">{{$quarterlyEvent['eventKey']}}</div>
+                                    </div>
+                                    @foreach($quarterlyEvent['eventNode'] as $event)
+                                        <div data-v-7612fa2f="" class="event-node">
+                                            <div data-v-7612fa2f="" class="event-title">{{$event['time']}}</div>
+                                            <div data-v-7612fa2f="" class="event-info">
+                                                <span data-v-7612fa2f="">{{$event['title']}}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </article>
+        <div class="clear"></div>
+
+        <div class="clear"></div>
+        <article id=anchor5 class="content dark">
+            <header class="title one">顾问</header>
+            <div class="spacer"></div>
+            {{--<div class="title two">顾问描述.</div>--}}
             <div id="portfolio" class="container">
                 <div class="section portfoliocontent">
-                    <section id="options" class="clear">
+                   {{-- <section id="options" class="clear">
                         <div id="filters" class="option-set clearfix foliomenu hideme dontHide" data-option-key="filter">
                           <a href="#filter" data-option-value="*" class="p-selected folio-btn"><div class="portfolio-btn">All</div></a>
                           <a href="#filter" data-option-value=".graphic" class="folio-btn"><div class="portfolio-btn">Graphic Design</div></a>
@@ -530,7 +565,7 @@
                           <a href="#filter" data-option-value=".music" class="folio-btn"><div class="portfolio-btn">Website</div></a>
                           <a href="#filter" data-option-value=".illustration" class="folio-btn"><div class="portfolio-btn">Motion</div></a>
                         </div>
-                    </section>
+                    </section>--}}
                     <div class="clear"></div>
                     <div id="project-show"></div>
                     <section class="project-window">
@@ -539,86 +574,25 @@
                     <section id="i-portfolio" class="clear">
                         <div class="inici"></div>
                         
+                        @foreach($proj['advisorList'] as $advisor)
                         <div class="ch-grid element graphic music" id="portfolio-1.html">
-                            <img class="ch-item" src="img/portfolio/thumb-01.jpg" alt='img'>
+                            <img class="ch-item" src="{{$advisor['photo_url']}}" alt='img'>
                             <div>
                                 <span>
                                     <span class="p-category"></span>
-                                    Kallo
-                                    <span class="cat2">Graphic Design</span>
+                                    {{$advisor['name']}}
+                                    <span class="cat2">{{$advisor['company'].$advisor['intro']}}</span>
                                 </span>
                             </div>
                         </div>
+                        @endforeach
 
-                        <div class="ch-grid element graphic vector" id="portfolio-2.html">
-                            <img class="ch-item" src="img/portfolio/thumb-02.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>The Inside<span class="cat2">Photography</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element illustration" id="portfolio-1b.html">
-                            <img class="ch-item" src="img/portfolio/thumb-03.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>Leitberg<span class="cat2">Graphic Design</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element illustration" id="portfolio-3.html">
-                            <img class="ch-item" src="img/portfolio/thumb-04.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>Fashion Brand<span class="cat2">Graphic Design</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element graphic vector" id="portfolio-1c.html">
-                            <img class="ch-item" src="img/portfolio/thumb-05.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>The Chop Shop<span class="cat2">Website</span></span>
-                            </div>
-                        </div>
-
-                        <div class="ch-grid element graphic vector illustration" id="portfolio-1d.html">
-                            <img class="ch-item" src="img/portfolio/thumb-06.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>Prego<span class="cat2">Website</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element music" id="portfolio-4.html">
-                            <img class="ch-item" src="img/portfolio/thumb-07.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>Behurs<span class="cat2">Graphic Design</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element graphic vector music" id="portfolio-1e.html">
-                            <img class="ch-item" src="img/portfolio/thumb-08.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>The New Girl<span class="cat2">Photography</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element illustration music" id="portfolio-4b.html">
-                            <img class="ch-item" src="img/portfolio/thumb-09.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>Shut Up & Shoot<span class="cat2">Graphic Design</span></span>
-                            </div>
-                        </div>
-                        
-                        <div class="ch-grid element music" id="portfolio-3b.html">
-                            <img class="ch-item" src="img/portfolio/thumb-10.jpg" alt='img'>
-                            <div>
-                                <span><span class="p-category"></span>Kulisha 79000<span class="cat2">Graphic Design</span></span>
-                            </div>
-                        </div>
-                        
                         <div class="final"></div>
                     </section>
                 </div>
             </div>
             <div class="clear"></div>
-            <section class="list_carousel responsive hideme dontHide">
+            {{--<section class="list_carousel responsive hideme dontHide">
                 <ul id="logos">
                     <li><img src="img/logos/logo-01.png" alt="logo"></li>
                     <li><img src="img/logos/logo-02.png" alt="logo"></li>
@@ -632,19 +606,19 @@
             </section>
             <section class="img-spacer">
                 <div class="img-item hideme dontHide"><img src="img/imac.png" alt='img'></div>
-            </section>
+            </section>--}}
         </article>
         <footer id=anchor6 class="footer light">
             <div class="footer-container">
-                <div class="title one no-top">Contact</div>
+                <div class="title one no-top">联系我们</div>
                 <div class="spacer"></div>
-                <div class="title two f-bottom">We like to create things with fun, like-minded people.<br> Feel free to say hello!</div>
+               {{-- <div class="title two f-bottom">We like to create things with fun, like-minded people.<br> Feel free to say hello!</div>--}}
                 <div class="foot-third hideme dontHide">
                     <div class="f-title-one">contact</div>
                     <div class="f-title-two">Visit Our Office</div>
-                    <div class="f-data adress"><img src="img/adress-ico.png" alt='img'> Adress: <span>1234 Street Name, City Name</span></div>
-                    <div class="f-data phone"><img src="img/phone-ico.png" alt='img'> Phone: <span>(123) 456-7890</span></div>
-                    <div class="f-data e-mail"><img src="img/mail-ico.png" alt='img'> Email: <span>theme@solido.com</span></div>
+                    <div class="f-data adress"><img src="img/adress-ico.png" alt='img'> 地址: <span>{{$proj['company_addr']}}</span></div>
+                    {{--<div class="f-data phone"><img src="img/phone-ico.png" alt='img'> 电话: <span>(123) 456-7890</span></div>--}}
+                    <div class="f-data e-mail"><img src="img/mail-ico.png" alt='img'> 邮箱: <span>{{$proj['company_email']}}</span></div>
                 </div>
                 <div class="foot-third hideme dontHide">
                     <div class="f-title-one">contact</div>
