@@ -6,6 +6,15 @@
     <title>BitCV</title>
     <meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="/static/css/style.css" />
+    <style type="text/css">
+    #divresult>div {
+        padding: 80px 0px 20px 0px;
+    }
+    #divresult div div{
+        padding: 10px 50px 0px 50px;
+        display: inline-block;
+    }
+    </style>
 </head>
 
 <body>
@@ -23,7 +32,7 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>每个手机号只能申请一次</p>
+                <p>{{$proj['name_cn']}}</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
@@ -43,14 +52,26 @@
 
             <div class="intro" style="display:none" id="result">
                 <div class="join"></div>
-                <p id="tips">您已申请成功，邀请朋友成功参与，可获取额外奖励</p>
+                <p id="tips" style="color:#FF6276">您已申请成功，邀请朋友成功参与，可获取额外奖励</p>
+                <div id="divresult">
+                    <div>
+                        <div>
+                            <p style="margin-top:0px;font-size:50px;" id="num">0</p>
+                            <p style="color:#4A4A4A">总邀请人数</p>
+                        </div>
+                        <div style="border-left:1px solid #ccc">    
+                            <p style="margin-top:0px;font-size:50px;color:#FF6276" id="total">0</p>
+                            <p style="color:#4A4A4A">累计获得奖励</p>
+                        </div>
+                    </div>
+                </div>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:69%">
                 <input type="button" id="btncopy" class='ipt-btn' style="width:30%" data-clipboard-target='address' value="复制邀请地址">
             </div>
         </div>
         <div class="footer">
-            <div class="" style="text-align: left;padding-top: 20px;font-size: 14px;padding-bottom: 40px; color: rgba(255,255,255,0.5)">
-                <p style="margin-bottom:20px">{{$proj['name_cn']}}</p>
+            <div class="" style="text-align: center;padding-top: 60px;font-size: 14px;padding-bottom: 40px;">
+                <p style="margin-bottom:20px"><img src="/static/image/alert.png"> 每个手机号仅能申请一次</p>
             </div>
 
         </div>
@@ -114,7 +135,9 @@
                         $('#addAddress').show();
                     } else if (ret.retcode == 202) {
                         $('#inviteurl').val(ret.data['url']);
-                        $('#tips').html('申请成功，您已获得'+ret.data['total']+' BCV，邀请好友参与可获更多奖励');
+                        $('#total').html(ret.data['total']);
+                        $('#num').html(ret.data['num']);
+                        $('#tips').html('恭喜您已获得'+ret.data['total']+' BCV，邀请好友参与可获更多奖励');
                         $('#verifyCode').hide();
                         $('#result').show();
                     } else {
@@ -164,7 +187,9 @@
 
     @if (isset($user['id']))
         $('#inviteurl').val("{{$user['url']}}");
-        $('#tips').html('申请成功，您已获得{{$user['total']}} BCV，邀请好友参与可获更多奖励');
+        $('#total').html("{{$user['total']}}");
+        $('#num').html("{{$user['num']}}");
+        $('#tips').html('恭喜您已获得{{$user['total']}} BCV，邀请好友参与可获更多奖励');
         $('#verifyCode').hide();
         $('#result').show();
     @endif

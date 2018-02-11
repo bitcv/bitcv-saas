@@ -2,7 +2,7 @@
 <html class="no-js">
     <head>
         <meta charset="utf-8">
-        <title>Solido Flat Theme</title>
+        <title>{{$proj['name_cn']}}</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
@@ -84,54 +84,52 @@
         </section>-->
         <div class="main-title">
             <div class="title-container">
-                <div class="welcome">Hello</div>
+                <div class="welcome">{{$proj['name_en']}}</div>
                 <ul>
-                    <li class="t-current">We are Solido</li>
-                    <li>We Are Smart</li>
-                    <li>We Are Fresh</li>
+                    <li class="t-current">{{$proj['name_cn']}}</li>
                 </ul>
                 <div class="spacer"></div>
                 <!--<a href="#anchor2"><div class="slider-logo">Get Started</div></a>-->
-                <div class="second-title">We build perfection, so you can get a product which complies with our quality standarts. Take action & keep it simple.</div>
-                <a href="#anchor2"><div class="buy-logo">Get Started<span></span></div></a>
+                <div class="second-title">{{$proj['short_desc']}}</div>
+                <a href="{{$proj['white_paper_url']}}"><div class="buy-logo">下载白皮书<span></span></div></a>
             </div>
         </div>
         <div id="logx"></div>
         <header class="header">
-            <div class="logo"><span><span></span></span>solido</div>
+            <div class="logo"><span><span></span></span>{{$proj['name_cn']}}</div>
             <nav id="nav2" role="navigation">
                 <a class="jump-menu" title="Show navigation">Show navigation</a>
                 <ul>
-                    <li class="current"><a href="#anchor1">home</a></li>
-                    <li><a href="#anchor2">about</a></li>
-                    <li><a href="#anchor3">team</a></li>
-                    <li><a href="#anchor4">services</a></li>
-                    <li><a href="#anchor5">portfolio</a></li>
-                    <li><a href="#anchor6">contact</a></li>
+                    <li class="current"><a href="#anchor1">首页</a></li>
+                    <li><a href="#anchor2">产品</a></li>
+                    <li><a href="#anchor3">团队</a></li>
+                    <li><a href="#anchor4">服务</a></li>
+                    <li><a href="#anchor5">顾问</a></li>
+                    <li><a href="#anchor6">联系</a></li>
                 </ul>
             </nav>
             <nav class="menu">
                 <ul id="nav">
-                    <li class="current"><a href="#anchor1">home</a></li>
-                    <li><a href="#anchor2">about</a></li>
-                    <li><a href="#anchor3">team</a></li>
-                    <li><a href="#anchor4">services</a></li>
-                    <li><a href="#anchor5">portfolio</a></li>
+                    <li class="current"><a href="#anchor1">首页</a></li>
+                    <li><a href="#anchor2">产品</a></li>
+                    <li><a href="#anchor3">团队</a></li>
+                    <li><a href="#anchor4">服务</a></li>
+                    <li><a href="#anchor5">顾问</a></li>
                     <!--<li><a href="#">blog</a></li>-->
-                    <li><a href="#anchor6">contact</a></li>
+                    <li><a href="#anchor6">联系</a></li>
                 </ul>
             </nav>
         </header>
-        <div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >免费模板</a></div>
+        
         <article id="anchor2" class="content menu-top dark">
-            <header class="title one">Featured Works</header>
+            <header class="title one">产品实现</header>
             <div class="spacer"></div>
-            <div class="title two">Visuals work in every language. We communicate in images where words fail to transmit our message. Keep it simple.</div>
+            <div class="title two">我们的产品取得了很好的反向，市场上得到广泛的关注。</div>
             <section class="featured-slider">
                 <div id="ca-container" class="ca-container">
                     <div class="nav-featured">
                         <div class="prev-featured"></div>
-                        <a href="#anchor5"><div class="btn-featured">go portfolio</div></a>
+                        <a href="#anchor5"><div class="btn-featured">查看顾问</div></a>
                         <div class="next-featured"></div>
                     </div>
                     <div class="main-carousel hideme dontHide">
@@ -263,109 +261,36 @@
             <div class="p-title-two">Add Your Content</div>
             <div class="spacer"></div>
             <div class="p-image-02">
-                <div class="p-image-second hideme-slide dontHide delay"><img src="img/parallax/p-image-03.png" alt='img'></div>
-                <div class="p-image-first hideme-slide dontHide"><img src="img/parallax/p-image-02.png" alt='img'></div>
+                <!--div class="p-image-second hideme-slide dontHide delay"><img src="{{$proj['banner_url']}}" alt='img'></div-->
+                <div class="p-image-first hideme-slide dontHide"><img src="{{$proj['banner_url']}}" alt='img'></div>
             </div>
         </article>
+
         <article id=anchor3 class="content dark">
-            <header class="title one">Our Team</header>
+            <header class="title one">团队</header>
             <div class="spacer"></div>
-            <div class="title two">We are a fun mix of designers and strategists with a great passion for all things creative.</div>
             <section class="team-box">
                 <div class="s-container team-grid">
                     <div class="t-list">
+
+                        @foreach ($proj['memberList'] as $m)
                         <div class="t-element hideme dontHide">
                             <div class="t-photo">
                                 <div class="image-hover-overlay"></div>
-                                <a class="f-category" href="#"></a>
-                                <a href="mailto:john@solido.com"><div class="portfolio-meta">
-                                    <div>john@solido.com</div>
-                                </div></a>
-                                <img src="img/team/team-01.jpg" alt='img'>
+                                <div class="portfolio-meta">
+                                    <div>{{$m['intro']}}</div>
+                                </div>
+                                <img src="{{$m['photo_url']}}" alt='img' style="width:100%">
                             </div>
                             <div class="t-data">
-                                <div class="t-name">John Matas</div>
-                                <div class="t-info">CEO</div>
+                                <div class="t-name">{{$m['name']}}</div>
+                                <div class="t-info">{{$m['position']}}</div>
                                 <div class="t-spacer"></div>
-                                <div class="t-social">
-                                    <div class="in-social">
-                                        <a href="#"><div class="ts facebook"></div></a>
-                                        <a href="#"><div class="ts twitter"></div></a>
-                                        <!--<a href="#"><div class="ts pinterest"></div></a>-->
-                                        <a href="#"><div class="ts tumblr"></div></a>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
-                        <div class="t-element hideme dontHide">
-                            <div class="t-photo">
-                                <div class="image-hover-overlay"></div>
-                                <a class="f-category" href="#"></a>
-                                <a href="mailto:lia@solido.com"><div class="portfolio-meta">
-                                    <div>lia@solido.com</div>
-                                </div></a>
-                                <img src="img/team/team-02.jpg" alt='img'>
-                            </div>
-                            <div class="t-data">
-                                <div class="t-name">Lia Duprois</div>
-                                <div class="t-info">Developer</div>
-                                <div class="t-spacer"></div>
-                                <div class="t-social">
-                                    <div class="in-social">
-                                        <a href="#"><div class="ts facebook"></div></a>
-                                        <a href="#"><div class="ts twitter"></div></a>
-                                        <!--<a href="#"><div class="ts pinterest"></div></a>-->
-                                        <a href="#"><div class="ts tumblr"></div></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="t-element hideme dontHide">
-                            <div class="t-photo">
-                                <div class="image-hover-overlay"></div>
-                                <a class="f-category" href="#"></a>
-                                <a href="mailto:diego@solido.com"><div class="portfolio-meta">
-                                    <div>diego@solido.com</div>
-                                </div></a>
-                                <img src="img/team/team-03.jpg" alt='img'>
-                            </div>
-                            <div class="t-data">
-                                <div class="t-name">Diego Smith</div>
-                                <div class="t-info">Graphic Designer</div>
-                                <div class="t-spacer"></div>
-                                <div class="t-social">
-                                    <div class="in-social">
-                                        <a href="#"><div class="ts facebook"></div></a>
-                                        <a href="#"><div class="ts twitter"></div></a>
-                                        <!--<a href="#"><div class="ts pinterest"></div></a>-->
-                                        <a href="#"><div class="ts tumblr"></div></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="t-element hideme dontHide">
-                            <div class="t-photo">
-                                <div class="image-hover-overlay"></div>
-                                <a class="f-category" href="#"></a>
-                                <a href="mailto:elisa@solido.com"><div class="portfolio-meta">
-                                    <div>elisa@solido.com</div>
-                                </div></a>
-                                <img src="img/team/team-04.jpg" alt='img'>
-                            </div>
-                            <div class="t-data">
-                                <div class="t-name">Elisa Ronald</div>
-                                <div class="t-info">Marketing</div>
-                                <div class="t-spacer"></div>
-                                <div class="t-social">
-                                    <div class="in-social">
-                                        <a href="#"><div class="ts facebook"></div></a>
-                                        <a href="#"><div class="ts twitter"></div></a>
-                                        <!--<a href="#"><div class="ts pinterest"></div></a>-->
-                                        <a href="#"><div class="ts tumblr"></div></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+                        
                     </div>
                 </div>
             </section>

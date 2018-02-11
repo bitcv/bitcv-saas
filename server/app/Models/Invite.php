@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Service;
 
 /**
  * 邀请
@@ -67,6 +68,7 @@ class Invite extends Base {
 
     public function getByUid($uid) {
         $data = (array)\DB::table(self::$table)->where('id', $uid)->first();
+        $data['num'] = $data['num'];
         $data['total'] = $this->getTotal($data['num']);
         $data['url'] = self::genInviteUrl($uid);
         return $data;
@@ -85,12 +87,13 @@ class Invite extends Base {
             );
             $uid = \DB::table(self::$table)->insertGetId($data);
             $num = 0;
+            Service::sms($mobile, '恭喜您获得50BCV，详情 http://t.cn/');
         }
 
         $total = $this->getTotal($num);
         $url = self::genInviteUrl($uid);
 
-        return ['retcode'=>202, 'data'=>['total'=>$total,'url'=>$url, 'uid'=>$uid]];
+        return ['retcode'=>202, 'data'=>['num'=>$num,'total'=>$total,'url'=>$url, 'uid'=>$uid]];
     }
 
     /**

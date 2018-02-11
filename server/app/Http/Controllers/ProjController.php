@@ -6,11 +6,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Saas;
 use Illuminate\Http\Request;
+use App\Models\Project;
 
 class ProjController extends Controller {
     //首页
     public function index() {
-        return view('proj.index');
+        $projId = app()->proj['proj_id'];
+        if (!$projId) {
+            die('err');
+        }
+        $proj = (new Project())->getProjDetail($projId);
+        return view('proj.index', compact('proj'));
     }
 
     //申请SaaS
@@ -37,4 +43,5 @@ class ProjController extends Controller {
             return ['retcode' => 200, 'msg'  => '申请成功！'];
         }
     }
+
 }
