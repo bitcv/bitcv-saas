@@ -152,6 +152,8 @@
                         $('#verifyCode').hide();
                         $('#addAddress').show();
                     } else if (ret.retcode == 202) {
+                        window.location.reload();
+
                         $('#inviteurl').val(ret.data['url']);
                         $('#total').html(ret.data['total_bcv_num']+'bcv,'+ ret.data['total_doge_num']+'doge');
                         $('#num').html(ret.data['num']);
