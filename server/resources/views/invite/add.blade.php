@@ -32,7 +32,7 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>{{$proj['name_cn']}}</p>
+                <p>{{$proj['name_en']}}</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
