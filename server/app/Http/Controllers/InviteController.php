@@ -14,12 +14,14 @@ class InviteController extends \App\Http\Controllers\Controller {
         if (!Module::check('invite')) {
             die('err url');
         }
+
         $uid        = Invite::decode(\Cookie::get('uid'));
         if ($uid) {
             $user = (new Invite())->getByUid($uid);
         } else {
             $user = [];
         }
+
         $code       = $request->input('code', '');
         $proj = Project::where('id', app()->proj['proj_id'])->first()->toArray();
         return view('invite.add', compact('code', 'proj', 'user'));
@@ -47,9 +49,7 @@ class InviteController extends \App\Http\Controllers\Controller {
         $fromid = $code ? Invite::decode($code) : 0;
         $ret    = $invite->getUidByMobile($mobile, $fromid);
         \Cookie::queue('uid', Invite::encode($ret['data']['uid']), 43200);//单位是分钟
-        if ($fromid && $fromid != $ret['data']['uid']) {
-            $invite->addNumById($fromid);
-        }
+
         unset($ret['data']['uid']);
 
         return $ret;

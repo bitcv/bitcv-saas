@@ -25,9 +25,27 @@ class Constant {
     //1 invite 2 代发
     const mod_id_invite         = 1;
     const mod_id_daifa          = 2;
+    const mod_id_invite_reward  = 3;
 
     static $mod_id_ch           = array(
-        self::mod_id_invite     => 'invite',
-        self::mod_id_daifa      => '代发',
+        self::mod_id_invite         => 'invite',
+        self::mod_id_daifa          => '代发',
+        self::mod_id_invite_reward  => '奖励',
+    );
+
+  /*  const invite_reward_type_bcv   = 1;
+    const invite_reward_type_dog   = 2;
+
+    static $invite_reward_type  = array(
+        self::invite_reward_type_bcv    => 'BCV币',
+        self::invite_reward_type_dog    => '狗狗币',
+    );*/
+
+    const invite_reward_action_register = 1;
+    const invite_reward_action_invite   = 2;
+
+    static $invite_reward_action   = array(
+        self::invite_reward_action_register => '注册',
+        self::invite_reward_action_invite   => '邀请',
     );
 }

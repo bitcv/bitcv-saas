@@ -36,18 +36,16 @@
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
-                    <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="输入你的手机号"/>
-                    <input type="text" class="ipt-txt ipt-address" style="width:69%" id="vcode" placeholder="输入验证码"/>
+                    <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="Mobile"/>
+                    <input type="text" class="ipt-txt ipt-address" style="width:69%" id="vcode" placeholder="Code"/>
                     <input type="button" class='ipt-btn' style="width:30%" id="btnvcode" value="获取验证码">
-                    <input type="submit" value="提 交" class='ipt-btn' id="code-btn"/>
+                    <input type="submit" value="SUBMIT" class='ipt-btn' id="code-btn"/>
                 </div>
 
                 <div style="display:none;" id="addAddress">
                     <input type="text" class="ipt-txt ipt-address" id="address" placeholder="输入你的以太坊钱包地址"/>
-                    <input type="submit" value="提 交" class='ipt-btn' id="address-btn"/>
+                    <input type="submit" value="SUBMIT" class='ipt-btn' id="address-btn"/>
                 </div>
-
-
             </fieldset>
 
             <div class="intro" style="display:none" id="result">
@@ -88,6 +86,25 @@
             }
         }
     );
+    var wait=60;
+    function time(o) {
+        if (wait == 0) {
+            o.css('background-color', '');
+            o.attr("disabled", false);
+            o.val("免费获取验证码");
+            wait = 60;
+        } else {
+            o.css('background-color', '#C0C0C0');
+            o.attr("disabled", true);
+            o.val("重新发送(" + wait + ")");
+            wait--;
+            setTimeout(function() {
+                    time(o)
+                },
+                1000)
+        }
+    }
+
     // 提交表单
     $(function() {
         $('#btnvcode').click(function() {
@@ -97,9 +114,10 @@
                 alert('请输入正确的手机号');
                 return false;
             }
+            time($(this));
             $.post('/invite/vcode/'+mobile, '', function(ret) {
                 if (ret.retcode == 200) {
-                    alert('验证码已发送，请在5分钟内输入');
+                    //alert('验证码已发送，请在5分钟内输入');
                 } else {
                     alert(ret.msg);
                 }
@@ -135,9 +153,9 @@
                         $('#addAddress').show();
                     } else if (ret.retcode == 202) {
                         $('#inviteurl').val(ret.data['url']);
-                        $('#total').html(ret.data['total']);
+                        $('#total').html(ret.data['total_bcv_num']+'bcv，'+ ret.data['total_doge_num']+'doge');
                         $('#num').html(ret.data['num']);
-                        $('#tips').html('恭喜您已获得'+ret.data['total']+' BCV，邀请好友参与可获更多奖励');
+                        $('#tips').html('恭喜您已获得'+ret.data['bcv_num']+' BCV，'+ret.data['doge_num']+'doge，邀请好友参与可获更多奖励');
                         $('#verifyCode').hide();
                         $('#result').show();
                     } else {

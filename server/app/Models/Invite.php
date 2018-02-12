@@ -30,8 +30,8 @@ class Invite extends Base {
      * @param $address
      * @return bool|string
      */
-    public function invites($code, $address, $uid) {
-        $inviteInfo = $this->getByUid($uid);
+    public function invites($code, $address, $invite_uid) {
+        $inviteInfo = $this->getByUid($invite_uid);
         if ($inviteInfo['address']) {
             return ['retcode'=>201, 'data'=>self::genInviteUrl($inviteInfo['id'])];
         }
@@ -41,7 +41,7 @@ class Invite extends Base {
             return ['retcode'=>201, 'data'=>self::genInviteUrl($hasBindAddress['id'])];
         }
 
-        $url = $this->inviteDbOpt($code, $address, $uid);
+        $url = $this->inviteDbOpt($code, $address, $invite_uid);
         if (!$url) {
             return ['retcode'=>2, 'msg' => '保存地址失败'];
         }
@@ -79,21 +79,74 @@ class Invite extends Base {
         if ($data) {
             $data   = (array)$data;
             $uid    = $data['id'];
-            $num = $data['num'];
+            $num    = $data['num'];
+            $register_bcv_coin  = $data['bcv_num'];
+            $register_dog_coin  = $data['doge_num'];
+            $total_bcv_num      = $data['bcv_num'];
+            $total_dog_num      = $data['doge_num'];
         } else {
+            $total_bcv_num = $register_bcv_coin   = rand(8, 18);
+            $total_dog_num = $register_dog_coin   = rand(8, 18);
+
             $data = array(
                 'mobile'    => $mobile,
                 'fromid'    => $fromid,
+                'bcv_num'   => $register_bcv_coin,
+                'doge_num'  => $register_dog_coin,
             );
             $uid = \DB::table(self::$table)->insertGetId($data);
+
+            $inviteReward = new InviteReward();
+            $inviteReward->register($uid, $register_bcv_coin, $register_dog_coin);
+
+            if ($fromid) {
+                $fromid_data = (array)$this->getByUid($fromid);
+
+                //邀请发币（前期8-18，bcv为准，超过300就减少为5-10）
+                if ($fromid_data['bcv_num'] >= 500) {
+                    $invite_bcv_coin    = 0;
+                    $invite_dog_coin    = 0;
+                } else if ($fromid_data['bcv_num'] > 300) {
+                    $invite_bcv_coin   = rand(5, 10);
+                    $invite_dog_coin   = rand(5, 10);
+                } else {
+                    $invite_bcv_coin   = rand(8, 18);
+                    $invite_dog_coin   = rand(8, 18);
+                }
+
+                $inviteReward->invite($fromid, $uid, $invite_bcv_coin, $invite_dog_coin);
+
+                //操作邀请表
+                $sql = 'update '.self::$table.' set bcv_num=bcv_num+?, doge_num=doge_num+?, num=num+1 where id=?';
+                $invite_data = array(
+                    'bcv_num'   => $invite_bcv_coin,
+                    'doge_num'  => $invite_dog_coin,
+                    'id'        => $fromid
+                );
+
+                \DB::update($sql, array_values($invite_data));
+            }
+
             $num = 0;
-            Service::sms($mobile, '恭喜您获得50BCV，详情 http://t.cn/');
+            Service::sms($mobile, '恭喜您获得'.$register_bcv_coin.'BCV，'.$register_dog_coin.'Dogecoin，详情 http://t.cn/');
         }
 
-        $total = $this->getTotal($num);
         $url = self::genInviteUrl($uid);
 
-        return ['retcode'=>202, 'data'=>['num'=>$num,'total'=>$total,'url'=>$url, 'uid'=>$uid]];
+        $ret_data = array(
+            'retcode'   =>202,
+            'data'      =>array(
+                'num'               => $num,
+                'total_bcv_num'     => $total_bcv_num,
+                'total_doge_num'    => $total_dog_num,
+                'bcv_num'           => $register_bcv_coin,
+                'doge_num'          => $register_dog_coin,
+                'url'               => $url,
+                'uid'               => $uid
+            )
+        );
+
+        return $ret_data;
     }
 
     /**
@@ -120,14 +173,20 @@ class Invite extends Base {
      * @param $address
      * @return bool|string
      */
-    public function inviteDbOpt($code, $address, $mobile) {
-        $id = $this->upAddressById($address, $mobile);
+    public function inviteDbOpt($code, $address, $invite_uid) {
+        $id = $this->upAddressById($address, $invite_uid);
         if (!$id) {
             return false;
         }
 
         if ($code) {
             $this->addNumById(self::decode($code));
+            //奖励币(todo 这个是否需要写个事务)
+            $bcv_coin   = rand(18, 58);
+            $dog_coin   = rand(18, 58);
+            $inviteReward = new InviteReward();
+            $inviteReward->add(self::decode($code), $invite_uid, $bcv_coin, Constant::invite_reward_type_bcv);
+            $inviteReward->add(self::decode($code), $invite_uid, $dog_coin, Constant::invite_reward_type_dog);
         }
 
         return self::genInviteUrl($id);
