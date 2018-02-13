@@ -14,6 +14,9 @@
         padding: 10px 50px 0px 50px;
         display: inline-block;
     }
+    #divresult p {
+        line-height: 50px;
+    }
     </style>
 </head>
 
@@ -37,8 +40,8 @@
             <fieldset id="info">
                 <div id="verifyCode">
                     <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="Mobile"/>
-                    <input type="text" class="ipt-txt ipt-address" style="width:69%" id="vcode" placeholder="Code"/>
-                    <input type="button" class='ipt-btn' style="width:30%" id="btnvcode" value="Get Verify Code">
+                    <input type="text" class="ipt-txt ipt-address" style="width:49%" id="vcode" placeholder="Code"/>
+                    <input type="button" class='ipt-btn' style="width:49%" id="btnvcode" value="Get Verify Code">
                     <input type="submit" value="SUBMIT" class='ipt-btn' id="code-btn"/>
                 </div>
 
@@ -157,7 +160,7 @@
                         $('#inviteurl').val(ret.data['url']);
                         $('#total').html(ret.data['total_bcv_num']+'bcv,'+ ret.data['total_doge_num']+'doge');
                         $('#num').html(ret.data['num']);
-                        $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+'doge,invite friends to get more rewards');
+                        $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' doge,invite friends to get more rewards');
                         $('#verifyCode').hide();
                         $('#result').show();
                     } else {
@@ -207,7 +210,7 @@
 
     @if (isset($user['id']))
         $('#inviteurl').val("{{$user['url']}}");
-        $('#total').html("{{$user['bcv_num']}}bcv,{{$user['doge_num']}} doge");
+        $('#total').html("{{$user['bcv_num']}} bcv,{{$user['doge_num']}} doge");
         $('#num').html("{{$user['num']}}");
 
         $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} doge,invite friends to get more rewards');
