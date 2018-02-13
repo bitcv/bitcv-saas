@@ -56,8 +56,6 @@ class InviteController extends \App\Http\Controllers\Controller {
         $ret    = $invite->getUidByMobile($mobile, $fromid);
         \Cookie::queue('uid', Invite::encode($ret['data']['uid']), 43200);//单位是分钟
 
-        unset($ret['data']['uid']);
-
         return $ret;
     }
 

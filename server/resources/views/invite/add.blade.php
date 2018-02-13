@@ -173,6 +173,7 @@
                         $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' DOGE,invite friends to get more rewards');
                         $('#verifyCode').hide();
                         $('#result').show();
+                        location.search = "?code=" + ret.data['uid'];
                     } else {
                         alert(ret.msg);
                     }
@@ -233,6 +234,10 @@
         $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BitCV later');
         $('#verifyCode').hide();
         $('#result').show();
+
+        if (location.search.indexOf('code=') <= 0) {
+            location.search = "?code={{$user['id']}}";
+        }
     @endif
     
 $(function(){
