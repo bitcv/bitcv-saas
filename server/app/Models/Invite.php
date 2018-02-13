@@ -126,7 +126,7 @@ class Invite extends Base {
             }
 
             $num = 0;
-            Service::sms($mobile, '恭喜您获得'.$register_bcv_coin.'BCV，'.$register_dog_coin.'Dogecoin，详情 http://t.cn/');
+            Service::sms($mobile, '恭喜您获得'.$register_bcv_coin.'BCV，'.$register_dog_coin.'Dogecoin，详情 http://t.cn/RRiadYN');
         }
 
         $url = self::genInviteUrl($uid);
