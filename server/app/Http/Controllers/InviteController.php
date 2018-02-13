@@ -7,10 +7,14 @@ use Illuminate\Http\Request;
 use App\Utils\Service;
 use App\Models\Module;
 use App\Models\Project;
+use App\Utils\WxJSSDK;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
     public function getInvite(Request $request) {
+        $jssdk = new WxJSSDK('wx47ea3553f628923e', '707647d30c29289569d0c3ee0addaa8a');
+        $signPackage = $jssdk->GetSignPackage();
+
         if (!Module::check('invite')) {
             die('err url');
         }
@@ -24,7 +28,7 @@ class InviteController extends \App\Http\Controllers\Controller {
 
         $code       = $request->input('code', '');
         $proj = Project::where('id', app()->proj['proj_id'])->first()->toArray();
-        return view('invite.add', compact('code', 'proj', 'user'));
+        return view('invite.add', compact('code', 'proj', 'user', 'signPackage'));
     }
 
     public function vcode($mobile) {

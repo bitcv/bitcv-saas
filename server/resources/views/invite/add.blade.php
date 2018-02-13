@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{csrf_token()}}" />
-    <title>BitCV</title>
+    <title>Get BitCV & DOGE</title>
     <meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="/static/css/style.css" />
     <style type="text/css">
@@ -72,7 +72,7 @@
         </div>
         <div class="footer">
             <div class="" style="text-align: center;padding-top: 60px;font-size: 14px;padding-bottom: 40px;">
-                <p style="margin-bottom:20px"><img src="/static/image/alert.png">Each phone number can only apply once</p>
+                <p style="margin-bottom:20px" id="tipphone"><img src="/static/image/alert.png">Each phone can only apply once</p>
             </div>
 
         </div>
@@ -112,8 +112,9 @@
     $(function() {
         $('#btnvcode').click(function() {
             var mobile = $('#mobile').val();
-            var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-            if (!pat.test(mobile)) {
+            //var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            //if (!pat.test(mobile)) {
+            if (mobile.length < 11) {
                 alert('please enter a valid phone number');
                 return false;
             }
@@ -158,9 +159,9 @@
                         window.location.reload();
 
                         $('#inviteurl').val(ret.data['url']);
-                        $('#total').html(ret.data['total_bcv_num']+'bcv,'+ ret.data['total_doge_num']+'doge');
+                        $('#total').html(ret.data['total_bcv_num']+'BCV,'+ ret.data['total_doge_num']+'DOGE');
                         $('#num').html(ret.data['num']);
-                        $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' doge,invite friends to get more rewards');
+                        $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' DOGE,invite friends to get more rewards');
                         $('#verifyCode').hide();
                         $('#result').show();
                     } else {
@@ -189,6 +190,7 @@
                     if (ret.retcode == 200 || ret.retcode == 201) {
                         if (ret.retcode == 201) {
                             $('#tips').html(' Your phone number or wallet address has been applied,invite friends to participate for more rewards');
+                            $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BiTCV later');
                         }
                         $('#inviteurl').val(ret.data);
                         $('#addAddress').hide();
@@ -210,10 +212,11 @@
 
     @if (isset($user['id']))
         $('#inviteurl').val("{{$user['url']}}");
-        $('#total').html("{{$user['bcv_num']}} bcv,{{$user['doge_num']}} doge");
+        $('#total').html("{{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE");
         $('#num').html("{{$user['num']}}");
 
-        $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} doge,invite friends to get more rewards');
+        $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE,invite friends to get more rewards');
+        $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BiTCV later');
         $('#verifyCode').hide();
         $('#result').show();
     @endif
@@ -222,3 +225,49 @@
 </body>
 
 </html>
+
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        appId: 'wx47ea3553f628923e',
+        timestamp: '<?php echo $signPackage["timestamp"]; ?>',
+        nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
+        signature: '<?php echo $signPackage["signature"]; ?>',
+        jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','translateVoice','startRecord','stopRecord','onRecordEnd','playVoice','pauseVoice','stopVoice','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard']});
+    wx.ready(function(){
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title : shareConfig.title,
+            desc: shareConfig.desc, 
+            link: shareConfig.link, 
+            imgUrl: shareConfig.imgUrl 
+        })
+        // 分享给朋友
+        wx.onMenuShareAppMessage({
+            title : 'Get BCV & DOGE',
+            desc: 'More than 1,000,000 BCV & DOGE, Invite more, Get More!', 
+            link: 'https://bitcv.saas.lianbi.io/invite?code=', 
+            imgUrl: '', 
+            type : 'link',
+            dateUrl : ''
+        })
+        // 分享到QQ
+        wx.onMenuShareQQ({
+            title : shareConfig.title,
+            desc: shareConfig.desc, 
+            link: shareConfig.link, 
+            imgUrl: shareConfig.imgUrl 
+        })
+        // 分享到腾讯微博
+        wx.onMenuShareWeibo({
+            title : shareConfig.title,
+            desc: shareConfig.desc, 
+            link: shareConfig.link, 
+            imgUrl: shareConfig.imgUrl 
+        })
+    })
+    wx.error(function(res) {
+        console.log(res);
+    });
+</script>

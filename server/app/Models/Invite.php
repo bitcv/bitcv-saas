@@ -205,8 +205,8 @@ class Invite extends Base {
      * @return string
      */
     public static function encode($id) {
-        //return urlencode(base64_encode($id));
-        return $id ? self::encrypt($id) : '';
+        //return $id ? self::encrypt($id) : '';
+        return $id;
     }
 
     /**
@@ -215,7 +215,7 @@ class Invite extends Base {
      * @return bool|string
      */
     public static function decode($code) {
-        //return base64_decode(urldecode($code));
-        return $code ? self::decrypt($code) : '';
+        //return $code ? self::decrypt($code) : '';
+        return $code;
     }
 }
