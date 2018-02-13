@@ -227,14 +227,15 @@
 </html>
 
 
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     wx.config({
         appId: 'wx47ea3553f628923e',
         timestamp: '<?php echo $signPackage["timestamp"]; ?>',
         nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
         signature: '<?php echo $signPackage["signature"]; ?>',
-        jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','translateVoice','startRecord','stopRecord','onRecordEnd','playVoice','pauseVoice','stopVoice','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard']});
+        jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','translateVoice','startRecord','stopRecord','onRecordEnd','playVoice','pauseVoice','stopVoice','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard']
+    });
     wx.ready(function(){
         // 分享到朋友圈
         wx.onMenuShareTimeline({
@@ -248,7 +249,7 @@
             title : 'Get BCV & DOGE',
             desc: 'More than 1,000,000 BCV & DOGE, Invite more, Get More!', 
             link: 'https://bitcv.saas.lianbi.io/invite?code=', 
-            imgUrl: '', 
+            imgUrl: 'https://bitcv.saas.lianbi.io/storage/image/logo/bscWykfCVKD5qHLGPqlf9w6PafMgw2NlDRPHCHI3.png', 
             type : 'link',
             dateUrl : ''
         })
