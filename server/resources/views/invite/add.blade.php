@@ -66,8 +66,8 @@
                         </div>
                     </div>
                 </div>
-                <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:69%">
-                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:30%" data-clipboard-target='address' value="Copy to invite friends">
+                <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:49%">
+                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:49%" data-clipboard-target='address' value="Copy to invite friends">
             </div>
         </div>
         <div class="footer">
