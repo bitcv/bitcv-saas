@@ -17,6 +17,13 @@
     #divresult p {
         line-height: 50px;
     }
+    /*
+    #doc {
+        background-image: url(/images/bg.png);
+        background-repeat: no-repeat;
+        background-size: 100% auto;
+    }
+    */
     </style>
 </head>
 
@@ -68,6 +75,7 @@
                 </div>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:49%">
                 <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:49%" data-clipboard-target='address' value="Copy to invite friends">
+                <p>Telegram: <a href="">https://t.me/bcvfuli</a></p>
             </div>
         </div>
         <div class="footer">
