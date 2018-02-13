@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:69%">
-                <input type="button" id="btncopy" class='ipt-btn' style="width:30%" data-clipboard-target='address' value="Copy to invite friends">
+                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:30%" data-clipboard-target='address' value="Copy to invite friends">
             </div>
         </div>
         <div class="footer">
@@ -80,7 +80,8 @@
 </div>
 
 <script src="/js/libs/jquery.min.js"></script>
-<script src="/static/js/jquery.zclip.js"></script>
+<!--script src="/static/js/jquery.zclip.js"></script-->
+<script src="/js/libs/clipboard.min.js"></script>
 <script>
     $.ajaxSetup(
         {
@@ -201,12 +202,17 @@
                 }
             );
         });
-
+/*
         $('#btncopy').zclip({
             path: "/static/js/ZeroClipboard.swf",
             copy: function(){
                 return $('#inviteurl').val();
             }
+        });
+*/
+        var clipboard = new Clipboard('#btncopy');
+        clipboard.on('success', function(e) {
+            alert('Copy successful. Invite friends to participate for additional rewards');
         });
     });
 
