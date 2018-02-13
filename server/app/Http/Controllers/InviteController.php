@@ -38,7 +38,7 @@ class InviteController extends \App\Http\Controllers\Controller {
         if ($ret['err'] > 0) {
             return ['retcode'=>1, 'msg'=>$ret['msg']];
         }
-        Service::sms($mobile, '【BitCV】您的验证码为'.$ret['data'].'，请在5分钟内输入');
+        Service::sms($mobile, '【BitCV】Your validation code is '.$ret['data'].', please input in 5 minutes');
         return ['retcode'=>200];
     }
 

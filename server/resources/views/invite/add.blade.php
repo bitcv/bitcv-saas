@@ -191,7 +191,7 @@
                     if (ret.retcode == 200 || ret.retcode == 201) {
                         if (ret.retcode == 201) {
                             $('#tips').html(' Your phone number or wallet address has been applied,invite friends to participate for more rewards');
-                            $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BiTCV later');
+                            $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BitCV later');
                         }
                         $('#inviteurl').val(ret.data);
                         $('#addAddress').hide();
@@ -222,7 +222,7 @@
         $('#num').html("{{$user['num']}}");
 
         $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE,invite friends to get more rewards');
-        $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BiTCV later');
+        $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BitCV later');
         $('#verifyCode').hide();
         $('#result').show();
     @endif
