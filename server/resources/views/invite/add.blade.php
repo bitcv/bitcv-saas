@@ -75,7 +75,7 @@
                 </div>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:49%">
                 <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:49%" data-clipboard-target='address' value="Copy to invite friends">
-                <p>Join the group to get more BCV<br>Telegram: <a href="">https://it.me/bcvfuli</a></p>
+                <p>Join the group to get more BCV<br>Telegram: <a href="https://it.me/bcvfuli" target="_blank">https://it.me/bcvfuli</a></p>
             </div>
         </div>
         <div class="footer">
