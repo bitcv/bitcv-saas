@@ -35,7 +35,7 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>{{$proj['name_en']}}</p>
+                <p>{{$leftbcv}}0 thousands BCV left, {{$leftdoge}}0 thousands DOGE left</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
@@ -159,7 +159,7 @@
                         window.location.reload();
 
                         $('#inviteurl').val(ret.data['url']);
-                        $('#total').html(ret.data['total_bcv_num']+'BCV,'+ ret.data['total_doge_num']+'DOGE');
+                        $('#total').html(ret.data['total_bcv_num']+'BCV<br>'+ ret.data['total_doge_num']+'DOGE');
                         $('#num').html(ret.data['num']);
                         $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' DOGE,invite friends to get more rewards');
                         $('#verifyCode').hide();
@@ -212,7 +212,7 @@
 
     @if (isset($user['id']))
         $('#inviteurl').val("{{$user['url']}}");
-        $('#total').html("{{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE");
+        $('#total').html("{{$user['bcv_num']}} BCV<br>{{$user['doge_num']}} DOGE");
         $('#num').html("{{$user['num']}}");
 
         $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE,invite friends to get more rewards');
@@ -221,54 +221,17 @@
         $('#result').show();
     @endif
     
+$(function(){
+    if (navigator.userAgent.match(/MicroMessenger/i)) {
+        var weixinShareLogo = 'https://bitcv.saas.lianbi.io/images/token_500*500.png';
+        $('body').prepend('<div style=" overflow:hidden; width:0px; height:0; margin:0 auto; position:absolute; top:-800px;"><img src="'+ weixinShareLogo +'"></div>');
+    }
+});
 </script>
 </body>
 
 </html>
 
 
-<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-    wx.config({
-        appId: 'wx47ea3553f628923e',
-        timestamp: '<?php echo $signPackage["timestamp"]; ?>',
-        nonceStr: '<?php echo $signPackage["nonceStr"]; ?>',
-        signature: '<?php echo $signPackage["signature"]; ?>',
-        jsApiList: ['checkJsApi','onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','hideMenuItems','showMenuItems','hideAllNonBaseMenuItem','showAllNonBaseMenuItem','translateVoice','startRecord','stopRecord','onRecordEnd','playVoice','pauseVoice','stopVoice','uploadVoice','downloadVoice','chooseImage','previewImage','uploadImage','downloadImage','getNetworkType','openLocation','getLocation','hideOptionMenu','showOptionMenu','closeWindow','scanQRCode','chooseWXPay','openProductSpecificView','addCard','chooseCard','openCard']
-    });
-    wx.ready(function(){
-        // 分享到朋友圈
-        wx.onMenuShareTimeline({
-            title : shareConfig.title,
-            desc: shareConfig.desc, 
-            link: shareConfig.link, 
-            imgUrl: shareConfig.imgUrl 
-        })
-        // 分享给朋友
-        wx.onMenuShareAppMessage({
-            title : 'Get BCV & DOGE',
-            desc: 'More than 1,000,000 BCV & DOGE, Invite more, Get More!', 
-            link: 'https://bitcv.saas.lianbi.io/invite?code=', 
-            imgUrl: 'https://bitcv.saas.lianbi.io/storage/image/logo/bscWykfCVKD5qHLGPqlf9w6PafMgw2NlDRPHCHI3.png', 
-            type : 'link',
-            dateUrl : ''
-        })
-        // 分享到QQ
-        wx.onMenuShareQQ({
-            title : shareConfig.title,
-            desc: shareConfig.desc, 
-            link: shareConfig.link, 
-            imgUrl: shareConfig.imgUrl 
-        })
-        // 分享到腾讯微博
-        wx.onMenuShareWeibo({
-            title : shareConfig.title,
-            desc: shareConfig.desc, 
-            link: shareConfig.link, 
-            imgUrl: shareConfig.imgUrl 
-        })
-    })
-    wx.error(function(res) {
-        console.log(res);
-    });
-</script>
+
+

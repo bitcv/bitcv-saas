@@ -12,9 +12,11 @@ use App\Utils\WxJSSDK;
 class InviteController extends \App\Http\Controllers\Controller {
 
     public function getInvite(Request $request) {
-        $jssdk = new WxJSSDK('wx47ea3553f628923e', '707647d30c29289569d0c3ee0addaa8a');
-        $signPackage = $jssdk->GetSignPackage();
-
+        //$jssdk = new WxJSSDK('wx47ea3553f628923e', '707647d30c29289569d0c3ee0addaa8a');
+        //$signPackage = $jssdk->GetSignPackage();
+        $sum = (new Invite())->getTotalToken();
+        $leftbcv = round((1000000-$sum['totalbcv'])/10000);
+        $leftdoge = round((1000000-$sum['totaldoge'])/10000);
         if (!Module::check('invite')) {
             die('err url');
         }
@@ -28,7 +30,7 @@ class InviteController extends \App\Http\Controllers\Controller {
 
         $code       = $request->input('code', '');
         $proj = Project::where('id', app()->proj['proj_id'])->first()->toArray();
-        return view('invite.add', compact('code', 'proj', 'user', 'signPackage'));
+        return view('invite.add', compact('code', 'proj', 'user', 'leftbcv', 'leftdoge'));
     }
 
     public function vcode($mobile) {

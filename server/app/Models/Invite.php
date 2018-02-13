@@ -72,6 +72,11 @@ class Invite extends Base {
         return $data;
     }
 
+    public function getTotalToken() {
+        $data = (array)\DB::select('select sum(bcv_num) as totalbcv,sum(doge_num) as totaldoge from '.self::$table);
+        return (array)$data[0];
+    }
+
     public function getUidByMobile($mobile, $fromid = 0) {
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
@@ -86,6 +91,14 @@ class Invite extends Base {
             $total_bcv_num = $register_bcv_coin   = rand(8, 18);
             $total_dog_num = $register_dog_coin   = rand(8, 18);
 
+            $total = $this->getTotalToken();
+            if ($total['totalbcv'] >= 1000000) {
+                $total_bcv_num = 0;
+            }
+            if ($total['totaldoge'] >= 1000000) {
+                $total_dog_num = 0;
+            }
+
             $data = array(
                 'mobile'    => $mobile,
                 'fromid'    => $fromid,
@@ -97,7 +110,7 @@ class Invite extends Base {
             $inviteReward = new InviteReward();
             $inviteReward->register($uid, $register_bcv_coin, $register_dog_coin);
 
-            if ($fromid) {
+            if ($fromid && $total['totalbcv'] < 1000000 && $total['totaldoge'] < 1000000) {
                 $fromid_data = (array)$this->getByUid($fromid);
 
                 //邀请发币（前期8-18，bcv为准，超过300就减少为5-10）
@@ -126,7 +139,7 @@ class Invite extends Base {
             }
 
             $num = 0;
-            Service::sms($mobile, '恭喜您获得'.$register_bcv_coin.'BCV，'.$register_dog_coin.'Dogecoin，详情 http://t.cn/RRiadYN');
+            Service::sms($mobile, 'Congratulations, you\'ve got '.$register_bcv_coin.'BCV,'.$register_dog_coin.'DOGE, detail http://t.cn/RRiadYN');
         }
 
         $url = self::genInviteUrl($uid);
