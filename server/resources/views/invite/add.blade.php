@@ -11,7 +11,6 @@
         padding: 30px 0px 20px 0px;
     }
     #divresult div div{
-        padding: 10px;
         display: inline-block;
     }
     #divresult p {
@@ -25,7 +24,11 @@
         background-color: rgb(255,163,55);
     }
     p {
-        color: #666;
+        color: rgb(127,96,0);
+    }
+    #tipphone img {
+        width: 14px;
+        height: 14px;
     }
     </style>
 </head>
@@ -45,7 +48,7 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>{{$leftbcv}}0 thousands BCV left<br>{{$leftdoge}}0 thousands DOGE left</p>
+                <p>More than 2,000,000 BCV, DOGE, BTC, ETH, EOS, NEO rewards</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
@@ -63,27 +66,27 @@
 
             <div class="intro" style="display:none" id="result">
                 <div class="join"></div>
-                <p id="tips" style="">Successfully applied. Invite friends to participate for additional rewards</p>
+                <p id="tips" style="color:rgb(213,8,20)">Successfully applied. Invite friends to participate for additional rewards</p>
                 <div id="divresult">
                     <div>
-                        <div>
+                        <div style="padding-right:5px">
                             <p style="margin-top:0px;font-size:30px;" id="num">0</p>
                             <p style="">Total Invitations</p>
                         </div>
-                        <div style="border-left:1px solid #ccc">    
+                        <div style="border-left:1px solid rgb(255,255,67);padding-left:10px;">    
                             <p style="margin-top:0px;font-size:30px;" id="total">0</p>
                             <p style="">Cumulative Rewards</p>
                         </div>
                     </div>
                 </div>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:49%">
-                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:49%" data-clipboard-target='address' value="Copy to invite friends">
+                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:49%" data-clipboard-target='address' value="Invite to gain more">
                 <p>Join the group to get more BCV<br>Telegram: <a href="https://t.me/bcvfuli" target="_blank">https://t.me/bcvfuli</a></p>
             </div>
         </div>
         <div class="footer">
             <div class="" style="text-align: center;padding-top: 20px;font-size: 14px;">
-                <p style="margin-bottom:20px" id="tipphone"><!--img src="/static/image/alert.png"-->Each phone can only apply once</p>
+                <p style="margin-bottom:20px" id="tipphone"><img src="/static/image/alert.png"> Each phone can only apply once</p>
             </div>
 
         </div>
@@ -171,7 +174,7 @@
                         window.location.reload();
 
                         $('#inviteurl').val(ret.data['url']);
-                        $('#total').html(ret.data['total_bcv_num']+'BCV<br>'+ ret.data['total_doge_num']+'DOGE');
+                        $('#total').html(ret.data['nums']);
                         $('#num').html(ret.data['num']);
                         $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' DOGE,invite friends to get more rewards');
                         $('#verifyCode').hide();
@@ -203,7 +206,7 @@
                     if (ret.retcode == 200 || ret.retcode == 201) {
                         if (ret.retcode == 201) {
                             $('#tips').html(' Your phone number or wallet address has been applied,invite friends to participate for more rewards');
-                            $('#tipphone').html('<!--img src="/static/image/alert.png"-->Each phone can only apply once, you can withdraw from BitCV later');
+                            $('#tipphone').html('<img src="/static/image/alert.png"> Each phone can only apply once, you can withdraw from BitCV later');
                         }
                         $('#inviteurl').val(ret.data);
                         $('#addAddress').hide();
@@ -230,11 +233,11 @@
 
     @if (isset($user['id']))
         $('#inviteurl').val("{{$user['url']}}");
-        $('#total').html("{{$user['bcv_num']}} BCV<br>{{$user['doge_num']}} DOGE");
+        $('#total').html("{!!$user['nums']!!}");
         $('#num').html("{{$user['num']}}");
 
         $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE,invite friends to get more rewards');
-        $('#tipphone').html('<!--img src="/static/image/alert.png"-->Each phone can only apply once, you can withdraw from BitCV later');
+        $('#tipphone').html('<img src="/static/image/alert.png"> Each phone can only apply once, you can withdraw from BitCV later');
         $('#verifyCode').hide();
         $('#result').show();
 

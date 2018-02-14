@@ -32,14 +32,10 @@ class InviteReward extends Base {
         return \DB::table(self::$table)->insertGetId($data);
     }
 
-    public function register($uid, $bcv_num, $doge_num) {
-        $data = array(
-            'uid'           => $uid,
-            'bcv_num'       => $bcv_num,
-            'doge_num'      => $doge_num,
-            'action'        => Constant::invite_reward_action_register,
-            'ctime'         => date('Y-m-d H:i:s', time())
-        );
+    public function register($uid, $data) {
+        $data['uid'] = $uid;
+        $data['action'] = Constant::invite_reward_action_register;
+        $data['ctime'] = date('Y-m-d H:i:s', time());
 
         return \DB::table(self::$table)->insertGetId($data);
     }
