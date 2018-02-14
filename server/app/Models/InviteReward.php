@@ -19,15 +19,14 @@ class InviteReward extends Base {
         return \DB::table(self::$table)->get()->all();
     }
 
-    public function invite($uid, $invite_uid, $bcv_num, $doge_num) {
+    public function invite($uid, $invite_uid, $coins) {
         $data = array(
             'uid'           => $uid,
             'invite_uid'    => $invite_uid,
-            'bcv_num'       => $bcv_num,
-            'doge_num'      => $doge_num,
             'action'        => Constant::invite_reward_action_invite,
             'ctime'         => date('Y-m-d H:i:s', time())
         );
+        $data += $coins;
 
         return \DB::table(self::$table)->insertGetId($data);
     }

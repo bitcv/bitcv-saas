@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{csrf_token()}}" />
-    <title>Get more than 2,000,000 BitCV,DOGE,BTC,ETH,EOS,NEO</title>
+    <title>Get more than 2,000,000 BCV,DOGE,BTC,ETH,EOS,NEO</title>
     <meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="/static/css/style.css" />
     <style type="text/css">
@@ -14,7 +14,7 @@
         display: inline-block;
     }
     #divresult p {
-        line-height: 30px;
+        line-height: 25px;
     }
     body {
         background-image: url(/images/bg.jpg);
@@ -70,11 +70,11 @@
                 <div id="divresult">
                     <div>
                         <div style="padding-right:5px">
-                            <p style="margin-top:0px;font-size:30px;" id="num">0</p>
+                            <p style="margin-top:0px;font-size:25px;" id="num">0</p>
                             <p style="">Total Invitations</p>
                         </div>
                         <div style="border-left:1px solid rgb(255,255,67);padding-left:10px;">    
-                            <p style="margin-top:0px;font-size:30px;" id="total">0</p>
+                            <p style="margin-top:0px;font-size:25px;text-align:left" id="total">0</p>
                             <p style="">Cumulative Rewards</p>
                         </div>
                     </div>
@@ -236,7 +236,7 @@
         $('#total').html("{!!$user['nums']!!}");
         $('#num').html("{{$user['num']}}");
 
-        $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE,invite friends to get more rewards');
+        $('#tips').html('Congratulations, you\'ve got {{$user['nums2']}} invite friends to get more rewards');
         $('#tipphone').html('<img src="/static/image/alert.png"> Each phone can only apply once, you can withdraw from BitCV later');
         $('#verifyCode').hide();
         $('#result').show();

@@ -72,7 +72,8 @@ class Invite extends Base {
             return [];
         }
         $data['url'] = self::genInviteUrl($uid);
-        $data['nums'] = $data['bcv_num'].' BCV<br>'.$data['doge_num'].' DOGE<br>'.$data['btc_num'].' BTC<br>'.$data['eth_num'].' ETH<br>'.$data['eos_num'].' EOS<br>'.$data['neo_num'].' NEO';
+        $data['nums'] = $this->getShowCoin($data, '<br>');
+        $data['nums2'] = $this->getShowCoin($data, ',');
         return $data;
     }
 
@@ -81,43 +82,92 @@ class Invite extends Base {
         return (array)$data[0];
     }
 
+    private function getShowCoin($data, $s = '<br>') {
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];
+        $str = '';
+        foreach ($types as $t) {
+            if (isset($data[$t.'_num']) && ($s=='<br>'||$data[$t.'_num']>0)) {
+                $num = $data[$t.'_num'];
+                if ($t == 'btc') {
+                    $num = $num/10000;
+                } elseif ($t == 'eth') {
+                    $num = $num/1000;
+                } elseif ($t == 'neo') {
+                    $num = $num/100;
+                } elseif ($t == 'eos') {
+                    $num = $num/10;
+                }
+                if ($s == '<br>') {
+                    $str .= strtoupper($t).' '.$num.$s;
+                } else {
+                    $str .= $num.' '.strtoupper($t).$s;
+                }
+            }
+        }
+        return $str;
+    }
+
     public function getUidByMobile($mobile, $fromid = 0) {
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
             $data   = (array)$data;
             $uid    = $data['id'];
             $num    = $data['num'];
-            $register_bcv_coin  = $total_bcv_num = $data['bcv_num'];
-            $register_dog_coin  = $total_dog_num = $data['doge_num'];
-            $register_btc_coin  = $total_btc_num = $data['btc_num'];
-            $register_eth_coin  = $total_eth_num = $data['eth_num'];
-            $register_eos_coin  = $total_eos_num = $data['eos_num'];
-            $register_neo_coin  = $total_neo_num = $data['neo_num'];
         } else {
-            $total_bcv_num = $register_bcv_coin   = rand(8, 18);
-            $total_dog_num = $register_dog_coin   = 0;//rand(8, 18);
-            $register_btc_coin  = $total_btc_num = 0;
-            $register_eth_coin  = $total_eth_num = 0;
-            $register_eos_coin  = $total_eos_num = 0;
-            $register_neo_coin  = $total_neo_num = 0;
-
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 200000) {
-                $total_bcv_num = 0;
+            if ($total['totalbcv'] >= 400000) { //1,200,000
+                $bcv_num = 0;
+                $invite_bcv_num = 0;
+            } else {
+                $bcv_num   = rand(8, 18);
+                $invite_bcv_num = rand(8, 18);
             }
-            if ($total['totaldoge'] >= 1000000) {
-                $total_dog_num = 0;
+            if ($total['totaldoge'] >= 1000000) { //1,000,000
+                $doge_num = 0;
+                $invite_doge_num = 0;
+            } else {
+                $doge_num   = 0; //rand(8, 18);
+                $invite_doge_num = 0;
+            }
+            if ($total['totalbtc'] >= 10000) { //1
+                $btc_num = 0;
+                $invite_btc_num = 0;
+            } else {
+                $btc_num = date('m-d')=='02-15'?rand(1,3):0;
+                $invite_btc_num = date('m-d')=='02-15'?rand(1,3):0;
+            }
+            if ($total['totaleth'] >= 10000) { //10
+                $eth_num = 0;
+                $invite_eth_num = 0;
+            } else {
+                $eth_num = 0; //rand(1,3);
+                $invite_eth_num = 0;
+            }
+            if ($total['totaleos'] >= 10000) { //1000
+                $eos_num = 0;
+                $invite_eos_num = 0;
+            } else {
+                $eos_num = 0; //rand(1,3);
+                $invite_eos_num = 0;
+            }
+            if ($total['totalneo'] >= 5000) { //50
+                $neo_num = 0;
+                $invite_neo_num = 0;
+            } else {
+                $neo_num = 0; //rand(1,2);
+                $invite_neo_num = 0;
             }
 
             $data = array(
                 'mobile'    => $mobile,
                 'fromid'    => $fromid,
-                'bcv_num'   => $register_bcv_coin,
-                'doge_num'  => $register_dog_coin,
-                'btc_num'  => $register_btc_coin,
-                'eth_num'  => $register_eth_coin,
-                'eos_num'  => $register_eos_coin,
-                'neo_num'  => $register_neo_coin,
+                'bcv_num'   => $bcv_num,
+                'doge_num'  => $doge_num,
+                'btc_num'  => $btc_num,
+                'eth_num'  => $eth_num,
+                'eos_num'  => $eos_num,
+                'neo_num'  => $neo_num,
             );
             $uid = \DB::table(self::$table)->insertGetId($data);
 
@@ -129,58 +179,43 @@ class Invite extends Base {
 
             if ($fromid) {
                 $fromid_data = (array)$this->getByUid($fromid);
-                if ($fromid_data['num'] < 10) {
-                    //邀请发币（前期8-18，bcv为准，超过300就减少为5-10）
-                    if ($fromid_data['bcv_num'] >= 300) {
-                        $invite_bcv_coin    = 0;
-                        $invite_dog_coin    = 0;
-                    } else if ($fromid_data['bcv_num'] > 100) {
-                        $invite_bcv_coin   = rand(5, 10);
-                        $invite_dog_coin   = 0;//rand(5, 10);
-                    } else {
-                        $invite_bcv_coin   = rand(8, 18);
-                        $invite_dog_coin   = 0;//rand(8, 18);
-                    }
+                $invitelimit = date('m-d') == '02-15' ? 20 : 10;
+                if (isset($fromid_data['num']) && $fromid_data['num'] < $invitelimit) {
+                    $invite = [
+                        'bcv_num' => $invite_bcv_num,
+                        'doge_num' => $invite_doge_num,
+                        'btc_num' => $invite_btc_num,
+                        'eth_num' => $invite_eth_num,
+                        'eos_num' => $invite_eos_num,
+                        'neo_num' => $invite_neo_num,
+                    ];
 
-                    $inviteReward->invite($fromid, $uid, $invite_bcv_coin, $invite_dog_coin);
+                    $inviteReward->invite($fromid, $uid, $invite);
 
                     //操作邀请表
-                    $sql = 'update '.self::$table.' set bcv_num=bcv_num+?, doge_num=doge_num+?, num=num+1 where id=?';
-                    $invite_data = array(
-                        'bcv_num'   => $invite_bcv_coin,
-                        'doge_num'  => $invite_dog_coin,
-                        'id'        => $fromid
-                    );
+                    $sql = 'update '.self::$table.' set bcv_num=bcv_num+?, doge_num=doge_num+?, btc_num=btc_num+?, eth_num=eth_num+?, eos_num=eos_num+?, neo_num=neo_num+?, num=num+1 where id=?';
+                    $invite['id'] = $fromid;
 
-                    \DB::update($sql, array_values($invite_data));
-
+                    \DB::update($sql, array_values($invite));
                 }
-
             }
 
             $num = 0;
-            Service::sms($mobile, 'Congratulations, you\'ve got '.$register_bcv_coin.' BCV, detail: http://t.cn/RRiadYN');
+            $msg = "Congratulations, you've got ";
+            $msg .= $this->getShowCoin($data, ',');
+            $msg .= ' detail: http://t.cn/RRiadYN';
+            Service::sms($mobile, $msg);
         }
 
         $url = self::genInviteUrl($uid);
 
-        $nums = $total_bcv_num.' BCV<br>'.$total_dog_num.' DOGE<br>'.$total_btc_num.' BTC<br>'
-            .$total_eth_num.' ETH<br>'.$total_eos_num.' EOS<br>'.$total_neo_num.' NEO';
         $ret_data = array(
-            'retcode'   =>202,
-            'data'      =>array(
+            'retcode'   => 202,
+            'data'      => array(
                 'num'               => $num,
-                'total_bcv_num'     => $total_bcv_num,
-                'total_doge_num'    => $total_dog_num,
-                'bcv_num'           => $register_bcv_coin,
-                'doge_num'          => $register_dog_coin,
-                'btc_num'          => $register_btc_coin,
-                'eth_num'          => $register_eth_coin,
-                'eos_num'          => $register_eos_coin,
-                'neo_num'          => $register_neo_coin,
                 'url'               => $url,
                 'uid'               => $uid,
-                'nums'  => $nums,
+                'nums'  => $this->getShowCoin($data),
             )
         );
 
