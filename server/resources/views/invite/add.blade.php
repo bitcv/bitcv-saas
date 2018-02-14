@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content="{{csrf_token()}}" />
-    <title>Get BitCV & DOGE</title>
+    <title>Get more than 2,000,000 BitCV,DOGE,BTC,ETH,EOS,NEO</title>
     <meta name=viewport content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <link rel="stylesheet" href="/static/css/style.css" />
     <style type="text/css">
