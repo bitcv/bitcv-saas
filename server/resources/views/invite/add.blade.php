@@ -74,7 +74,7 @@
                             <p style="">Total Invitations</p>
                         </div>
                         <div style="border-left:1px solid rgb(255,255,67);padding-left:10px;">    
-                            <p style="margin-top:0px;font-size:25px;text-align:left" id="total">0</p>
+                            <p style="margin-top:0px;font-size:25px;" id="total">0</p>
                             <p style="">Cumulative Rewards</p>
                         </div>
                     </div>
