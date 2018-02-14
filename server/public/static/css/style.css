@@ -126,7 +126,7 @@ img {
 #doc {
     max-width: 700px;
     min-width: 320px;
-    padding: 0 20px 40px;
+    padding: 0 20px 10px;
     margin: 0 auto;
     box-sizing: border-box;
 }
@@ -174,9 +174,9 @@ form {
     padding: 15px;
     line-height: 100%;
     border-radius: 6px;
-    border: 1px solid #ccc;
-    /*background: rgba(216,216,216,0.20);
-    color: #fff;*/
+    border: 2px solid rgb(255,224,97);
+    background: transparent;
+    color: rgb(197,146,47);
     box-sizing: border-box;
 }
 .ipt-txtarea {
@@ -196,7 +196,7 @@ form {
     height: 50px;
     margin-top: 20px;
     line-height: 100%;
-    background: #7199FF;
+    background: rgb(218,0,29);
     border: none;
     border-radius: 6px;
     cursor: pointer;

@@ -8,68 +8,71 @@
     <link rel="stylesheet" href="/static/css/style.css" />
     <style type="text/css">
     #divresult>div {
-        padding: 80px 0px 20px 0px;
+        padding: 30px 0px 20px 0px;
     }
     #divresult div div{
-        padding: 10px 50px 0px 50px;
+        padding: 10px;
         display: inline-block;
     }
     #divresult p {
-        line-height: 50px;
+        line-height: 30px;
     }
-    /*
-    #doc {
-        background-image: url(/images/bg.png);
+    body {
+        background-image: url(/images/bg.jpg);
         background-repeat: no-repeat;
-        background-size: 100% auto;
+        /*background-attachment: fixed;*/
+        background-size: 100%;
+        background-color: rgb(255,163,55);
     }
-    */
+    p {
+        color: #666;
+    }
     </style>
 </head>
 
 <body>
 <div id="doc">
 
-    <div class="header">
+    <div class="header" style="height:350px;">
     </div>
 
     <div class="lang-wrap" data-lang="ZH">
         <div class="container">
-            <h1 class="logo">
+            <h1 class="logo" style="display:none">
                 <a href>
                     <img src="{{$proj['logo_url']}}">
                 </a>
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>{{$leftbcv}}0 thousands BCV left, {{$leftdoge}}0 thousands DOGE left</p>
+                <p>{{$leftbcv}}0 thousands BCV left<br>{{$leftdoge}}0 thousands DOGE left</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
                     <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="Mobile"/>
                     <input type="text" class="ipt-txt ipt-address" style="width:49%" id="vcode" placeholder="Code"/>
-                    <input type="button" class='ipt-btn' style="width:49%" id="btnvcode" value="Get Verify Code">
-                    <input type="submit" value="SUBMIT" class='ipt-btn' id="code-btn"/>
+                    <input type="button" class='ipt-btn' style="width:49%" id="btnvcode" value="Get verify code">
+                    <input type="submit" value="Submit" class='ipt-btn' id="code-btn"/>
                 </div>
 
                 <div style="display:none;" id="addAddress">
                     <input type="text" class="ipt-txt ipt-address" id="address" placeholder="Enter your Ethereum wallet address"/>
-                    <input type="submit" value="SUBMIT" class='ipt-btn' id="address-btn"/>
+                    <input type="submit" value="Submit" class='ipt-btn' id="address-btn"/>
                 </div>
             </fieldset>
 
             <div class="intro" style="display:none" id="result">
                 <div class="join"></div>
-                <p id="tips" style="color:#FF6276">Successfully applied. Invite friends to participate for additional rewards</p>
+                <p id="tips" style="">Successfully applied. Invite friends to participate for additional rewards</p>
                 <div id="divresult">
                     <div>
                         <div>
-                            <p style="margin-top:0px;font-size:50px;" id="num">0</p>
-                            <p style="color:#4A4A4A">Total Invitations</p>
+                            <p style="margin-top:0px;font-size:30px;" id="num">0</p>
+                            <p style="">Total Invitations</p>
                         </div>
                         <div style="border-left:1px solid #ccc">    
-                            <p style="margin-top:0px;font-size:50px;color:#FF6276" id="total">0</p>
-                            <p style="color:#4A4A4A">Cumulative Rewards</p>
+                            <p style="margin-top:0px;font-size:30px;" id="total">0</p>
+                            <p style="">Cumulative Rewards</p>
                         </div>
                     </div>
                 </div>
@@ -79,8 +82,8 @@
             </div>
         </div>
         <div class="footer">
-            <div class="" style="text-align: center;padding-top: 60px;font-size: 14px;padding-bottom: 40px;">
-                <p style="margin-bottom:20px" id="tipphone"><img src="/static/image/alert.png">Each phone can only apply once</p>
+            <div class="" style="text-align: center;padding-top: 20px;font-size: 14px;">
+                <p style="margin-bottom:20px" id="tipphone"><!--img src="/static/image/alert.png"-->Each phone can only apply once</p>
             </div>
 
         </div>
@@ -200,7 +203,7 @@
                     if (ret.retcode == 200 || ret.retcode == 201) {
                         if (ret.retcode == 201) {
                             $('#tips').html(' Your phone number or wallet address has been applied,invite friends to participate for more rewards');
-                            $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BitCV later');
+                            $('#tipphone').html('<!--img src="/static/image/alert.png"-->Each phone can only apply once, you can withdraw from BitCV later');
                         }
                         $('#inviteurl').val(ret.data);
                         $('#addAddress').hide();
@@ -231,7 +234,7 @@
         $('#num').html("{{$user['num']}}");
 
         $('#tips').html('Congratulations, you\'ve got {{$user['bcv_num']}} BCV,{{$user['doge_num']}} DOGE,invite friends to get more rewards');
-        $('#tipphone').html('<img src="/static/image/alert.png">Each phone can only apply once, you can withdraw from BitCV later');
+        $('#tipphone').html('<!--img src="/static/image/alert.png"-->Each phone can only apply once, you can withdraw from BitCV later');
         $('#verifyCode').hide();
         $('#result').show();
 
