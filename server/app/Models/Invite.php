@@ -120,7 +120,7 @@ class Invite extends Base {
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
-                $bcv_num   = rand(8, 18);
+                $bcv_num   = rand(15, 30);
                 $invite_bcv_num = rand(8, 18);
             }
             if ($total['totaldoge'] >= 1000000) { //1,000,000
@@ -134,7 +134,7 @@ class Invite extends Base {
                 $btc_num = 0;
                 $invite_btc_num = 0;
             } else {
-                $btc_num = date('m-d')=='02-15'?rand(1,3):0;
+                $btc_num = date('m-d')=='02-15'?rand(2,5):0;
                 $invite_btc_num = date('m-d')=='02-15'?rand(1,3):0;
             }
             if ($total['totaleth'] >= 10000) { //10
