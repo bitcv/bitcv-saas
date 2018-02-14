@@ -14,16 +14,17 @@ class InviteController extends \App\Http\Controllers\Controller {
     public function getInvite(Request $request) {
         //$jssdk = new WxJSSDK('wx47ea3553f628923e', '707647d30c29289569d0c3ee0addaa8a');
         //$signPackage = $jssdk->GetSignPackage();
-        $sum = (new Invite())->getTotalToken();
-        $leftbcv = round((1000000-$sum['totalbcv'])/10000);
-        $leftdoge = round((1000000-$sum['totaldoge'])/10000);
+        //$sum = (new Invite())->getTotalToken();
+        //$leftbcv = round((1000000-$sum['totalbcv'])/10000);
+        //$leftdoge = round((1000000-$sum['totaldoge'])/10000);
         if (!Module::check('invite')) {
             die('err url');
         }
 
+        $invite = new Invite();
         $uid        = Invite::decode(\Cookie::get('uid'));
         if ($uid) {
-            $user = (new Invite())->getByUid($uid);
+            $user = $invite->getByUid($uid);
         } else {
             $user = [];
         }
