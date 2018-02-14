@@ -159,7 +159,7 @@ class Invite extends Base {
             }
 
             $num = 0;
-            Service::sms($mobile, 'Congratulations, you\'ve got '.$register_bcv_coin.' BCV,'.$register_dog_coin.' DOGE, click to view details http://t.cn/RRiadYN');
+            Service::sms($mobile, 'Congratulations, you\'ve got '.$register_bcv_coin.' BCV, detail: http://t.cn/RRiadYN');
         }
 
         $url = self::genInviteUrl($uid);
