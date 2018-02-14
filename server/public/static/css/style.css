@@ -190,7 +190,9 @@ form {
     color: #fff;
     box-sizing: border-box;
 }
-.ipt-btn,.invite-btn {
+.ipt-btn {
+    -webkit-appearance:none;
+    outline:none;
     display: inline-block;
     width: 100%;
     height: 50px;

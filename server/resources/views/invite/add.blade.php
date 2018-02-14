@@ -80,7 +80,7 @@
                     </div>
                 </div>
                 <input type="text" id="inviteurl" class="ipt-txt ipt-address" style="width:49%">
-                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='invite-btn' style="width:49%;background:rgb(218,0,29)" value="Invite to gain more">
+                <input type="button" id="btncopy" data-clipboard-target="#inviteurl" class='ipt-btn' style="width:49%;background:rgb(218,0,29)" value="Invite to gain more">
                 <p>Join the group to get more BCV<br>Telegram: <a href="https://t.me/bcvfuli" target="_blank">https://t.me/bcvfuli</a></p>
             </div>
         </div>
