@@ -68,6 +68,9 @@ class Invite extends Base {
 
     public function getByUid($uid) {
         $data = (array)\DB::table(self::$table)->where('id', $uid)->first();
+        if (!isset($data['id'])) {
+            return [];
+        }
         $data['url'] = self::genInviteUrl($uid);
         $data['nums'] = $data['bcv_num'].' BCV<br>'.$data['doge_num'].' DOGE<br>'.$data['btc_num'].' BTC<br>'.$data['eth_num'].' ETH<br>'.$data['eos_num'].' EOS<br>'.$data['neo_num'].' NEO';
         return $data;
