@@ -146,8 +146,9 @@
         //注册手机号码
         $('#code-btn').click(function () {
             var mobile = $('#mobile').val();
-            var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-            if (!pat.test(mobile)) {
+            //var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            //if (!pat.test(mobile)) {
+            if (mobile.length < 11) {
                 alert('please enter a valid phone number');
                 return false;
             }

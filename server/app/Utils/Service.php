@@ -4,8 +4,33 @@ namespace App\Utils;
 
 use Request;
 use Redis;
+use Validator;
 
 class Service {
+
+    //调试日志和系统日志分开
+    private static $loggers = array();
+    public static function log($msg, $file = 'debug') {
+        if (empty(self::$loggers[$file])) {
+            self::$loggers[$file] = new \Illuminate\Log\Writer(new \Monolog\Logger($file));
+            self::$loggers[$file]->useFiles(storage_path()."/logs/{$file}.log");
+        }
+        return self::$loggers[$file]->info($msg);
+        //不能改写默认日志，会同时写2个文件
+        //Log::useFiles(storage_path()."/logs/{$file}.log");
+    }
+
+    //中美手机号格式校验
+    public static function checkMobile($mobile, $nation = 86) {
+        $nation = strlen($mobile) == 10 ? 1 : 86;
+        $data = ['mobile' => $mobile];
+        $reg = $nation == 86 ? 'regex:/^1[35789]\d{9}$/' : 'regex:/^\d{10}$/';
+        $v = Validator::make($data, ['mobile' => $reg]);
+        if ($v->fails()) {
+            return false;
+        }
+        return true;
+    }
 
     //生成随机码
     public static function genRandChars($len = 6) { 

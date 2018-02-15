@@ -40,4 +40,9 @@ return [
         'pass' => env('SMS_PASS'),
     ],
 
+    'qcloudsms' => [
+        'sdkappid' => env('QCLOUDSMS_SDKAPPID'),
+        'appkey' => env('QCLOUDSMS_APPKEY'),
+    ],
+
 ];

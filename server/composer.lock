@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "216554b3c554f227c6023e5338af60f1",
+    "content-hash": "de781c098f200a8670fe93409b579374",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1226,6 +1226,42 @@
                 "shell"
             ],
             "time": "2017-12-28T16:14:16+00:00"
+        },
+        {
+            "name": "qcloudsms/qcloudsms_php",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qcloudsms/qcloudsms_php.git",
+                "reference": "660b598a58b3d271bff310b64ec238d2df45d9d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/qcloudsms/qcloudsms_php/660b598a58b3d271bff310b64ec238d2df45d9d6.zip",
+                "reference": "660b598a58b3d271bff310b64ec238d2df45d9d6",
+                "shasum": ""
+            },
+            "require-dev": {
+                "sami/sami": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Qcloud\\Sms\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "qcloud sms php sdk",
+            "keywords": [
+                "php",
+                "qcloud",
+                "sdk",
+                "sms"
+            ],
+            "time": "2018-01-23T06:52:45+00:00"
         },
         {
             "name": "ramsey/uuid",
