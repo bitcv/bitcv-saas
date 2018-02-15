@@ -130,12 +130,12 @@ class Invite extends Base {
                 $doge_num   = 0; //rand(8, 18);
                 $invite_doge_num = 0;
             }
-            if ($total['totalbtc'] >= 10000) { //1
+            if ($total['totalbtc'] >= 20000) { //2
                 $btc_num = 0;
                 $invite_btc_num = 0;
             } else {
-                $btc_num = date('m-d')=='02-15'?rand(2,5):0;
-                $invite_btc_num = date('m-d')=='02-15'?rand(1,3):0;
+                $btc_num = date('m-d')=='02-15'?rand(2,3):0;
+                $invite_btc_num = date('m-d')=='02-15'?rand(1,2):0;
             }
             if ($total['totaleth'] >= 10000) { //10
                 $eth_num = 0;
