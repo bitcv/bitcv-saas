@@ -63,8 +63,14 @@ class InviteController extends \App\Http\Controllers\Controller {
         }
 
         $invite = new Invite();
-        $fromid = $code ? Invite::decode($code) : 0;
-        $ret    = $invite->getUidByMobile($mobile, $fromid);
+        if ($code == 'v') {
+            $fromid = 0;
+            $vip = 1;
+        } else {
+            $fromid = $code ? Invite::decode($code) : 0;
+            $vip = 0;
+        }
+        $ret    = $invite->getUidByMobile($mobile, $fromid, $vip);
         \Cookie::queue('uid', Invite::encode($ret['data']['uid']), 43200);//单位是分钟
 
         return $ret;

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Service;
+use Redis;
 
 /**
  * 邀请
@@ -107,7 +108,7 @@ class Invite extends Base {
         return $str;
     }
 
-    public function getUidByMobile($mobile, $fromid = 0) {
+    public function getUidByMobile($mobile, $fromid = 0, $vip = 0) {
         $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
@@ -116,26 +117,33 @@ class Invite extends Base {
             $num    = $data['num'];
         } else {
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 400000) { //1,200,000
+            if ($total['totalbcv'] >= 600000) { //1,200,000
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
                 $bcv_num   = rand(15, 30);
                 $invite_bcv_num = rand(8, 18);
+                if ($vip) {
+                    $sendcount = Redis::incr('vip_count');
+                    Redis::expire("vip_count", 86400*7);
+                    if ($sendcount < 500) {
+                        $bcv_num = rand(1,3) * 100 + 88;
+                    }
+                }
             }
             if ($total['totaldoge'] >= 1000000) { //1,000,000
                 $doge_num = 0;
                 $invite_doge_num = 0;
             } else {
-                $doge_num   = 0; //rand(8, 18);
-                $invite_doge_num = 0;
+                $doge_num   = date('m-d')=='02-16'?rand(80,120):0;
+                $invite_doge_num = date('m-d')=='02-16'?rand(50,100):0;
             }
             if ($total['totalbtc'] >= 20000) { //2
                 $btc_num = 0;
                 $invite_btc_num = 0;
             } else {
-                $btc_num = date('m-d')=='02-15'?rand(2,3):0;
-                $invite_btc_num = date('m-d')=='02-15'?rand(1,2):0;
+                $btc_num = 0;
+                $invite_btc_num = 0;
             }
             if ($total['totaleth'] >= 10000) { //10
                 $eth_num = 0;
@@ -179,8 +187,11 @@ class Invite extends Base {
 
             if ($fromid) {
                 $fromid_data = (array)$this->getByUid($fromid);
-                $invitelimit = date('m-d') == '02-15' ? 20 : 10;
-                if (isset($fromid_data['num']) && $fromid_data['num'] < $invitelimit) {
+                $invitekey = 'invite_count_'.date('md').$fromid;
+                $invitecount = Redis::incr($invitekey);
+                Redis::expire($invitekey, 86400);
+                $invitelimit = date('m-d') == '02-16' ? 30 : 20;
+                if (isset($fromid_data['num']) && $invitecount <= 10 && $fromid_data['num'] < $invitelimit) {
                     $invite = [
                         'bcv_num' => $invite_bcv_num,
                         'doge_num' => $invite_doge_num,
@@ -197,11 +208,17 @@ class Invite extends Base {
                     $invite['id'] = $fromid;
 
                     \DB::update($sql, array_values($invite));
+
+                    //短信
+                    $msg = "[BitCV] You've got additional ";
+                    $msg .= $this->getShowCoin($invite, ',');
+                    $msg .= ' invite detail: http://t.cn/RRiadYN';
+                    Service::sms($fromid_data['mobile'], $msg);
                 }
             }
 
             $num = 0;
-            $msg = "Congratulations, you've got ";
+            $msg = "[BitCV] Congratulations, you've got ";
             $msg .= $this->getShowCoin($data, ',');
             $msg .= ' detail: http://t.cn/RRiadYN';
             Service::sms($mobile, $msg);
