@@ -129,7 +129,7 @@
             var mobile = $('#mobile').val();
             //var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             //if (!pat.test(mobile)) {
-            if (mobile.length < 11) {
+            if (mobile.length < 10) {
                 alert('please enter a valid phone number');
                 return false;
             }
@@ -148,7 +148,7 @@
             var mobile = $('#mobile').val();
             //var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             //if (!pat.test(mobile)) {
-            if (mobile.length < 11) {
+            if (mobile.length < 10) {
                 alert('please enter a valid phone number');
                 return false;
             }
