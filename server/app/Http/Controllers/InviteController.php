@@ -40,15 +40,6 @@ class InviteController extends \App\Http\Controllers\Controller {
         if ($ret['err'] > 0) {
             return ['retcode'=>1, 'msg'=>$ret['msg']];
         }
-        Service::sms($mobile, '【BitCV】Your validation code is '.$ret['data'].', please input in 5 minutes');
-        return ['retcode'=>200];
-    }
-
-    public function vcode2($mobile) {
-        $ret = Service::getVcode('reg', $mobile);
-        if ($ret['err'] > 0) {
-            return ['retcode'=>1, 'msg'=>$ret['msg']];
-        }
         SMS::sendVcode($mobile, $ret['data']);
         return ['retcode'=>200];
     }

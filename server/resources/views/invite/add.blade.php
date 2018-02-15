@@ -177,7 +177,7 @@
                         $('#inviteurl').val(ret.data['url']);
                         $('#total').html(ret.data['nums']);
                         $('#num').html(ret.data['num']);
-                        $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' DOGE,invite friends to get more rewards');
+                        $('#tips').html('Congratulations, you\'ve got'+ret.data['bcv_num']+' BCV,'+ret.data['doge_num']+' DOGE,invite friends to get more rewards.<br>Visit bitcv.com in march 1-10 to get your token to wallet');
                         $('#verifyCode').hide();
                         $('#result').show();
                         location.search = "?code=" + ret.data['uid'];
@@ -237,7 +237,7 @@
         $('#total').html("{!!$user['nums']!!}");
         $('#num').html("{{$user['num']}}");
 
-        $('#tips').html('Congratulations, you\'ve got {{$user['nums2']}} invite friends to get more rewards');
+        $('#tips').html('Congratulations, you\'ve got {{$user['nums2']}} invite friends to get more rewards.<br>Visit bitcv.com in march 1-10 to get your token to wallet');
         $('#tipphone').html('<img src="/static/image/alert.png"> Each phone can only apply once, you can withdraw from BitCV later');
         $('#verifyCode').hide();
         $('#result').show();

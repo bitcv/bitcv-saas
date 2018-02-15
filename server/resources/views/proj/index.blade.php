@@ -126,7 +126,7 @@
         <article id="anchor2" class="content menu-top dark">
             <header class="title one">产品实现</header>
             <div class="spacer"></div>
-            <div class="title two">我们的产品取得了很好的反向，市场上得到广泛的关注。</div>
+            <div class="title two">我们的产品取得了很好的反响，市场上得到广泛的关注。</div>
             <section class="featured-slider">
                 <div id="ca-container" class="ca-container">
                     <div class="nav-featured">

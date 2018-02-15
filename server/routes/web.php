@@ -12,7 +12,8 @@
 */
 
 
-Route::get('/', 'ProjController@apply');
+//Route::get('/', 'ProjController@apply');
+Route::get('/', 'InviteController@getInvite')->name('invite');
 
 //saas.lianbi.io saas申请和审核
 Route::group(['prefix' => 'saas'], function() {
@@ -44,8 +45,7 @@ Route::group(['prefix' => 'admin'], function() {
 //应用，收集钱包地址邀请
 Route::group(['prefix' => 'invite'], function() {
     Route::get('/', 'InviteController@getInvite')->name('invite');
-    Route::post('vcode/{mobile}', 'InviteController@vcode2');
-    Route::any('vcode2/{mobile}', 'InviteController@vcode2');
+    Route::post('vcode/{mobile}', 'InviteController@vcode');
     Route::post('add', 'InviteController@add');
     Route::post('verifyCode', 'InviteController@verifyCode');
 });
