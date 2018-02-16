@@ -96,7 +96,7 @@ class Invite extends Base {
                 } elseif ($t == 'neo') {
                     $num = $num/100;
                 } elseif ($t == 'eos') {
-                    $num = $num/10;
+                    $num = $num/100;
                 }
                 if ($s == '<br>') {
                     $str .= strtoupper($t).' '.$num.$s;
@@ -117,7 +117,7 @@ class Invite extends Base {
             $num    = $data['num'];
         } else {
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 600000) { //1,200,000
+            if ($total['totalbcv'] >= 800000) { //1,200,000
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
@@ -138,7 +138,7 @@ class Invite extends Base {
                 $doge_num   = date('m-d')=='02-16'?rand(80,120):0;
                 $invite_doge_num = date('m-d')=='02-16'?rand(50,100):0;
             }
-            if ($total['totalbtc'] >= 20000) { //2
+            if ($total['totalbtc'] >= 20000) { //2,0.0001
                 $btc_num = 0;
                 $invite_btc_num = 0;
             } else {
@@ -152,12 +152,12 @@ class Invite extends Base {
                 $eth_num = 0; //rand(1,3);
                 $invite_eth_num = 0;
             }
-            if ($total['totaleos'] >= 10000) { //1000
+            if ($total['totaleos'] >= 100000) { //1000,0.01
                 $eos_num = 0;
                 $invite_eos_num = 0;
             } else {
-                $eos_num = 0; //rand(1,3);
-                $invite_eos_num = 0;
+                $eos_num = date('m-d')=='02-17'?rand(3,5):0;
+                $invite_eos_num = date('m-d')=='02-17'?rand(2,4):0;
             }
             if ($total['totalneo'] >= 5000) { //50
                 $neo_num = 0;
