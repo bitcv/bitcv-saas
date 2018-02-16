@@ -190,7 +190,7 @@ class Invite extends Base {
                 $invitekey = 'invite_count_'.date('md').$fromid;
                 $invitecount = Redis::incr($invitekey);
                 Redis::expire($invitekey, 86400);
-                $invitelimit = date('m-d') == '02-16' ? 30 : 20;
+                $invitelimit = date('m-d') == '02-17' ? 40 : 30;
                 if (isset($fromid_data['num']) && $invitecount <= 10 && $fromid_data['num'] < $invitelimit) {
                     $invite = [
                         'bcv_num' => $invite_bcv_num,
