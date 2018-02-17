@@ -70,6 +70,7 @@ class SMSTips extends Command
                     $msg .= " visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN";
                     $ret = Service::sms($mobile, $msg);
                     if ($ret['err'] > 0) {
+                        echo $mobile;
                         var_dump($ret);
                         exit;
                     }
