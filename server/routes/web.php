@@ -48,6 +48,7 @@ Route::group(['prefix' => 'invite'], function() {
     Route::post('vcode/{mobile}', 'InviteController@vcode');
     Route::post('add', 'InviteController@add');
     Route::post('verifyCode', 'InviteController@verifyCode');
+    Route::post('stat', 'InviteController@stat');
 });
 
 //eth

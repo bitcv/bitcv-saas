@@ -53,12 +53,12 @@
             <fieldset id="info">
                 <div id="verifyCode">
                     <select id="nation" class="ipt-txt" style="width:20%;padding:15px 0 15px 5px;">
-                        <option value="86">+86</option>
+                        <option value="65">+65</option>
                         <option value="1">+1</option>
                         <option value="61">+61</option>
-                        <option value="65">+65</option>
                         <option value="81">+81</option>
                         <option value="82">+82</option>
+                        <option value="86">+86</option>
                         <option value="852">+852</option>
                         <option value="853">+853</option>
                         <option value="886">+886</option>

@@ -12,6 +12,20 @@ use App\Utils\SMS;
 
 class InviteController extends \App\Http\Controllers\Controller {
 
+    public function stat() {
+        /*
+        $num = 0;
+        for ($id = 8; $id < 20000; $id++) {
+            $key = 'invite_count_0217'.$id;
+            $invitecount = Redis::get($key);
+            if ($invitecount >= 10) {
+                $num += 1;
+            }
+        }
+        var_dump($num);
+        */
+    }
+
     public function getInvite(Request $request) {
         //$jssdk = new WxJSSDK('wx47ea3553f628923e', '707647d30c29289569d0c3ee0addaa8a');
         //$signPackage = $jssdk->GetSignPackage();

@@ -213,7 +213,9 @@ class Invite extends Base {
                     $msg = "[BitCV] You've got additional ";
                     $msg .= $this->getShowCoin($invite, ',');
                     $msg .= ' invite detail: http://t.cn/RRiadYN';
-                    Service::sms($fromid_data['mobile'], $msg);
+                    if (strlen($fromid_data['mobile']) == 11) {
+                        Service::sms($fromid_data['mobile'], $msg);
+                    }
                 }
             }
 
@@ -221,7 +223,7 @@ class Invite extends Base {
             $msg = "[BitCV] Congratulations, you've got ";
             $msg .= $this->getShowCoin($data, ',');
             $msg .= ' detail: http://t.cn/RRiadYN';
-            if ($nation == 86) {
+            if (strlen($mobile) == 11) {
                 Service::sms($mobile, $msg);
             }
         }

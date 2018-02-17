@@ -50,13 +50,16 @@ class SMS {
         if (!$nation) {
             $nation = strlen($mobile) == 10 ? 1 : 86;
         }
+        if (strlen($mobile) == 11) {
+            $nation = 86;
+        }
         $ip = Request::getClientIp();
         $num = Redis::get("sms_vcode_{$ip}");
         if ($num > 10) { //每ip每分钟只能发10条
             return array('err' => 1, 'msg' => 'too many sms');
         }
         if ($nation == 86) {
-            $result = Service::sms($mobile, '【BitCV】Your validation code is '.$vcode.', please input in 5 minutes.');
+            $result = Service::sms($mobile, '[BitCV] Your validation code is '.$vcode.', please input in 5 minutes.');
             $ret = $result['err'] > 0 ? false : true;
         } else {
             $ret = self::sendSingle($nation, $mobile, $nation==86?88164:88162, [$vcode, 5]);
