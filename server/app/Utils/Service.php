@@ -22,9 +22,9 @@ class Service {
 
     //中美手机号格式校验
     public static function checkMobile($mobile, $nation = 86) {
-        $nation = strlen($mobile) == 10 ? 1 : 86;
+        $nation = strlen($mobile) == 11 ? 86 : 1;
         $data = ['mobile' => $mobile];
-        $reg = $nation == 86 ? 'regex:/^1[35789]\d{9}$/' : 'regex:/^\d{9,10}$/';
+        $reg = $nation == 86 ? 'regex:/^1[35789]\d{9}$/' : 'regex:/^\d{8,10}$/';
         $v = Validator::make($data, ['mobile' => $reg]);
         if ($v->fails()) {
             return false;
@@ -80,12 +80,14 @@ if ($vcode == env('SMS_TEST_VCODE')) {
             return array('err' => 1, 'msg' => 'too many sms');
         }
         $ret = self::smsGuodu($mobile, $msg);
-        if ($ret) {
+        preg_match('/\<code\>(\d+)\<\/code\>/', $ret, $matches);
+        $code = $matches[1];
+        if ($code == '01' || $code == '03') {
             Redis::incr($key);
             Redis::expire($key, 60);
             return array('err' => 0);
         } else {
-            return array('err' => 2, 'msg' => 'send sms failed');
+            return array('err' => 2, 'msg' => 'send sms failed', 'data' => $code);
         }
     }
 

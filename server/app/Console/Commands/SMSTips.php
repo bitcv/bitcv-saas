@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use DB;
 use Service;
 use App\Models\Invite;
+use Redis;
 
 class SMSTips extends Command
 {
@@ -60,11 +61,20 @@ class SMSTips extends Command
                 if ($id % 10 != $seq) {
                     continue;
                 }
+                if (Redis::get('sms_tip_'.$mobile)) {
+                    continue;
+                }
                 if (strlen($mobile) == 11) {
                     $msg = "[BitCV] You've got ";
                     $msg .= $this->getShowCoin($u, ',');
                     $msg .= " visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN";
-                    Service::sms($mobile, $msg);
+                    $ret = Service::sms($mobile, $msg);
+                    if ($ret['err'] > 0) {
+                        var_dump($ret);
+                        exit;
+                    }
+                    Redis::set('sms_tip_'.$mobile, 1);
+                    Redis::expire('sms_tip_'.$mobile, 86400);
                     echo "{$u['id']}\t{$u['mobile']}\n";
                     sleep(1);
                 }
