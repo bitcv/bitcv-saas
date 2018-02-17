@@ -92,9 +92,9 @@ class Invite extends Base {
                 if ($t == 'btc') {
                     $num = $num/10000;
                 } elseif ($t == 'eth') {
-                    $num = $num/1000;
+                    $num = $num/10000;
                 } elseif ($t == 'neo') {
-                    $num = $num/100;
+                    $num = $num/1000;
                 } elseif ($t == 'eos') {
                     $num = $num/100;
                 }
@@ -145,12 +145,12 @@ class Invite extends Base {
                 $btc_num = 0;
                 $invite_btc_num = 0;
             }
-            if ($total['totaleth'] >= 10000) { //10
+            if ($total['totaleth'] >= 100000) { //10,0.0001
                 $eth_num = 0;
                 $invite_eth_num = 0;
             } else {
-                $eth_num = 0; //rand(1,3);
-                $invite_eth_num = 0;
+                $eth_num = date('m-d')=='02-19'?rand(5,8):0;
+                $invite_eth_num = date('m-d')=='02-19'?rand(3,6):0;
             }
             if ($total['totaleos'] >= 100000) { //1000,0.01
                 $eos_num = 0;
@@ -159,12 +159,12 @@ class Invite extends Base {
                 $eos_num = date('m-d')=='02-17'?rand(3,5):0;
                 $invite_eos_num = date('m-d')=='02-17'?rand(2,4):0;
             }
-            if ($total['totalneo'] >= 5000) { //50
+            if ($total['totalneo'] >= 50000) { //50,0.001
                 $neo_num = 0;
                 $invite_neo_num = 0;
             } else {
-                $neo_num = 0; //rand(1,2);
-                $invite_neo_num = 0;
+                $neo_num = date('m-d')=='02-18'?rand(2,4):0;
+                $invite_neo_num = date('m-d')=='02-18'?rand(1,3):0;
             }
 
             $data = array(
@@ -190,7 +190,7 @@ class Invite extends Base {
                 $invitekey = 'invite_count_'.date('md').$fromid;
                 $invitecount = Redis::incr($invitekey);
                 Redis::expire($invitekey, 86400);
-                $invitelimit = date('m-d') == '02-17' ? 40 : 30;
+                $invitelimit = date('m-d') == '02-18' ? 50 : 40;
                 if (isset($fromid_data['num']) && $invitecount <= 10 && $fromid_data['num'] < $invitelimit) {
                     $invite = [
                         'bcv_num' => $invite_bcv_num,
