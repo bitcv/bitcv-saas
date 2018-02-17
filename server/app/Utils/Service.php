@@ -24,7 +24,7 @@ class Service {
     public static function checkMobile($mobile, $nation = 86) {
         $nation = strlen($mobile) == 10 ? 1 : 86;
         $data = ['mobile' => $mobile];
-        $reg = $nation == 86 ? 'regex:/^1[35789]\d{9}$/' : 'regex:/^\d{10}$/';
+        $reg = $nation == 86 ? 'regex:/^1[35789]\d{9}$/' : 'regex:/^\d{9,10}$/';
         $v = Validator::make($data, ['mobile' => $reg]);
         if ($v->fails()) {
             return false;

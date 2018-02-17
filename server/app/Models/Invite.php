@@ -108,7 +108,7 @@ class Invite extends Base {
         return $str;
     }
 
-    public function getUidByMobile($mobile, $fromid = 0, $vip = 0) {
+    public function getUidByMobile($mobile, $fromid = 0, $vip = 0, $nation = 86) {
         $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
@@ -221,7 +221,9 @@ class Invite extends Base {
             $msg = "[BitCV] Congratulations, you've got ";
             $msg .= $this->getShowCoin($data, ',');
             $msg .= ' detail: http://t.cn/RRiadYN';
-            Service::sms($mobile, $msg);
+            if ($nation == 86) {
+                Service::sms($mobile, $msg);
+            }
         }
 
         $url = self::genInviteUrl($uid);

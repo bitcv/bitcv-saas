@@ -35,12 +35,13 @@ class InviteController extends \App\Http\Controllers\Controller {
         return view('invite.add', compact('code', 'proj', 'user', 'leftbcv', 'leftdoge'));
     }
 
-    public function vcode($mobile) {
+    public function vcode(Request $request, $mobile) {
+        $nation = $request->input('nation');
         $ret = Service::getVcode('reg', $mobile);
         if ($ret['err'] > 0) {
             return ['retcode'=>1, 'msg'=>$ret['msg']];
         }
-        SMS::sendVcode($mobile, $ret['data']);
+        SMS::sendVcode($mobile, $ret['data'], $nation);
         return ['retcode'=>200];
     }
 
@@ -48,6 +49,7 @@ class InviteController extends \App\Http\Controllers\Controller {
         $vcode = $request->input('vcode');
         $mobile = $request->input('mobile');
         $code       = $request->input('code', '');
+        $nation = $request->input('nation');
         $ret = Service::checkVCode('reg', $mobile, $vcode);
         if ($ret['err'] > 0) {
             return ['retcode' => 1, 'msg' => $ret['msg']];
@@ -61,7 +63,7 @@ class InviteController extends \App\Http\Controllers\Controller {
             $fromid = $code ? Invite::decode($code) : 0;
             $vip = 0;
         }
-        $ret    = $invite->getUidByMobile($mobile, $fromid, $vip);
+        $ret    = $invite->getUidByMobile($mobile, $fromid, $vip, $nation);
         \Cookie::queue('uid', Invite::encode($ret['data']['uid']), 43200);//单位是分钟
 
         return $ret;

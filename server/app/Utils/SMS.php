@@ -46,8 +46,10 @@ class SMS {
     }
 
     //您的验证码为{1}，请在{2}分钟内输入。
-    public static function sendVcode($mobile, $vcode) {
-        $nation = strlen($mobile) == 10 ? 1 : 86;
+    public static function sendVcode($mobile, $vcode, $nation = 86) {
+        if (!$nation) {
+            $nation = strlen($mobile) == 10 ? 1 : 86;
+        }
         $ip = Request::getClientIp();
         $num = Redis::get("sms_vcode_{$ip}");
         if ($num > 10) { //每ip每分钟只能发10条

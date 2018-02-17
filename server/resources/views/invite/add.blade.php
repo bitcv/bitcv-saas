@@ -52,7 +52,18 @@
             </div>
             <fieldset id="info">
                 <div id="verifyCode">
-                    <input type="text" class="ipt-txt ipt-address" id="mobile" placeholder="Mobile"/>
+                    <select id="nation" class="ipt-txt" style="width:20%;padding:15px 0 15px 5px;">
+                        <option value="86">+86</option>
+                        <option value="1">+1</option>
+                        <option value="61">+61</option>
+                        <option value="65">+65</option>
+                        <option value="81">+81</option>
+                        <option value="82">+82</option>
+                        <option value="852">+852</option>
+                        <option value="853">+853</option>
+                        <option value="886">+886</option>
+                    </select>
+                    <input type="text" class="ipt-txt ipt-address" style="width:78%" id="mobile" placeholder="Mobile"/>
                     <input type="text" class="ipt-txt ipt-address" style="width:49%" id="vcode" placeholder="Code"/>
                     <input type="button" class='ipt-btn' style="width:49%" id="btnvcode" value="Get verify code">
                     <input type="submit" value="Submit" class='ipt-btn' id="code-btn"/>
@@ -129,12 +140,12 @@
             var mobile = $('#mobile').val();
             //var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             //if (!pat.test(mobile)) {
-            if (mobile.length < 10) {
+            if (mobile.length < 9) {
                 alert('please enter a valid phone number');
                 return false;
             }
             time($(this));
-            $.post('/invite/vcode/'+mobile, '', function(ret) {
+            $.post('/invite/vcode/'+mobile, 'nation='+$('#nation').val(), function(ret) {
                 if (ret.retcode == 200) {
                     //alert('验证码已发送，请在5分钟内输入');
                 } else {
@@ -148,7 +159,7 @@
             var mobile = $('#mobile').val();
             //var pat = /^(((13[0-9]{1})|(17[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             //if (!pat.test(mobile)) {
-            if (mobile.length < 10) {
+            if (mobile.length < 9) {
                 alert('please enter a valid phone number');
                 return false;
             }
@@ -164,7 +175,8 @@
                 {
                     'mobile': mobile,
                     'vcode': vcode,
-                    'code': '{{$code}}'
+                    'code': '{{$code}}',
+                    'nation': $('#nation').val()
                 },
 
                 function(ret) {
