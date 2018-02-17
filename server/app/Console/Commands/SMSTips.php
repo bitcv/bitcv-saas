@@ -41,8 +41,8 @@ class SMSTips extends Command
     public function handle()
     {
         //test
-        Service::sms('13810055038', "[BitCV] You've got 8 BCV,0.0003 BTC, visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN");
-        exit;
+        //Service::sms('13810055038', "[BitCV] You've got 8 BCV,0.0003 BTC, visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN");
+        //exit;
         //
         $start = 0;
         $num = 100;
@@ -59,10 +59,10 @@ class SMSTips extends Command
                     $msg = "[BitCV] You've got ";
                     $msg .= $this->getShowCoin($u, ',');
                     $msg .= " visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN";
-                    //Service::sms($mobile, $msg);
-                    echo $mobile.': '.$msg . "\n";
+                    Service::sms($mobile, $msg);
+                    //echo $mobile.': '.$msg . "\n";
+                    echo "{$u['id']}\t{$u['mobile']}\n";
                 }
-                //echo "{$u['id']}\t{$u['mobile']}\n";
             }
             sleep(1);
         }
