@@ -117,7 +117,7 @@ class Invite extends Base {
             $num    = $data['num'];
         } else {
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 800000) { //1,200,000
+            if ($total['totalbcv'] >= 1000000) { //1,200,000
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {

@@ -14,7 +14,7 @@ class SMSTips extends Command
      *
      * @var string
      */
-    protected $signature = 'sms:tips';
+    protected $signature = 'sms:tips {seq}';
 
     /**
      * The console command description.
@@ -44,27 +44,31 @@ class SMSTips extends Command
         //Service::sms('13810055038', "[BitCV] You've got 8 BCV,0.0003 BTC, visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN");
         //exit;
         //
+        $seq = $this->argument('seq');
         $start = 0;
-        $num = 100;
+        $num = 1000;
         while (true) {
-            $rows = DB::table('mod_invite_2')->where('num',0)->orWhere('id','<',1000)->orderBy('id')->offset($start)->limit($num)->get()->toArray();
+            $rows = DB::table('mod_invite_2')->orderBy('id')->offset($start)->limit($num)->get()->toArray();
             if (empty($rows)) {
                 break;
             }
             $start += $num;
             foreach ($rows as $row) {
                 $u = (array)$row;
+                $id = $u['id'];
                 $mobile = $u['mobile'];
+                if ($id % 10 != $seq) {
+                    continue;
+                }
                 if (strlen($mobile) == 11) {
                     $msg = "[BitCV] You've got ";
                     $msg .= $this->getShowCoin($u, ',');
                     $msg .= " visit bitcv.com in march 1-10 to get your token to wallet, invite friends to get more, detail: http://t.cn/RRiadYN";
                     Service::sms($mobile, $msg);
-                    //echo $mobile.': '.$msg . "\n";
                     echo "{$u['id']}\t{$u['mobile']}\n";
+                    sleep(1);
                 }
             }
-            sleep(1);
         }
     }
     private function getShowCoin($data, $s = '<br>') {
