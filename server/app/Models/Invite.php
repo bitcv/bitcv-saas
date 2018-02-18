@@ -79,12 +79,20 @@ class Invite extends Base {
     }
 
     public function getTotalToken() {
-        $data = (array)\DB::select('select sum(bcv_num) as totalbcv,sum(doge_num) as totaldoge,sum(btc_num) as totalbtc,sum(eth_num) as totaleth,sum(eos_num) as totaleos,sum(neo_num) as totalneo from '.self::$table);
+        $data = (array)\DB::select('select sum(bcv_num) as totalbcv,
+            sum(doge_num) as totaldoge,
+            sum(btc_num) as totalbtc,
+            sum(eth_num) as totaleth,
+            sum(eos_num) as totaleos,
+            sum(neo_num) as totalneo,
+            sum(pxc_num) as totalpxc,
+            sum(icst_num) as totalicst
+            from '.self::$table);
         return (array)$data[0];
     }
 
     private function getShowCoin($data, $s = '<br>') {
-        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];//, 'pxc', 'icst'];
         $str = '';
         foreach ($types as $t) {
             if (isset($data[$t.'_num']) && ($s=='<br>'||$data[$t.'_num']>0)) {
@@ -109,7 +117,7 @@ class Invite extends Base {
     }
 
     public function getUidByMobile($mobile, $fromid = 0, $vip = 0, $nation = 86) {
-        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo', 'pxc', 'icst'];
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
             $data   = (array)$data;
@@ -117,7 +125,7 @@ class Invite extends Base {
             $num    = $data['num'];
         } else {
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 1200000) { //1,200,000
+            if ($total['totalbcv'] >= 1300000) { //1,500,000
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
@@ -167,16 +175,29 @@ class Invite extends Base {
                 $invite_neo_num = date('m-d')=='02-18'?rand(1,3):0;
             }
 
+            if ($total['totalpxc'] >= 1000000) { //1,000,000
+                $pxc_num = 0;
+                $invite_pxc_num = 0;
+            } else {
+                $pxc_num = date('m-d')=='02-20'?rand(50,80):0;
+                $invite_pxc_num = date('m-d')=='02-20'?rand(30,60):0;
+            }
+            if ($total['totalicst'] >= 250000) { //250,000
+                $icst_num = 0;
+                $invite_icst_num = 0;
+            } else {
+                $icst_num = date('m-d')=='02-20'?rand(10,20):0;
+                $invite_icst_num = date('m-d')=='02-20'?rand(8,15):0;
+            }
+
             $data = array(
                 'mobile'    => $mobile,
                 'fromid'    => $fromid,
-                'bcv_num'   => $bcv_num,
-                'doge_num'  => $doge_num,
-                'btc_num'  => $btc_num,
-                'eth_num'  => $eth_num,
-                'eos_num'  => $eos_num,
-                'neo_num'  => $neo_num,
             );
+            foreach ($types as $t) {
+                $f = $t.'_num';
+                $data[$f] = $$f;
+            }
             $uid = \DB::table(self::$table)->insertGetId($data);
 
             $inviteReward = new InviteReward();
@@ -190,21 +211,21 @@ class Invite extends Base {
                 $invitekey = 'invite_count_'.date('md').$fromid;
                 $invitecount = Redis::incr($invitekey);
                 Redis::expire($invitekey, 86400);
-                $invitelimit = date('m-d') == '02-18' ? 50 : 40;
+                $invitelimit = date('m-d') == '02-19' ? 60 : 50;
                 if (isset($fromid_data['num']) && $invitecount <= 10 && $fromid_data['num'] < $invitelimit) {
-                    $invite = [
-                        'bcv_num' => $invite_bcv_num,
-                        'doge_num' => $invite_doge_num,
-                        'btc_num' => $invite_btc_num,
-                        'eth_num' => $invite_eth_num,
-                        'eos_num' => $invite_eos_num,
-                        'neo_num' => $invite_neo_num,
-                    ];
-
+                    $invite = [];
+                    foreach ($types as $t) {
+                        $f = 'invite_'.$t.'_num';
+                        $invite[$t.'_num'] = $$f;
+                    }
                     $inviteReward->invite($fromid, $uid, $invite);
 
                     //操作邀请表
-                    $sql = 'update '.self::$table.' set bcv_num=bcv_num+?, doge_num=doge_num+?, btc_num=btc_num+?, eth_num=eth_num+?, eos_num=eos_num+?, neo_num=neo_num+?, num=num+1 where id=?';
+                    $sql = 'update '.self::$table.' set ';
+                    foreach ($types as $t) {
+                        $sql .= "{$t}_num={$t}_num+?,";
+                    }
+                    $sql .= 'num=num+1 where id=?';
                     $invite['id'] = $fromid;
 
                     \DB::update($sql, array_values($invite));
