@@ -121,8 +121,8 @@ class Invite extends Base {
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
-                $bcv_num   = rand(15, 30);
-                $invite_bcv_num = rand(8, 18);
+                $bcv_num   = rand(10, 12);
+                $invite_bcv_num = rand(5, 10);
                 if ($vip) {
                     $sendcount = Redis::incr('vip_count');
                     Redis::expire("vip_count", 86400*7);
