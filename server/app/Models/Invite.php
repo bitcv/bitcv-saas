@@ -86,13 +86,14 @@ class Invite extends Base {
             sum(eos_num) as totaleos,
             sum(neo_num) as totalneo,
             sum(pxc_num) as totalpxc,
-            sum(icst_num) as totalicst
+            sum(icst_num) as totalicst,
+            sum(kcash_num) as totalkcash
             from '.self::$table);
         return (array)$data[0];
     }
 
     private function getShowCoin($data, $s = '<br>') {
-        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];//, 'pxc', 'icst'];
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];//, 'pxc', 'icst', 'kcash'];
         $str = '';
         foreach ($types as $t) {
             if (isset($data[$t.'_num']) && ($s=='<br>'||$data[$t.'_num']>0)) {
@@ -117,7 +118,7 @@ class Invite extends Base {
     }
 
     public function getUidByMobile($mobile, $fromid = 0, $vip = 0, $nation = 86) {
-        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo', 'pxc', 'icst'];
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo', 'pxc', 'icst', 'kcash'];
         $data = \DB::table(self::$table)->where('mobile', $mobile)->first();
         if ($data) {
             $data   = (array)$data;
@@ -189,6 +190,13 @@ class Invite extends Base {
                 $icst_num = date('m-d')=='02-20'?rand(10,20):0;
                 $invite_icst_num = date('m-d')=='02-20'?rand(8,15):0;
             }
+            if ($total['totalkcash'] >= 40000) { //40,000
+                $kcash_num = 0;
+                $invite_kcash_num = 0;
+            } else {
+                $kcash_num = date('m-d')=='02-20'?rand(2,3):0;
+                $invite_kcash_num = date('m-d')=='02-20'?rand(1,2):0;
+            }
 
             $data = array(
                 'mobile'    => $mobile,
@@ -211,7 +219,7 @@ class Invite extends Base {
                 $invitekey = 'invite_count_'.date('md').$fromid;
                 $invitecount = Redis::incr($invitekey);
                 Redis::expire($invitekey, 86400);
-                $invitelimit = date('m-d') == '02-19' ? 60 : 50;
+                $invitelimit = date('m-d') == '02-20' ? 70 : 60;
                 if (isset($fromid_data['num']) && $invitecount <= 10 && $fromid_data['num'] < $invitelimit) {
                     $invite = [];
                     foreach ($types as $t) {
