@@ -93,7 +93,7 @@ class Invite extends Base {
     }
 
     private function getShowCoin($data, $s = '<br>') {
-        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo'];//, 'pxc', 'icst', 'kcash'];
+        $types = ['bcv', 'doge', 'btc', 'eth', 'eos', 'neo', 'pxc', 'icst', 'kcash'];
         $str = '';
         foreach ($types as $t) {
             if (isset($data[$t.'_num']) && ($s=='<br>'||$data[$t.'_num']>0)) {
