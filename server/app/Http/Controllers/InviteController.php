@@ -51,7 +51,7 @@ class InviteController extends \App\Http\Controllers\Controller {
 
     public function vcode(Request $request, $mobile) {
         if (date('Ymd') >= '20180221') {
-            //return ['retcode' => 1, 'msg' => 'The event is over, thank you for your support.'];
+            return ['retcode' => 1, 'msg' => 'The event is over, thank you for your support. Visit bitcv.com in march 1-10 to get your token to wallet.'];
         }
         $nation = $request->input('nation');
         $ret = Service::getVcode('reg', $mobile);
