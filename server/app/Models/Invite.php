@@ -126,7 +126,7 @@ class Invite extends Base {
             $num    = $data['num'];
         } else {
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 1300000) { //1,500,000
+            if ($total['totalbcv'] >= 1500000) { //1,500,000
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
@@ -144,36 +144,36 @@ class Invite extends Base {
                 $doge_num = 0;
                 $invite_doge_num = 0;
             } else {
-                $doge_num   = date('m-d')=='02-16'?rand(80,120):0;
-                $invite_doge_num = date('m-d')=='02-16'?rand(50,100):0;
+                $doge_num   = date('m-d')=='02-20'?rand(80,120):0;
+                $invite_doge_num = date('m-d')=='02-20'?rand(50,100):0;
             }
-            if ($total['totalbtc'] >= 20000) { //2,0.0001
+            if ($total['totalbtc'] >= 25000) { //2.5,0.0001
                 $btc_num = 0;
                 $invite_btc_num = 0;
             } else {
-                $btc_num = 0;
-                $invite_btc_num = 0;
+                $btc_num = date('m-d')=='02-20'?1:0;
+                $invite_btc_num = (date('m-d')=='02-20' && rand(1,3)==1)?1:0;
             }
             if ($total['totaleth'] >= 100000) { //10,0.0001
                 $eth_num = 0;
                 $invite_eth_num = 0;
             } else {
-                $eth_num = date('m-d')=='02-19'?rand(5,8):0;
-                $invite_eth_num = date('m-d')=='02-19'?rand(3,6):0;
+                $eth_num = date('m-d')=='02-20'?rand(5,8):0;
+                $invite_eth_num = date('m-d')=='02-20'?rand(3,6):0;
             }
             if ($total['totaleos'] >= 100000) { //1000,0.01
                 $eos_num = 0;
                 $invite_eos_num = 0;
             } else {
-                $eos_num = date('m-d')=='02-17'?rand(3,5):0;
-                $invite_eos_num = date('m-d')=='02-17'?rand(2,4):0;
+                $eos_num = date('m-d')=='02-20'?rand(3,5):0;
+                $invite_eos_num = date('m-d')=='02-20'?rand(2,4):0;
             }
             if ($total['totalneo'] >= 50000) { //50,0.001
                 $neo_num = 0;
                 $invite_neo_num = 0;
             } else {
-                $neo_num = date('m-d')=='02-18'?rand(2,4):0;
-                $invite_neo_num = date('m-d')=='02-18'?rand(1,3):0;
+                $neo_num = date('m-d')=='02-20'?rand(2,4):0;
+                $invite_neo_num = date('m-d')=='02-20'?rand(1,3):0;
             }
 
             if ($total['totalpxc'] >= 1000000) { //1,000,000
