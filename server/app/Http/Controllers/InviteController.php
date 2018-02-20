@@ -50,6 +50,9 @@ class InviteController extends \App\Http\Controllers\Controller {
     }
 
     public function vcode(Request $request, $mobile) {
+        if (date('Ymd') >= '20180221') {
+            //return ['retcode' => 1, 'msg' => 'The event is over, thank you for your support.'];
+        }
         $nation = $request->input('nation');
         $ret = Service::getVcode('reg', $mobile);
         if ($ret['err'] > 0) {
@@ -60,6 +63,9 @@ class InviteController extends \App\Http\Controllers\Controller {
     }
 
     public function verifyCode(Request $request) {
+        if (date('Ymd') >= '20180221') {
+            //return ['retcode' => 1, 'msg' => 'The event is over, thank you for your support.'];
+        }
         $vcode = $request->input('vcode');
         $mobile = $request->input('mobile');
         $code       = $request->input('code', '');

@@ -48,7 +48,7 @@
             </h1>
             <div class="intro">
                 <div class="join"></div>
-                <p>More than 2,000,000 BCV, DOGE,<br>BTC, ETH, EOS, NEO rewards</p>
+                <p>More than 2,000,000 BCV, DOGE,<br>BTC, ETH, EOS, NEO rewards.<br>(The event is over, thank you for your support.)</p>
             </div>
             <fieldset id="info">
                 <div id="verifyCode">

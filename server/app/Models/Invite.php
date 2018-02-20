@@ -126,12 +126,13 @@ class Invite extends Base {
             $num    = $data['num'];
         } else {
             $total = $this->getTotalToken();
-            if ($total['totalbcv'] >= 1500000) { //1,500,000
+            if ($total['totalbcv'] >= 1600000) { //1,500,000
                 $bcv_num = 0;
                 $invite_bcv_num = 0;
             } else {
                 $bcv_num   = rand(10, 12);
-                $invite_bcv_num = rand(5, 10);
+                $invite_bcv_num = 0;//rand(5, 10);
+                /*
                 if ($vip) {
                     $sendcount = Redis::incr('vip_count');
                     Redis::expire("vip_count", 86400*7);
@@ -139,6 +140,7 @@ class Invite extends Base {
                         $bcv_num = rand(1,3) * 100 + 88;
                     }
                 }
+                */
             }
             if ($total['totaldoge'] >= 1000000) { //1,000,000
                 $doge_num = 0;
@@ -219,8 +221,8 @@ class Invite extends Base {
                 $invitekey = 'invite_count_'.date('md').$fromid;
                 $invitecount = Redis::incr($invitekey);
                 Redis::expire($invitekey, 86400);
-                $invitelimit = date('m-d') == '02-20' ? 70 : 60;
-                if (isset($fromid_data['num']) && $invitecount <= 10 && $fromid_data['num'] < $invitelimit) {
+                $invitelimit = date('m-d') == '02-20' ? 100 : 100;
+                if (isset($fromid_data['num']) && $invitecount <= 50 && $fromid_data['num'] < $invitelimit) {
                     $invite = [];
                     foreach ($types as $t) {
                         $f = 'invite_'.$t.'_num';
@@ -243,7 +245,7 @@ class Invite extends Base {
                     $msg .= $this->getShowCoin($invite, ',');
                     $msg .= ' invite detail: http://t.cn/RRiadYN';
                     if (strlen($fromid_data['mobile']) == 11) {
-                        Service::sms($fromid_data['mobile'], $msg);
+//                        Service::sms($fromid_data['mobile'], $msg);
                     }
                 }
             }
@@ -253,7 +255,7 @@ class Invite extends Base {
             $msg .= $this->getShowCoin($data, ',');
             $msg .= ' detail: http://t.cn/RRiadYN';
             if (strlen($mobile) == 11) {
-                Service::sms($mobile, $msg);
+//                Service::sms($mobile, $msg);
             }
         }
 

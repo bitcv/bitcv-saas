@@ -42,13 +42,13 @@ class SMSTips extends Command
     public function handle()
     {
         //test
-        //Service::sms('13810055038', "[BitCV] http://t.cn/RRiadYN The last day invite friends to get BCV、KCASH、PXC、ICST、BTC、DOGE、EOS、NEO、ETH together.");
+        //Service::sms('13810055038', "[BitCV] http://t.cn/RRiadYN The last day invite friends to get BCV、KCASH、PXC、ICST、BTC、DOGE、EOS、NEO、ETH together!");
         //exit;
         //
         $seq = $this->argument('seq');
         $start = 0;
         $num = 199;
-        $msg = '[BitCV] http://t.cn/RRiadYN The last day invite friends to get BCV、KCASH、PXC、ICST、BTC、DOGE、EOS、NEO、ETH together.';
+        $msg = '[BitCV] http://t.cn/RRiadYN The last day invite friends to get BCV、KCASH、PXC、ICST、BTC、DOGE、EOS、NEO、ETH together!';
         while (true) {
             $rows = DB::table('mod_invite_2')->where('id','<',40000)->orderBy('id')->offset($start)->limit($num)->get()->toArray();
             if (empty($rows)) {

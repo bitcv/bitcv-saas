@@ -77,7 +77,7 @@ if ($vcode == env('SMS_TEST_VCODE')) {
         $key = "saas_vcode_{$ip}";
         $num = Redis::get($key);
         if ($num > 10) { //每ip每分钟只能发10条
-//            return array('err' => 1, 'msg' => 'too many sms');
+            return array('err' => 1, 'msg' => 'too many sms');
         }
         $ret = self::smsGuodu($mobile, $msg);
         preg_match('/\<code\>(\d+)\<\/code\>/', $ret, $matches);
