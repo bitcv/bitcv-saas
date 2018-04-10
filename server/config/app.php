@@ -2,7 +2,7 @@
 
 return [
 
-    'domain' => env('SAAS_DOMAIN', 'saas.lianbi.io'),
+    'domain' => env('SAAS_DOMAIN', 'saas.bitcv.com'),
 
     /*
     |--------------------------------------------------------------------------

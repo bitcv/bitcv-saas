@@ -15,7 +15,7 @@
 //Route::get('/', 'ProjController@apply');
 Route::get('/', 'InviteController@getInvite')->name('invite');
 
-//saas.lianbi.io saas申请和审核
+//saas.bitcv.com saas申请和审核
 Route::group(['prefix' => 'saas'], function() {
     
     //项目方申请
