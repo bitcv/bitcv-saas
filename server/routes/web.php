@@ -12,14 +12,14 @@
 */
 
 
-//Route::get('/', 'ProjController@apply');
-Route::get('/', 'InviteController@getInvite')->name('invite');
+Route::get('/', 'ProjController@apply');
+//Route::get('/', 'InviteController@getInvite')->name('invite');
 
 //saas.bitcv.com saas申请和审核
 Route::group(['prefix' => 'saas'], function() {
     
     //项目方申请
-    //Route::get('apply', 'ProjController@apply')->name('proj.apply');
+    Route::get('apply', 'ProjController@apply')->name('proj.apply');
     Route::post('add', 'ProjController@add')->name('proj.add');
 
     //管理后台
