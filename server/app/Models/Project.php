@@ -122,11 +122,11 @@ class Project extends Model
         $projData['reportList'] = $projReportList;
 
         // 获取社交链接信息
-        $projSocialList = M\ProjSocial::join('proj_social', 'proj_social.social_id', '=', 'proj_social.id')
-            ->where('proj_id', $projId)
-            ->select('name', 'font_class', 'link_url')
-            ->get()->toArray();
-        $projData['socialList'] = $projSocialList;
+        // $projSocialList = M\ProjSocial::join('proj_social', 'proj_social.social_id', '=', 'proj_social.id')
+        //     ->where('proj_id', $projId)
+        //     ->select('name', 'font_class', 'link_url')
+        //     ->get()->toArray();
+        // $projData['socialList'] = $projSocialList;
 
         return $projData;
     }
