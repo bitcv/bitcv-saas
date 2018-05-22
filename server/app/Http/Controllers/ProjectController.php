@@ -19,6 +19,7 @@ class ProjectController extends Controller
     public function login(Request $req) {
         $username   = $req->input('username');
         $passwd     = $req->input('password');
+
         if ($username != app()->proj['adminname'] ||  $passwd != app()->proj['adminpass']) {
             return $this->error(401);
         }

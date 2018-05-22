@@ -30,7 +30,8 @@ class InitSaas
                 $proj = $saas->getByDomain($host);
             }
             if (!isset($proj['proj_id'])) {
-                return redirect($_SERVER['REQUEST_SCHEME'].'://'.$saasdomain);
+                if (isset($_SERVER['REQUEST_SCHEME']) && $_SERVER['REQUEST_SCHEME'])
+                    return redirect($_SERVER['REQUEST_SCHEME'].'://'.$saasdomain);
             }
             app()->proj = $proj;
         } else {

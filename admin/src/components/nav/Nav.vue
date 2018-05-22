@@ -20,6 +20,14 @@ export default {
         url: '#/info',
         text: '项目管理'
       }, {
+        icon: 'el-icon-menu',
+        url: '#/check',
+        text: 'SaaS 审核'
+      }, {
+        icon: 'el-icon-menu',
+        url: '#/picture',
+        text: '上传图片'
+      }, {
         icon: 'el-icon-info',
         url: '#/profile',
         text: '个人信息'

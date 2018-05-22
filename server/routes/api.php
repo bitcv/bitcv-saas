@@ -75,3 +75,7 @@ Route::any('updSocial', 'ProjectController@updSocial');
 Route::any('delSocial', 'ProjectController@delSocial');
 Route::any('updSocial', 'ProjectController@updSocial');
 
+//saas
+Route::any('getApplySaasList', 'AdminController@getApplySaasList');
+Route::any('checkSaas', 'AdminController@checkSaas');
+Route::any('deleteSaas', 'AdminController@deleteSaas');

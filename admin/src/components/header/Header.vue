@@ -22,13 +22,13 @@ export default {
     updateData () {
     },
     logout () {
-        this.$http.post('/api/signout').then((res) => {
-            if (res.data.errcode === 0) {
-              this.$router.push('/login')
-            } else {
-              this.$message({ type: 'error', message: res.data.errmsg })
-            }
-          })
+      this.$http.post('/api/signout').then((res) => {
+        if (res.data.errcode === 0) {
+          this.$router.push('/login')
+        } else {
+          this.$message({ type: 'error', message: res.data.errmsg })
+        }
+      })
     }
   }
 }

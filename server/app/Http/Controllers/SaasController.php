@@ -6,6 +6,7 @@ use App\Models\Constant;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Models\Saas;
+use Illuminate\Support\Facades\DB;
 
 class SaasController extends Controller
 {
@@ -96,5 +97,11 @@ class SaasController extends Controller
         } else {
             return ['retcode'=>$data['err'],'msg'=>$data['msg']];
         }
+    }
+
+    public function addPic (Request $request)
+    {
+        $projId = app()->proj['proj_id'];
+        print_r($projId);
     }
 }

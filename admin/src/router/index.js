@@ -5,6 +5,8 @@ import Social from '@/components/social/Social'
 import Media from '@/components/media/Media'
 import Login from '@/components/login/Login'
 import EditProject from '@/components/projList/editProject/EditProject'
+import Check from '@/components/saas/check'
+import UploadPic from '@/components/saas/upload'
 
 Vue.use(Router)
 
@@ -30,6 +32,14 @@ export default new Router({
     {
       path: '/media',
       component: Media
+    },
+    {
+      path: '/check',
+      component: Check
+    },
+    {
+      path: '/picture',
+      component: UploadPic
     }
   ]
 })
