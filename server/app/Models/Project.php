@@ -115,14 +115,14 @@ class Project extends Model
         $projData['partnerList'] = $projPartnerList;
 
         // 获取媒体报道信息
-        $projReportList = M\ProjReport::join('media', 'proj_report.media_id', '=', 'media.id')
+        $projReportList = M\ProjReport::join('proj_media', 'proj_report.media_id', '=', 'proj_media.id')
             ->where('proj_id', $projId)
             ->select('name', 'logo_url', 'link_url', 'title')
             ->limit(4)->get()->toArray();
         $projData['reportList'] = $projReportList;
 
         // 获取社交链接信息
-        $projSocialList = M\ProjSocial::join('social', 'proj_social.social_id', '=', 'social.id')
+        $projSocialList = M\ProjSocial::join('proj_social', 'proj_social.social_id', '=', 'proj_social.id')
             ->where('proj_id', $projId)
             ->select('name', 'font_class', 'link_url')
             ->get()->toArray();
