@@ -116,7 +116,7 @@ class Project extends Model
 
         // 获取媒体报道信息
         $projReportList = M\ProjReport::join('proj_media', 'proj_report.media_id', '=', 'proj_media.id')
-            ->where('proj_id', $projId)
+            ->where('proj_report.proj_id', $projId)
             ->select('banner_url', 'link_url', 'proj_report.title')
             ->limit(4)->get()->toArray();
         $projData['reportList'] = $projReportList;
