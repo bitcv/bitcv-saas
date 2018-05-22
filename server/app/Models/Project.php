@@ -22,11 +22,11 @@ class Project extends Model
         //     ->first();
         $projData = DB::table('proj_info')->where('id',$projId)
             ->select('id', 'name_cn', 'name_en', 'logo_url', 'banner_url', 'abstract', 'white_paper_url', 'home_url', 'view_times', 'token_id', 'node_amount', 'cur_amount', 'plan_amount', 'fund_start_time', 'fund_end_time', 'status', 'admin_id', 'company_addr', 'company_email')
-            ->first()->toArray();
+            ->get();
         if ($projData === null) {
             return $this->error(301);
         }
-        // $projData->toArray();
+        $projData->toArray();
 
         // 获取项目关注数目
         //$projData['focusNum'] = M\UserFocus::where([['proj_id', $projId], ['status', 1]])->count();
