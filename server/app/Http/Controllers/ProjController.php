@@ -16,7 +16,6 @@ class ProjController extends Controller {
             die('err');
         }
         $proj = (new Project())->getProjDetail($projId);
-        var_dump($proj);die;
         return view('proj.index', compact('proj'));
     }
 

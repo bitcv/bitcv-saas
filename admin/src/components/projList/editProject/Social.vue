@@ -1,7 +1,7 @@
 <template>
   <div class="social">
     <div class="header-btn-area">
-      <el-button type="primary" icon="el-icon-plus" @click="showAdd">添加</el-button>
+      <el-button type="primary" icon="el-icon-plus" @click="showDialog = true">添加</el-button>
     </div>
     <el-table :data="socialList">
       <el-table-column label="Logo">
@@ -26,10 +26,7 @@
       <el-form label-width="80px">
         <el-form-item label="平台名称">
           <el-select v-model="inputSocialId" placeholder="请选择社交平台">
-            <el-option v-for="(social, index) in socialOptionList" :key="index" :value="social.id">
-              <i class="fab select-font-icon" :class="social.fontClass"></i>
-              <span>{{ social.name }}</span>
-            </el-option>
+            <el-option v-for="(social, index) in socialOptionList" :key="index" :value="social.id" :label="social.name"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="主页url">
@@ -157,7 +154,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.select-font-icon {
-  font-size: 16px;
-}
 </style>
