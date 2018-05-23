@@ -1,32 +1,45 @@
 <template>
   <div class="header container">
     <div class="logo">
-      <img src="/static/logo.png" alt="">
+      <a href="/">
+        <img src="/static/img/logo.png" alt="">
+      </a>
     </div>
     <div class="info">
-      <div class="account"><span>JunderKing</span></div>
-      <div class="signout"><span @click="logout">退出登录</span></div>
+      <div class="account"><span>{{ mobile }}</span></div>
+      <div class="signout" @click="signout"><span>退出登录</span></div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   data () {
     return {
+      mobile: ''
     }
   },
   mounted () {
+    this.mobile = localStorage.getItem('mobile')
   },
   methods: {
-    updateData () {
-    },
-    logout () {
-      this.$http.post('/api/signout').then((res) => {
+    /* signout () {
+      this.$http.post('/api/signout', {}).then((res) => {
         if (res.data.errcode === 0) {
-          this.$router.push('/login')
-        } else {
-          this.$message({ type: 'error', message: res.data.errmsg })
+          localStorage.removeItem('userId')
+          localStorage.removeItem('mobile')
+          localStorage.removeItem('avatarUrl')
+          window.location.href = '/'
+        }
+      })
+    } */
+    ...mapMutations(['cleanUserInfo']),
+    signout () {
+      this.$http.post('/api/doSignout', {}).then((res) => {
+        if (res.data.errcode === 0) {
+          this.cleanUserInfo()
+          this.$router.push('/admin/signin')
         }
       })
     }
@@ -65,6 +78,7 @@ export default {
       color: #FFF;
       height: 100%;
       display: flex;
+      cursor: pointer;
       align-items: center;
     }
   }

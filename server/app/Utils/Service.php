@@ -139,5 +139,14 @@ if ($vcode == env('SMS_TEST_VCODE')) {
         return $str;
     }
 
+    //获取加密密码
+    public static function getPwd($pass) {
+        return password_hash($pass.env('PASS_SALT'), PASSWORD_DEFAULT);
+    }
+    //校验密码
+    public static function checkPwd($pass, $hash) {
+        return password_verify($pass.env('PASS_SALT'), $hash);
+    }
+
 
 }

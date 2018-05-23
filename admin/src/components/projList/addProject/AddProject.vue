@@ -104,7 +104,7 @@ export default {
       this.$http.post('/api/addProject', this.formData).then((res) => {
         if (res.data.errcode === 0) {
           this.$message({ type: 'success', message: '创建成功!' })
-          this.$router.push('/')
+          this.$router.push('/admin/project')
         }
       })
     }

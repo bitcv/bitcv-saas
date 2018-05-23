@@ -1,45 +1,32 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Social from '@/components/social/Social'
-import Media from '@/components/media/Media'
-import Login from '@/components/login/Login'
-import EditProject from '@/components/projList/editProject/EditProject'
-import Check from '@/components/saas/check'
-import UploadPic from '@/components/saas/upload'
+import Signin from '@/components/signin/Signin'
+import Home from '@/components/home/Home'
+import Setting from '@/components/setting/Setting'
+import Upload from '@/components/setting/upload'
 
 Vue.use(Router)
 
 export default new Router({
-  // mode: 'history',
-  routes: [
-    {
-      path: '/',
-      component: Login
-    },
-    {
-      path: '/login',
-      component: Login
-    },
-    {
-      path: '/info',
-      component: EditProject
-    },
-    {
-      path: '/social',
-      component: Social
-    },
-    {
-      path: '/media',
-      component: Media
-    },
-    {
-      path: '/check',
-      component: Check
-    },
-    {
-      path: '/picture',
-      component: UploadPic
-    }
-  ]
+  mode: 'history',
+  routes: [{
+    path: '/admin',
+    component: Home,
+    children: [{
+      path: '/admin/setting',
+      meta: {
+        requireAuth: true
+      },
+      component: Setting
+    }, {
+      path: '/admin/upload',
+      meta: {
+        requireAuth: true
+      },
+      component: Upload
+    }]
+  }, {
+    path: '/admin/signin',
+    component: Signin
+  }]
 })
