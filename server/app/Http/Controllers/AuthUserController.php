@@ -247,7 +247,7 @@ class AuthUserController extends Controller
         if ($params === false) {
             return $this->error(100);
         }
-
+        print_r(app()->proj['proj_id']);
         $picture = DB::table('base_token')->where('id',$params['pid'])->select('packet_cover','id')->get()->toArray();
         if ($picture) {
             return $this->output([

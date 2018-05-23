@@ -9,7 +9,7 @@
           <img class="table-image" :src="scope.row.logoUrl" alt="">
         </template>
       </el-table-column>
-      <el-table-column label="机构名称">
+      <el-table-column label="交易所名称">
         <template slot-scope="scope">{{ scope.row.name }}</template>
       </el-table-column>
       <el-table-column label="主页url">
@@ -22,33 +22,33 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="合作机构信息" :visible.sync="showDialog" center>
+    <el-dialog title="交易所信息" :visible.sync="showDialog" center>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="直接选择" name="first">
           <el-form label-width="80px">
-            <el-form-item label="机构名称">
-              <el-select v-model="partnerId" placeholder="请选择机构信息">
-                <el-option v-for="(partner, index) in partnerOptionList" :key="index" :value="partner.id" :label="partner.name"></el-option>
+            <el-form-item label="名称">
+              <el-select v-model="exchangeId" placeholder="请选择交易所信息">
+              <el-option v-for="(exchange, index) in exchangeOptionList" :key="index" :value="exchange.id" :label="exchange.name"></el-option>
               </el-select>
             </el-form-item>
           </el-form>
         </el-tab-pane>
         <el-tab-pane label="手动输入" name="second">
-          <el-form label-width="80px">
-            <el-form-item label="名称">
+         <el-form label-width="80px">
+          <el-form-item label="名称">
             <el-input v-model="inputName"></el-input>
-            </el-form-item>
-            <el-form-item label="Logo">
-            <el-upload class="upload-box" name="logo" action="/api/uploadFile" :on-success="onLogoSuccess" :show-file-list="false">
-              <i class="el-icon-plus"></i>
-              <img :src="inputLogoUrl" alt="">
-            </el-upload>
-            </el-form-item>
-            <el-form-item label="主页url">
+          </el-form-item>
+          <el-form-item label="Logo">
+          <el-upload class="upload-box" name="logo" action="/api/uploadFile" :on-success="onLogoSuccess" :show-file-list="false">
+            <i class="el-icon-plus"></i>
+            <img :src="inputLogoUrl" alt="">
+          </el-upload>
+          </el-form-item>
+          <el-form-item label="主页url">
             <el-input v-model="inputHomeUrl">
               <template slot="prepend" placeholder="请输入主页地址">http://</template>
-            </el-input>
-            </el-form-item>
+          </el-input>
+          </el-form-item>
           </el-form>
         </el-tab-pane>
       </el-tabs>
@@ -64,24 +64,23 @@
 export default {
   data () {
     return {
-      showDialog: false,
       activeName: 'first',
+      showDialog: false,
       inputName: '',
       inputLogoUrl: '',
       inputHomeUrl: '',
-      partnerId: '',
-      instituId: '',
+      exchangeId: '',
       partnerList: [],
-      partnerOptionList: []
+      exchangeOptionList: []
     }
   },
   mounted () {
     this.updateData()
-    this.getReportOptionList()
+    this.getExchangeOptionList()
   },
   methods: {
     updateData () {
-      this.$http.post('/api/getProjPartnerList', {
+      this.$http.post('/api/getProjExchangeList', {
         projId: this.$route.params.id
       }).then((res) => {
         if (res.data.errcode === 0) {
@@ -89,32 +88,32 @@ export default {
         }
       })
     },
-    getReportOptionList () {
-      this.$http.get('/api/getInstituNameList').then((res) => {
+    handleClick (tab, event) {
+    },
+    getExchangeOptionList () {
+      this.$http.get('/api/getExchangeNameList').then((res) => {
         if (res.data.errcode === 0) {
-          this.partnerOptionList = res.data.data.instituList
+          this.exchangeOptionList = res.data.data.exchangeList
         }
       })
-    },
-    handleClick (tab, event) {
     },
     onLogoSuccess (res) {
       if (res.errcode === 0) {
         this.inputLogoUrl = res.data.url
       }
     },
-    showAdd () {
-      this.partnerId = ''
-      this.showDialog = true
-    },
     showEdit (index) {
       var partnerInfo = this.partnerList[index]
-      var partnerOption = this.partnerOptionList[index]
+      var partnerOption = this.exchangeOptionList[index]
       this.partnerId = partnerInfo.id
-      this.instituId = partnerOption.id
+      this.exchangeId = partnerOption.id
       this.inputName = partnerInfo.name
       this.inputLogoUrl = partnerInfo.logoUrl
       this.inputHomeUrl = partnerInfo.homeUrl
+      this.showDialog = true
+    },
+    showAdd () {
+      this.exchangeId = ''
       this.showDialog = true
     },
     showDel (partnerId) {
@@ -138,50 +137,28 @@ export default {
         this.addInputPartner()
       }
     },
+    addPartner () {
+      this.$http.post('/api/addProjExchange', {
+        projId: this.$route.params.id,
+        memberId: this.exchangeId
+      }).then((res) => {
+        if (res.data.errcode === 0) {
+          this.$message({ type: 'success', message: '添加成功!' })
+          this.inputName = ''
+          this.inputLogoUrl = ''
+          this.inputHomeUrl = ''
+          this.exchangeId = ''
+          this.showDialog = false
+          this.updateData()
+        }
+      })
+    },
     addInputPartner () {
-      this.$http.post('/api/addProjIPartner', {
+      this.$http.post('/api/addProjIExchange', {
         projId: this.$route.params.id,
         name: this.inputName,
         logoUrl: this.inputLogoUrl,
         homeUrl: this.inputHomeUrl
-      }).then((res) => {
-        if (res.data.errcode === 0) {
-          this.$message({ type: 'success', message: '添加成功!' })
-          this.inputName = ''
-          this.inputLogoUrl = ''
-          this.inputHomeUrl = ''
-          this.showDialog = false
-          this.updateData()
-        }
-      })
-    },
-    addPartner () {
-      this.$http.post('/api/addProjPartner', {
-        projId: this.$route.params.id,
-        partnerId: this.partnerId
-        // name: this.inputName,
-        // logoUrl: this.inputLogoUrl,
-        // homeUrl: this.inputHomeUrl
-      }).then((res) => {
-        if (res.data.errcode === 0) {
-          this.$message({ type: 'success', message: '添加成功!' })
-          this.inputName = ''
-          this.inputLogoUrl = ''
-          this.inputHomeUrl = ''
-          this.partnerId = ''
-          this.instituId = ''
-          this.showDialog = false
-          this.updateData()
-        }
-      })
-    },
-    updPartner () {
-      this.$http.post('/api/updProjPartner', {
-        partnerId: this.partnerId,
-        projId: this.instituId
-        // name: this.inputName,
-        // logoUrl: this.inputLogoUrl,
-        // homeUrl: this.inputHomeUrl
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.$message({ type: 'success', message: '更新成功!' })
@@ -190,13 +167,32 @@ export default {
           this.inputHomeUrl = ''
           this.showDialog = false
           this.partnerId = ''
-          this.instituId = ''
+          this.exchangeId = ''
+          this.updateData()
+        }
+      })
+    },
+    updPartner () {
+      this.$http.post('/api/updProjPartner', {
+        partnerId: this.partnerId,
+        name: this.inputName,
+        logoUrl: this.inputLogoUrl,
+        homeUrl: this.inputHomeUrl
+      }).then((res) => {
+        if (res.data.errcode === 0) {
+          this.$message({ type: 'success', message: '更新成功!' })
+          this.inputName = ''
+          this.inputLogoUrl = ''
+          this.inputHomeUrl = ''
+          this.showDialog = false
+          this.partnerId = ''
+          this.exchangeId = ''
           this.updateData()
         }
       })
     },
     delPartner (partnerId) {
-      this.$http.post('/api/delProjPartner', {
+      this.$http.post('/api/delProjExchange', {
         partnerId: partnerId
       }).then((res) => {
         if (res.data.errcode === 0) {
