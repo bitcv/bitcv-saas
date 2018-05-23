@@ -79,4 +79,37 @@ class AdminController extends Controller
             $this->output();
         }
     }
+
+    public function getProjBasicList (Request $request) {
+        //获取请求参数
+        $params = $this->validation($request, [
+            'pageno' => 'required|numeric',
+            'perpage' => 'required|numeric',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        extract($params);
+
+        $allparams = $request->all();
+        $query = DB::table('proj_info');
+        $query = $query->select('proj_info.*');
+        if (array_key_exists('projname', $allparams) && $allparams['projname']) {
+            $where = ['name_cn','like','%'.$allparams['projname'].'%'];
+            $query = $query->where('proj_info.name_cn','like','%'.$allparams['projname'].'%');
+        }
+        $offset = $perpage * ($pageno - 1);
+        $projList = $query->offset($offset)
+            ->limit($perpage)
+            ->get()->toArray();
+
+        $dataCount = $query->count();
+        // $projList = Model\Project::offset($offset)->limit($perpage)->get()->toArray();
+        // $dataCount = Model\Project::count();
+
+        return $this->output([
+            'dataCount' => $dataCount,
+            'dataList' => $projList
+        ]);
+    }
 }
