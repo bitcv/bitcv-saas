@@ -52,10 +52,10 @@ export default {
   mounted () {
     this.$http.post('/api/getPid', {
     }).then((res) => {
-       if (res.data.errcode === 0) {
-         this.pid = res.data.data.tokenId.tokenid
-         this.getPacketPic()
-       }
+      if (res.data.errcode === 0) {
+        this.pid = res.data.data.tokenId.tokenid
+        this.getPacketPic()
+      }
     })
   },
   methods: {
