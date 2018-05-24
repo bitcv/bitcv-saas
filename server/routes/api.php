@@ -29,10 +29,11 @@ Route::post('doSignout', 'AuthUserController@doSignout');
 	Route::post('addPacketPic', 'AuthUserController@addPacketPic');
 	Route::post('getPacketPic', 'AuthUserController@getPacketPic');
 	Route::post('uploadFile', 'FileController@uploadFile');
+	Route::post('getPid', 'AuthUserController@getPid');
 // });
 
 // 项目管理相关
-Route::any('getSocialList', 'AdminController@getSocialList');
+/*Route::any('getSocialList', 'AdminController@getSocialList');
 
 Route::any('getProjBasicInfo', 'AdminController@getProjBasicInfo');
 Route::any('getProjBasicList', 'AdminController@getProjBasicList');
@@ -87,4 +88,4 @@ Route::any('getAdminProjDepositBoxList', 'AdminController@getProjDepositBoxList'
 Route::any('getAdminProjDepositOrderList', 'AdminController@getProjDepositOrderList');
 Route::any('getAdminBoxTxRecordList', 'AdminController@getBoxTxRecordList');
 Route::post('confirmAdminBoxTx', 'AdminController@confirmBoxTx');
-Route::post('addAdminDepositBox', 'AdminController@addDepositBox');
+Route::post('addAdminDepositBox', 'AdminController@addDepositBox');*/

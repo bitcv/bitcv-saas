@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       showDialog: false,
-      pid: '1', // 暂时测试使用
+      pid: '',
       picture: [],
       formData: {
         pic: ''
@@ -50,12 +50,26 @@ export default {
     }
   },
   mounted () {
-    this.getPacketPic()
+    this.$http.post('/api/getPid', {
+    }).then((res) => {
+       if (res.data.errcode === 0) {
+         this.pid = res.data.data.tokenId.tokenid
+         this.getPacketPic()
+       }
+    })
   },
   methods: {
     showAdd () {
       this.formData.pic = ''
       this.showDialog = true
+    },
+    getPid () {
+      this.$http.post('/api/getPid', {
+      }).then((res) => {
+        if (res.data.errcode === 0) {
+          this.pid = res.data.data.tokenId.tokenid
+        }
+      })
     },
     getPacketPic () {
       this.$http.post('/api/getPacketPic', {

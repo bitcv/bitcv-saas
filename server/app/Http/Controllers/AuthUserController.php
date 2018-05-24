@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Utils\Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Utils\Service;
@@ -158,7 +159,6 @@ class AuthUserController extends Controller
                 }
             }
         }
-
         return $this->output([
             'uinfo' => $uinfo,
             'menu'  => $adminmenu,
@@ -247,12 +247,29 @@ class AuthUserController extends Controller
         if ($params === false) {
             return $this->error(100);
         }
-        print_r(app()->proj['proj_id']);
         $picture = DB::table('base_token')->where('id',$params['pid'])->select('packet_cover','id')->get()->toArray();
         if ($picture) {
             return $this->output([
                 'pic' => $picture
             ]);
         }
+    }
+
+    // 获取项目方 tokenid
+    public function getPid (Request $request)
+    {
+        $projectid = app()->proj['proj_id'];
+        // 获取当前项目的 tokenid
+        $project = DB::table('proj_info')->where('id',$projectid)->select('token_id')->get()->toArray();
+        if ($project) {
+            $result = array();
+            foreach ($project as $key => $value) {
+                $result['tokenid'] = $value->token_id;
+            }
+        }
+
+        return $this->output([
+            'tokenId' => $result
+        ]);
     }
 }
