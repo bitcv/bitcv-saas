@@ -21,11 +21,26 @@ class Saas {
                 return false;
             }
         }
-        $projid = \DB::table(self::$table)->insertGetId($data);
-        if ($projid) {
-            DB::table('project')->insert(['id'=>$projid]);
+
+        $result = (array) DB::table('proj_info')->where('name_en',trim($data['subname']))->select('id')->first();
+        if (isset($result) && $result) { // 如果 proj_info 表中存在，就获取 proj_id
+            $data['proj_id'] = $result['id'];
+        } else {
+            $projinfo['name_en'] = $data['subname'];
+            $projinfo['home_url'] = '';
+            $id = DB::table('proj_info')->insertGetId($projinfo);
+            $data['proj_id'] = $id;
         }
+        $projid = \DB::table(self::$table)->insertGetId($data);
         return $projid;
+        /*if ($projid) {
+            $projinfo['name_en'] = $data['subname'];
+            $projinfo['home_url'] = '';
+            $id = DB::table('proj_info')->insertGetId($projinfo);
+            return $id;
+//            DB::table('project')->insert(['id'=>$projid]);
+        }
+//        return $projid;*/
     }
 
     public function getBySubname($subname) {
