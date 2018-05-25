@@ -53,7 +53,7 @@
                     <section>
                         <span class="icon major fa-bolt accent2"></span>
                         <h3>糖果空投</h3>
-                        <p>收集用户钱包地址,，奖励转发，完成社群预热。</p>
+                        <p>收集用户钱包地址，奖励转发，完成社群预热。</p>
                     </section>
                     <section>
                         <span class="icon major fa-area-chart accent3"></span>
