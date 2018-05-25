@@ -20,7 +20,7 @@
                     </el-table-column>
                 </el-table>
                 <el-dialog title="上传图片" :visible.sync="showDialog" center>
-                    <el-form label-width="120px">
+                    <el-form label-width="165px">
                         <el-form-item label="上传糖包儿宣传图片：" required>
                             <el-upload class="upload-box" name="saasPacketPic" action="/api/uploadFile" :on-success="onRarSuccess" :show-file-list="false" style="display: inline-flex">
                                 <i class="el-icon-plus"></i>
