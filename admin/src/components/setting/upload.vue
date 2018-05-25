@@ -27,6 +27,9 @@
                                 <img :src="formData.pic ? formData.pic : ''" alt="">
                             </el-upload>
                         </el-form-item>
+                        <el-form-item>
+                            <p style="color: red">请上传 750 x 436 像素图片</p>
+                        </el-form-item>
                     </el-form>
                     <div slot="footer">
                         <el-button @click="showDialog = false">取消</el-button>
