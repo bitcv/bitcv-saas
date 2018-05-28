@@ -30,6 +30,8 @@ Route::post('doSignout', 'AuthUserController@doSignout');
 	Route::post('getPacketPic', 'AuthUserController@getPacketPic');
 	Route::post('uploadFile', 'FileController@uploadFile');
 	Route::post('getPid', 'AuthUserController@getPid');
+	//糖包数据统计
+    Route::post('getPacketStatByMonth', 'PacketStatController@getPacketStatByMonth');
 // });
 
 // 项目管理相关
