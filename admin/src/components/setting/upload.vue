@@ -28,7 +28,7 @@
                             </el-upload>
                         </el-form-item>
                         <el-form-item>
-                            <p style="color: red">请上传 1240 x 720 像素图片</p>
+                            <p style="color: red">请上传 1240(宽) x 720(高) 像素图片</p>
                         </el-form-item>
                     </el-form>
                     <div slot="footer">

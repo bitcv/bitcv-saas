@@ -7,6 +7,7 @@ import Upload from '@/components/setting/upload'
 import ProjList from '@/components/projList/ProjList'
 import ProjData from '@/components/projdata/projdata'
 import MediaReport from '@/components/media/MediaReport'
+import Stat from '@/components/stat/redpacket'
 
 Vue.use(Router)
 
@@ -45,6 +46,12 @@ export default new Router({
         requireAuth: true
       },
       component: Upload
+    }, {
+      path: '/admin/stat',
+      meta: {
+        requireAuth: true
+      },
+      component: Stat
     }]
   }, {
     path: '/admin/signin',

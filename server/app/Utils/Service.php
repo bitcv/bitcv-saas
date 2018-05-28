@@ -148,5 +148,24 @@ if ($vcode == env('SMS_TEST_VCODE')) {
         return password_verify($pass.env('PASS_SALT'), $hash);
     }
 
+    /**
+     * 获取当月第一日
+     * @param $date
+     * @return false|string
+     */
+    public static function getCurMonthFirstDay($date) {
+        return date('Y-m-01', strtotime($date));
+    }
+
+
+    /**
+     * 获取当月最后一日
+     * @param $date
+     * @return false|string
+     */
+    public static function getCurMonthLastDay($date) {
+        return date('Y-m-d', strtotime(date('Y-m-01', strtotime($date)) . ' +1 month -1 day'));
+    }
+
 
 }
