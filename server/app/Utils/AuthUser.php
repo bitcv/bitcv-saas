@@ -32,9 +32,9 @@ class AuthUser {
         array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/upload', 'text' => '上传图片' ,'child' => array (
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/upload', 'text' => '上传图片')
         )),
-//        array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '数据统计' ,'child' => array (
-//            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '糖包数据统计')
-//        )),
+        array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '数据统计' ,'child' => array (
+            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '糖包数据统计')
+        )),
     );
 
     public static $uid = 0;

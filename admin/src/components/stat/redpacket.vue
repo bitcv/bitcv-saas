@@ -30,9 +30,9 @@
             <el-table-column label="发放糖包总价值金额">
                 <template slot-scope="scope">{{ scope.row.cnyValueOfTokenSent }}</template>
             </el-table-column>
-            <el-table-column label="发放token种类" >
+            <!-- <el-table-column label="发放token种类" >
                 <template slot-scope="scope" >{{ scope.row.kindsOfTokenSent.length }}</template>
-            </el-table-column>
+            </el-table-column> -->
         </el-table>
     </div>
 </template>
