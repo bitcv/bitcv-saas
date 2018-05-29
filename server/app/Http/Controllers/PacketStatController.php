@@ -18,7 +18,6 @@ class PacketStatController extends Controller
         $endDate = strtotime($endDate) > $nowStamp ? date('Y-m-d',$nowStamp) : $endDate;
         $tokenId = $request->get('tokenId');
         $data = PacketStatService::getStatDataByDay($beginDate,$endDate,$tokenId);
-        print_r($data);die;
         foreach ($data as &$item) {
             $sentPacketRate = $item['numsOfSendPacketMember'] > 0 ? bcdiv($item['numsOfPacketsSent'],$item['numsOfSendPacketMember'],2) : 0;
             $avgAmountOfPacket = $item['numsOfPacketsSent'] > 0 ?  bcdiv($item['amountOfCandySent'],$item['numsOfPacketsSent'],2) : 0;
@@ -27,6 +26,10 @@ class PacketStatController extends Controller
             $item['amountOfCandyPicked'] = number_format($item['amountOfCandyPicked'],2,'.',',');
             $item['cnyValueOfTokenSent'] = number_format($item['cnyValueOfTokenSent'],2,'.',',');
         }
-        return $this->output($data);
+        $results = [];
+        foreach ($data as $key => $value) {
+            $results[] = $value;
+        }
+        return $this->output($results);
     }
 }
