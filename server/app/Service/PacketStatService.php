@@ -287,6 +287,7 @@ class PacketStatService
         $statData = array_flip($statData);
         $currentStamp = $endStamp;
 
+        $returnData = [];
         while ($currentStamp >= $beginStamp) {
             $currentDate = date('Y-m-d',$currentStamp);
             if(!isset($statData[$currentStamp])){
