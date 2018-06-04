@@ -26,7 +26,8 @@ class SaasController extends Controller
             $key = 'pass_err_'.$uname;
             //1分钟内密码尝试3次
             if (Redis::get($key) > 3) {
-                return ['err' => 2, 'msg' => '密码错误次数过多请稍候重试'];
+//                return ['err' => 2, 'msg' => '密码错误次数过多请稍候重试'];
+                return false;
             }
             Redis::incr($key);
             Redis::expire($key, 60);

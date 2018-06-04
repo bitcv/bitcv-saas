@@ -120,7 +120,8 @@ class AuthUserController extends Controller
         $key = 'pass_err_'.$user->email;
         //1分钟内密码尝试3次
         if (Redis::get($key) > 3) {
-            return $this->error(207);
+//            return $this->error(207);
+            return false;
         }
         if(!Service::checkPwd($params['passwd'],$hash)) {
             Redis::incr($key);
