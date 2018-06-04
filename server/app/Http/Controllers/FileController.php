@@ -10,7 +10,7 @@ use App\Utils\Qiniu;
 class FileController extends Controller
 {
     // 本地文件 storage 上传
-    /*public function uploadFile (Request $request) {
+    public function uploadFile2 (Request $request) {
 
         $path = null;
         if ($request->file('logo') && $request->file('logo')->isValid()) {
@@ -21,6 +21,10 @@ class FileController extends Controller
             $path = $request->file('picture')->store('image/picture', 'public');
         } else if ($request->file('whitePaper') && $request->file('whitePaper')->isValid()) {
             $path = $request->file('whitePaper')->store('pdf/whitePaper', 'public');
+        } else if ($request->file('redpacket') && $request->file('redpacket')->isValid()) {
+            $path = $request->file('redpacket')->store('image/redpacket', 'public');
+        } else {
+            return false;
         }
         if ($path === null) {
             return $this->error(100);
@@ -28,7 +32,7 @@ class FileController extends Controller
         $path = '/storage/' . $path;
 
         return $this->output(['url' => $path]);
-    }*/
+    }
 
     // 七牛上传
     public function uploadFile (Request $request)
@@ -51,6 +55,11 @@ class FileController extends Controller
         } else if ($request->file('saasPacketPic') && $request->file('saasPacketPic')->isValid()) {
             $filePath = $request->saasPacketPic->path();
             $prefix = 'saasPacketPic';
+        } else if ($request->file('redpacket') && $request->file('redpacket')->isValid()) {
+            $filePath = $request->redpacket->path();
+            $prefix = 'saasPacketPic';
+        } else {
+            return false;
         }
         $result = Qiniu::upload($filePath,$prefix);
         if (!$result['code'] == 0) {

@@ -23,7 +23,7 @@ Route::post('getAuthUser', 'AuthUserController@getAuthUser');
 Route::post('doSignout', 'AuthUserController@doSignout');
 
 //超级管理员接口
-// Route::group(['middleware' => 'checkAdmin'], function () {
+ Route::group(['middleware' => 'checkAdmin'], function () {
 	Route::post('getSimpleAuthUser', 'AuthUserController@getSimpleAuthUser');
 	Route::post('updateAuthUser', 'AuthUserController@updateAuthUser');
 	Route::post('addPacketPic', 'AuthUserController@addPacketPic');
@@ -32,7 +32,8 @@ Route::post('doSignout', 'AuthUserController@doSignout');
 	Route::post('getPid', 'AuthUserController@getPid');
 	//糖包数据统计
     Route::post('getPacketStatByMonth', 'PacketStatController@getPacketStatByMonth');
-// });
+    Route::post('uploadFile2', 'FileController@uploadFile2');
+ });
 
 // 项目管理相关
 /*Route::any('getSocialList', 'AdminController@getSocialList');
