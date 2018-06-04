@@ -7,6 +7,7 @@ use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Models\Saas;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class SaasController extends Controller
 {
@@ -22,6 +23,14 @@ class SaasController extends Controller
         if ($uname == 'admin' && $pwd == env('ADMIN_PASS')) {
             session()->put('saas_admin', ['uid'=>1,'uname'=>'admin']);
         } else {
+            $key = 'pass_err_'.$uname;
+            //1分钟内密码尝试3次
+            if (Redis::get($key) > 3) {
+//                return ['err' => 2, 'msg' => '密码错误次数过多请稍候重试'];
+                return false;
+            }
+            Redis::incr($key);
+            Redis::expire($key, 60);
             return ['err' => 1, 'msg' => 'password error'];
         }
 

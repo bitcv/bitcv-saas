@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Utils\Service;
 use App\Utils\AuthUser;
 use Cookie;
+use Illuminate\Support\Facades\Redis;
 
 class AuthUserController extends Controller
 {
@@ -116,7 +117,15 @@ class AuthUserController extends Controller
         }
         $user = $user[0];
         $hash = $user->passwd;
+        $key = 'pass_err_'.$user->email;
+        //1分钟内密码尝试3次
+        if (Redis::get($key) > 3) {
+//            return $this->error(207);
+            return false;
+        }
         if(!Service::checkPwd($params['passwd'],$hash)) {
+            Redis::incr($key);
+            Redis::expire($key, 60);
             return $this->error(202);
         }
         $tempuser = array();
@@ -191,6 +200,14 @@ class AuthUserController extends Controller
 
     public function updateAuthUser (Request $request)
     {
+        //获取请求参数
+        $params = $this->validation($request, [
+            'uemail' => 'required',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        extract($params);
         $allparams = $request->all();
         $uinfo = session()->get('authuinfo');
         $uid = $uinfo['uid'];
@@ -231,6 +248,7 @@ class AuthUserController extends Controller
         }
         $data = array();
         $data['packet_cover'] = $allparams['pic'];
+//        $data['packet_cover'] = 'http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_810039961619194,http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_524009732861674';
         $result = DB::table('base_token')->where('id', $params['pid'])->update($data);
         if ($result !== false) {
             $this->output();
@@ -259,6 +277,7 @@ class AuthUserController extends Controller
     public function getPid (Request $request)
     {
         $projectid = app()->proj['proj_id'];
+//        $projectid = 1; // 测试使用
         // 获取当前项目的 tokenid
         $project = DB::table('proj_info')->where('id',$projectid)->select('token_id')->get()->toArray();
         if ($project) {

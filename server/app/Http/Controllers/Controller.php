@@ -26,6 +26,7 @@ class Controller extends BaseController
         '204' => ['errcode' => 204, 'errmsg' => '重复关注'],
         '205' => ['errcode' => 205, 'errmsg' => '密码格式不正确'],
         '206' => ['errcode' => 206, 'errmsg' => '验证码错误'],
+        '207' => ['errcode' => 207, 'errmsg' => '登录次数过多请稍候重试'],
         // 项目错误码
         '301' => ['errcode' => 301, 'errmsg' => '项目不存在'],
         '302' => ['errcode' => 302, 'errmsg' => '社交ID不存在'],
