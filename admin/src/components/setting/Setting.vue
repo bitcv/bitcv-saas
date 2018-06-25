@@ -10,6 +10,10 @@
       <el-form-item label="">
         <el-button type="primary" @click="submit">确定</el-button>
       </el-form-item>
+      <hr v-if="this.isshow">
+      <el-form-item label="有效期还剩：" v-if="this.isshow">
+        {{ this.day }} 天 {{ this.hr }} 小时 {{ this.min }} 分钟 {{ this.sec }} 秒
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -19,11 +23,18 @@ export default {
   data () {
     return {
       useremail: '',
-      userpwd: ''
+      userpwd: '',
+      day: 0,
+      hr: 0,
+      min: 0,
+      sec: 0,
+      endtime: '',
+      isshow: false
     }
   },
   mounted () {
     this.userData()
+    this.countdown()
   },
   methods: {
     userData () {
@@ -31,6 +42,8 @@ export default {
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.useremail = res.data.data.uinfo.email
+          this.endtime = res.data.data.endtime
+          this.isshow = res.data.data.isshow
         }
       })
     },
@@ -51,6 +64,23 @@ export default {
           this.userData()
         }
       })
+    },
+    countdown: function () {
+      const end = Date.parse(new Date(this.endtime))
+      const now = Date.parse(new Date())
+      const msec = end - now
+      let day = parseInt(msec / 1000 / 60 / 60 / 24)
+      let hr = parseInt(msec / 1000 / 60 / 60 % 24)
+      let min = parseInt(msec / 1000 / 60 % 60)
+      let sec = parseInt(msec / 1000 % 60)
+      this.day = day
+      this.hr = hr > 9 ? hr : '0' + hr
+      this.min = min > 9 ? min : '0' + min
+      this.sec = sec > 9 ? sec : '0' + sec
+      const that = this
+      setTimeout(function () {
+        that.countdown()
+      }, 1000)
     }
   }
 }

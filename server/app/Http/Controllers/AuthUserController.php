@@ -187,6 +187,13 @@ class AuthUserController extends Controller
         $uinfo = session()->get('authuinfo');
         $uid = $uinfo['uid'];
         $user = DB::table('base_authuser')->select('*')->where('uid',$uid)->get()->toArray();
+        $projectid = app()->proj['proj_id'];
+        $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
+        if (isset($result) && $result) {
+            $atime = $result[0]->atime;
+            $atime = date('Y-m-d H:i:s',strtotime("{$atime} +1 year"));
+            $ctime = $result[0]->ctime;
+        }
         if (!empty($user)) {
             $userinfo = array();
             $userinfo['uname'] = $user[0]->uname;
@@ -194,6 +201,8 @@ class AuthUserController extends Controller
             $userinfo['email'] = $user[0]->email;
             return $this->output([
                'uinfo' => $userinfo,
+               'endtime' => isset($atime) && $atime ? $atime : date('Y-m-d H:i:s',strtotime("+1 year")),
+               'isshow' => (isset($ctime) && ($ctime > '2018-06-25')) ?  true : false,
             ]);
         }
     }
