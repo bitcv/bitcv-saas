@@ -118,14 +118,14 @@ class AuthUserController extends Controller
         $user = $user[0];
         $hash = $user->passwd;
         $key = 'pass_err_'.$user->email;
-        //1分钟内密码尝试3次
-        if (Redis::get($key) > 3) {
+        // 登录密码错误五次后，一天禁止登录
+        if (Redis::get($key) >= 5) {
 //            return $this->error(207);
             return false;
         }
         if(!Service::checkPwd($params['passwd'],$hash)) {
             Redis::incr($key);
-            Redis::expire($key, 60);
+            Redis::expire($key, 86400);
             return $this->error(202);
         }
         $tempuser = array();
@@ -188,7 +188,9 @@ class AuthUserController extends Controller
         $uid = $uinfo['uid'];
         $user = DB::table('base_authuser')->select('*')->where('uid',$uid)->get()->toArray();
         $projectid = app()->proj['proj_id'];
+//        $projectid = 1; // 测试使用
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
+        $item = DB::table('base_item')->select('*')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
         if (isset($result) && $result) {
             $atime = $result[0]->atime;
             $atime = date('Y-m-d H:i:s',strtotime("{$atime} +1 year"));
@@ -203,6 +205,7 @@ class AuthUserController extends Controller
                'uinfo' => $userinfo,
                'endtime' => isset($atime) && $atime ? $atime : date('Y-m-d H:i:s',strtotime("+1 year")),
                'isshow' => (isset($ctime) && ($ctime > '2018-06-25')) ?  true : false,
+               'showItem' => (isset($ctime) && ($ctime > '2018-06-29') && !$item) ?  true : false,
             ]);
         }
     }
@@ -299,5 +302,35 @@ class AuthUserController extends Controller
         return $this->output([
             'tokenId' => $result
         ]);
+    }
+
+    public function agreeItems (Request $request)
+    {
+        //获取请求参数
+        $params = $this->validation($request, [
+            'other' => 'required',
+            'otherContact' => 'required',
+            'otherEmail' => 'required',
+            'otherAddr' => 'required',
+        ]);
+        $allparams = $request->all();
+        if ($params === false) {
+            return $this->error(100);
+        }
+
+        $projectid = app()->proj['proj_id'];
+//        $projectid = 1;
+        $data = [];
+        $data['proj_id'] = $projectid;
+        $data['other'] = $allparams['other'];
+        $data['other_contact'] = $allparams['otherContact'];
+        $data['other_addr'] = $allparams['otherAddr'];
+        $data['other_email'] = $allparams['otherEmail'];
+        $data['created_at'] = date('Y-m-d H:i:s',time());
+        $data['status'] = 1;
+        $insertId = DB::table('base_item')->insertGetId($data);
+        if ($insertId) {
+            return $this->output();
+        }
     }
 }
