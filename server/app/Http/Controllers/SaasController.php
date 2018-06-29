@@ -20,18 +20,20 @@ class SaasController extends Controller
     public function login(Request $req) {
         $uname = $req->input('uname');
         $pwd = $req->input('password');
+        if (!$uname || !$pwd) {
+            return false;
+        }
         if ($uname == 'admin' && $pwd == env('ADMIN_PASS')) {
             session()->put('saas_admin', ['uid'=>1,'uname'=>'admin']);
         } else {
+            // 登录五次密码错误后，禁止登录一天。
             $key = 'pass_err_'.$uname;
-            //1分钟内密码尝试3次
-            if (Redis::get($key) > 3) {
-//                return ['err' => 2, 'msg' => '密码错误次数过多请稍候重试'];
+            if (Redis::get($key) >= 5) {
                 return false;
             }
             Redis::incr($key);
-            Redis::expire($key, 60);
-            return ['err' => 1, 'msg' => 'password error'];
+            Redis::expire($key, 86400);
+            return ['err' => 1, 'msg' => '密码错误'];
         }
 
         return ['err' => 0, 'data' => route('saas.admin')];

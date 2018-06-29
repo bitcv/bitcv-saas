@@ -30,6 +30,7 @@ Route::post('doSignout', 'AuthUserController@doSignout');
 	Route::post('getPacketPic', 'AuthUserController@getPacketPic');
 	Route::post('uploadFile', 'FileController@uploadFile');
 	Route::post('getPid', 'AuthUserController@getPid');
+	Route::post('agreeItems', 'AuthUserController@agreeItems');
 	//糖包数据统计
     Route::post('getPacketStatByMonth', 'PacketStatController@getPacketStatByMonth');
     Route::post('uploadFile2', 'FileController@uploadFile2');
