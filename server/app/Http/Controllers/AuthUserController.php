@@ -209,7 +209,7 @@ class AuthUserController extends Controller
                'uinfo' => $userinfo,
                'endtime' => isset($atime) && $atime ? $atime : date('Y-m-d H:i:s',strtotime("+1 year")),
                'isshow' => (isset($ctime) && ($ctime > '2018-06-25')) ?  true : false,
-//               'showItem' => (isset($ctime) && ($ctime > '2018-06-29') && !$item) ?  true : false,
+               'showItem' => (isset($ctime) && ($ctime > '2018-06-29') && !$item) ?  true : false,
             ]);
         }
     }
