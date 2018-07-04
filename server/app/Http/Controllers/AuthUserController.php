@@ -193,7 +193,7 @@ class AuthUserController extends Controller
         \Log::info('getSimpleAuthUserprojid'.$projectid);
 //        $projectid = 1; // 测试使用
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
-        $item = DB::table('base_item')->select('*')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
+        $item = DB::table('base_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
         \Log::info('base_item'.var_export($item,true));
         if (isset($result) && $result) {
             $atime = $result[0]->atime;
