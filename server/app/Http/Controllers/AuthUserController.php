@@ -147,6 +147,7 @@ class AuthUserController extends Controller
     public function getAuthUser (Request $request)
     {
         $uinfo = session()->get('authuinfo');
+        \Log::info('getAuthUser$uinfo'.var_export($uinfo,true));
         $menus = AuthUser::$menu;
         $adminmenu = array();
         $uid = $uinfo['uid'];
