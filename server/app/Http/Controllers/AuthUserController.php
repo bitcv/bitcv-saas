@@ -193,8 +193,8 @@ class AuthUserController extends Controller
         \Log::info('getSimpleAuthUserprojid'.$projectid);
 //        $projectid = 1; // 测试使用
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
-        $item = DB::table('base_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
-        \Log::info('base_item'.var_export($item,true));
+        $item = DB::table('saas_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
+        \Log::info('saas_item'.var_export($item,true));
         if (isset($result) && $result) {
             $atime = $result[0]->atime;
             $atime = date('Y-m-d H:i:s',strtotime("{$atime} +1 year"));
@@ -332,7 +332,7 @@ class AuthUserController extends Controller
         $data['other_email'] = $allparams['otherEmail'];
         $data['created_at'] = date('Y-m-d H:i:s',time());
         $data['status'] = 1;
-        $insertId = DB::table('base_item')->insertGetId($data);
+        $insertId = DB::table('saas_item')->insertGetId($data);
         if ($insertId) {
             return $this->output();
         }
