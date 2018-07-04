@@ -193,8 +193,8 @@ class AuthUserController extends Controller
         \Log::info('getSimpleAuthUserprojid'.$projectid);
 //        $projectid = 1; // 测试使用
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
-        $item = DB::table('base_item')->select('*')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
-        \Log::info('base_item'.var_export($item,true));
+        /*$item = DB::table('base_item')->select('*')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
+        \Log::info('base_item'.var_export($item,true));*/
         if (isset($result) && $result) {
             $atime = $result[0]->atime;
             $atime = date('Y-m-d H:i:s',strtotime("{$atime} +1 year"));
@@ -209,7 +209,7 @@ class AuthUserController extends Controller
                'uinfo' => $userinfo,
                'endtime' => isset($atime) && $atime ? $atime : date('Y-m-d H:i:s',strtotime("+1 year")),
                'isshow' => (isset($ctime) && ($ctime > '2018-06-25')) ?  true : false,
-               'showItem' => (isset($ctime) && ($ctime > '2018-06-29') && !$item) ?  true : false,
+//               'showItem' => (isset($ctime) && ($ctime > '2018-06-29') && !$item) ?  true : false,
             ]);
         }
     }
