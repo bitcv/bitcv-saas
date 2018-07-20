@@ -11,14 +11,14 @@ namespace App\Service;
 use App\Models\PacketRecord;
 use App\Models\RedPacket;
 use App\Models\User;
-use App\Models\Token;
 use Illuminate\Support\Facades\Redis;
-//ini_set("memory_limit","512M");
+ini_set("memory_limit","512M");
 
 class PacketStatService
 {
-
     const STAT_DATA_KEY = 'PSDZ:';
+    const TOTAL_PICK_PACKET_MEMBERS = 'TPPMS:';
+    const TOTAL_SEND_PACKET_MEMBERS = 'TSPMS:';
     /**
      * 发送糖包的人数（排重）
      * @param string $beginDate
@@ -63,38 +63,41 @@ class PacketStatService
         $begin = $beginDate;
         $end = $endDate .' 23:59:59';
         //微信领红包人数
-        $result = PacketRecord::from('base_packet_record')
-            ->leftJoin('base_packet','base_packet.id','=','base_packet_record.packet_id')
-            ->where('base_packet_record.created_at','>=',$begin)->where('base_packet_record.created_at','<=',$end)
-            ->where('base_packet_record.is_wx_user',1)
+        $result = PacketRecord::from('base_packet_record as pr')
+            ->leftJoin('base_packet as p','p.id','=','pr.packet_id')
+            ->where('pr.created_at','>=',$begin)->where('pr.created_at','<=',$end)
+            ->where('pr.is_wx_user',1)
             ->where(function ($query) use ($tokenId,$type){
                 if($tokenId > 0) {
-                    $query->where('base_packet.token_id',$tokenId);
+                    $query->where('p.token_id',$tokenId);
                 }
                 if($type > 0) {
-                    $query->where('base_packet.type',$type);
+                    $query->where('p.type',$type);
 
                 }
             })
-            ->select('base_packet_record.wx_user_id')
+            ->where('pr.wx_user_id','>','0')
+            ->select('pr.wx_user_id')
             ->distinct()
             ->get()->toArray();
         $wechatIds = array_column($result,'wx_user_id');
         $wechatNums = count($wechatIds);
+        \Log::info('PacketStatService numsOfPickPacketMember $wechatNums:'.var_export($wechatNums,true));
         //UID领红包人数
-        $result = PacketRecord::from('base_packet_record')
-            ->leftJoin('base_packet','base_packet.id','=','base_packet_record.packet_id')
-            ->where('base_packet_record.created_at','>=',$begin)->where('base_packet_record.created_at','<=',$end)
-            ->where('base_packet_record.is_wx_user',0)
+        $result = PacketRecord::from('base_packet_record as pr')
+            ->leftJoin('base_packet AS p','p.id','=','pr.packet_id')
+            ->where('pr.created_at','>=',$begin)->where('pr.created_at','<=',$end)
+            ->where('pr.is_wx_user',0)
             ->where(function ($query) use ($tokenId,$type){
                 if($tokenId > 0) {
-                    $query->where('base_packet.token_id',$tokenId);
+                    $query->where('p.token_id',$tokenId);
                 }
                 if($type > 0) {
-                    $query->where('base_packet.type',$type);
+                    $query->where('p.type',$type);
                 }
             })
-            ->select('base_packet_record.wx_user_id')
+            ->where('pr.wx_user_id','>','0')
+            ->select('pr.wx_user_id')
             ->distinct()
             ->get()->toArray();
         //去重微信ID与UID为同一人的数据
@@ -105,6 +108,12 @@ class PacketStatService
             unset($userIdAsKey[$dupUserId]);
         }
         $userNums = count($userIdAsKey);
+        \Log::info('PacketStatService numsOfPickPacketMember $userNums:'.var_export($userNums,true));
+        unset($result);
+        unset($userIdAsKey);
+        unset($userIds);
+        unset($wechatIds);
+        unset($userIdForWechatId);
         return $userNums + $wechatNums;
     }
 
@@ -177,18 +186,18 @@ class PacketStatService
         }
         $begin = $beginDate;
         $end = $endDate .' 23:59:59';
-        $amount = PacketRecord::from('base_packet_record')
-            ->leftJoin('base_packet','base_packet.id','=','base_packet_record.packet_id')
-            ->where('base_packet_record.created_at','>=',$begin)->where('base_packet_record.created_at','<=',$end)
-            ->where('base_packet_record.wx_user_id','>',0)
+        $amount = PacketRecord::from('base_packet_record as pr')
+            ->leftJoin('base_packet as p','p.id','=','pr.packet_id')
+            ->where('pr.created_at','>=',$begin)->where('pr.created_at','<=',$end)
+            ->where('pr.wx_user_id','>',0)
             ->where(function ($query) use ($tokenId,$type){
                 if($tokenId > 0) {
-                    $query->where('base_packet.token_id',$tokenId);
+                    $query->where('p.token_id',$tokenId);
                 }
                 if($type > 0) {
-                    $query->where('base_packet.type',$type);
+                    $query->where('p.type',$type);
                 }
-            })->sum('base_packet_record.amount');
+            })->sum('pr.amount');
         return $amount;
     }
 
@@ -200,34 +209,76 @@ class PacketStatService
      */
     public static function numsOfPickPacketMemberTotal($tokenId = 0, $type = 0)
     {
-        $beginData = '0000-00-00';
-        $endDate = date('Y-m-d H:i:s',time());
-        return self::numsOfPickPacketMember($beginData,$endDate,$tokenId,$type);
+        $currentStamp = time();
+        $endDate = date('Y-m-d',$currentStamp);
+        $redis = Redis::connection('stat');
+        $dataRedisKey = self::TOTAL_PICK_PACKET_MEMBERS.$tokenId;
+        $oldDataJson = $redis->get($dataRedisKey);
+        $oldData = json_decode($oldDataJson,true);
+        $updateDate = isset($oldData['updated_at']) ? $oldData['updated_at'] : '0000-00-00';
+        $currentNum = isset($oldData['data']) ? $oldData['data'] : 0;
+        if($currentNum == 0 || $currentStamp - strtotime($updateDate) > 3600){
+            $currentNum = self::numsOfPickPacketMember('2018-01',$endDate,$tokenId,$type);
+            $currentData = json_encode(['data' => $currentNum,'updated_at' => date('Y-m-d H:i:s',$currentStamp)]);
+            $redis->set($dataRedisKey,$currentData);
+        }
+        return $currentNum;
+    }
+
+    /**
+     * 发送糖果的总人数
+     * @param int $tokenId
+     * @param int $type
+     * @return int
+     */
+    public static function numsOfSendPacketMemberTotal($tokenId = 0, $type = 0)
+    {
+        $currentStamp = time();
+        $endDate = date('Y-m-d',$currentStamp);
+        $redis = Redis::connection('stat');
+        $dataRedisKey = self::TOTAL_SEND_PACKET_MEMBERS.$tokenId;
+        $oldDataJson = $redis->get($dataRedisKey);
+        $oldData = json_decode($oldDataJson,true);
+        $updateDate = isset($oldData['updated_at']) ? $oldData['updated_at'] : '0000-00-00';
+        $currentNum = isset($oldData['data']) ? $oldData['data'] : 0;
+        if($currentNum == 0 || $currentStamp - strtotime($updateDate) > 3600){
+            $currentNum = self::numsOfSendPacketMember('2018-01',$endDate,$tokenId,$type);
+            $currentData = json_encode(['data' => $currentNum,'updated_at' => date('Y-m-d H:i:s',$currentStamp)]);
+            $redis->set($dataRedisKey,$currentData);
+        }
+        return $currentNum;
     }
 
     /**
      * 发放token种类
      * @param string $beginDate
      * @param string $endDate
+     * @param int $tokenId
+     * @param int $column
      * @return int
      */
-    public static function kindsOfTokenSent($beginDate = '0000-00-00', $endDate = '0000-00-00')
+    public static function kindsOfTokenSent($beginDate = '0000-00-00', $endDate = '0000-00-00', $tokenId = 0, $column = 'symbol')
     {
         if(strtotime($beginDate) > strtotime($endDate)){
             return 0;
         }
         $begin = $beginDate;
         $end = $endDate .' 23:59:59';
-        $symbol = RedPacket::from('base_packet')
-            ->where('base_packet.created_at','>=',$begin)
-            ->leftJoin('base_token','base_token.id','=','base_packet.token_id')
-            ->where('base_packet.created_at','<=',$end)
-            ->where('base_token.symbol','!=',null)
-            ->select('base_token.symbol')
-            ->groupBy('base_token.symbol')
+        $symbol = RedPacket::from('base_packet AS p')
+            ->where('p.created_at','>=',$begin)
+            ->leftJoin('base_token AS t','t.id','=','p.token_id')
+            ->where('p.created_at','<=',$end)
+            ->where('t.symbol','!=',null)
+            ->where(function ($query) use ($tokenId){
+                if($tokenId > 0){
+                    $query->where('p.token_id',$tokenId);
+                }
+            })
+            ->select('t.'.$column)
+            ->groupBy('t.'.$column)
             ->get()->toArray();
         if($symbol){
-            return array_column($symbol,'symbol');
+            return $symbol;
         }
         return [];
     }
@@ -246,13 +297,13 @@ class PacketStatService
         }
         $begin = $beginDate;
         $end = $endDate .' 23:59:59';
-        $result = RedPacket::from('base_packet')
-            ->leftJoin('base_token','base_token.id','=','base_packet.token_id')
-            ->select('base_packet.total_amount','base_token.price')
-            ->where('base_packet.created_at','>=',$begin)->where('base_packet.created_at','<=',$end)
+        $result = RedPacket::from('base_packet AS p')
+            ->leftJoin('base_token AS t','t.id','=','p.token_id')
+            ->select('p.total_amount','t.price')
+            ->where('p.created_at','>=',$begin)->where('p.created_at','<=',$end)
             ->where(function ($query) use ($tokenId){
                 if($tokenId > 0){
-                    $query->where('base_packet.token_id',$tokenId);
+                    $query->where('p.token_id',$tokenId);
                 }
             })
             ->get()->toArray();
@@ -278,7 +329,7 @@ class PacketStatService
     public static function getStatDataByDay($beginDate = '0000-00-00', $endDate = '0000-00-00', $tokenId = 0)
     {
         $beginStamp = strtotime($beginDate);
-        $endStamp = strtotime($endDate);
+        $endStamp = strtotime($endDate.' 23:59:59');
         if($beginStamp > $endStamp){
             return [];
         }
@@ -286,27 +337,25 @@ class PacketStatService
         $statDataKey = self::STAT_DATA_KEY.$tokenId;
         $statData = $redis->zrevrangebyscore($statDataKey,$endStamp,$beginStamp,'WITHSCORES');
         $statData = array_flip($statData);
-        \Log::info('getStatDataByDay$statData'.var_export($statData,true));
         $currentStamp = $endStamp;
-
-        $returnData = [];
-        \Log::info('$currentStamp'.$currentStamp);
-        \Log::info('$beginStamp'.$beginStamp);
+        $dailyData = [];
         while ($currentStamp >= $beginStamp) {
             $currentDate = date('Y-m-d',$currentStamp);
             if(!isset($statData[$currentStamp])){
                 $currentData = self::statDataSingleDay($currentDate,$tokenId);
-                if(isset($currentData['amountOfCandySent']) && $currentData['amountOfCandySent'] > 0){
+                if(isset($currentData['amountOfCandySent'])){
                     $redis->zadd($statDataKey,$currentStamp,json_encode($currentData,true));
-                    $returnData[$currentDate] = $currentData;
+                    $dailyData[$currentDate] = $currentData;
                 }
             } else {
-                $returnData[$currentDate] = json_decode($statData[$currentStamp],true);
-                \Log::info('getStatDataByDay$returnData[$currentDate]'.var_export($returnData,true));
+                $dailyData[$currentDate] = json_decode($statData[$currentStamp],true);
             }
             $currentStamp -= 86400;
         }
-        \Log::info('getStatDataByDay$returnData'.var_export($returnData,true));
+        $returnData['dailyData'] = $dailyData;
+        \Log::info('PacketStatService  $returnData:'.var_export($returnData,true));
+        $returnData = array_add($returnData,'numsOfPickPacketMemberTotal',PacketStatService::numsOfPickPacketMemberTotal($tokenId));
+        $returnData = array_add($returnData,'numsOfSendPacketMemberTotal',PacketStatService::numsOfSendPacketMemberTotal($tokenId));
         return $returnData;
     }
 
@@ -319,12 +368,11 @@ class PacketStatService
     public static function statDataSingleDay($date = '0000-00-00', $tokenId = 0)
     {
         $beginDate = $date;
-        $endDate = $date.' 23:59:59';
+        $endDate = $date;
         $data = [
-            'numsOfPickPacketMemberTotal' => PacketStatService::numsOfPickPacketMemberTotal($tokenId),
             'amountOfCandySent'           => PacketStatService::amountOfCandySent($beginDate,$endDate,$tokenId),
             'numsOfPacketsSent'           => PacketStatService::numsOfPacketsSent($beginDate,$endDate,$tokenId),
-            'kindsOfTokenSent'            => PacketStatService::kindsOfTokenSent($beginDate,$endDate),
+            'kindsOfTokenSent'            => PacketStatService::kindsOfTokenSent($beginDate,$endDate,$tokenId),
             'amountOfCandyPicked'         => PacketStatService::amountOfCandyPicked($beginDate,$endDate,$tokenId),
             'numsOfPickPacketMember'      => PacketStatService::numsOfPickPacketMember($beginDate,$endDate,$tokenId),
             'numsOfSendPacketMember'      => PacketStatService::numsOfSendPacketMember($beginDate,$endDate,$tokenId),
