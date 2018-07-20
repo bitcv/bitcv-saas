@@ -21,8 +21,8 @@ class PacketStatController extends Controller
         $data = PacketStatService::getStatDataByDay($beginDate,$endDate,$tokenId);
         \Log::info('getPacektStat'.var_export($data,true));
         foreach ($data as &$item) {
-            $sentPacketRate = $item['numsOfSendPacketMember'] > 0 ? bcdiv($item['numsOfPacketsSent'],$item['numsOfSendPacketMember'],2) : 0;
-            $avgAmountOfPacket = $item['numsOfPacketsSent'] > 0 ?  bcdiv($item['amountOfCandySent'],$item['numsOfPacketsSent'],2) : 0;
+            $sentPacketRate = isset($item['numsOfSendPacketMember']) && $item['numsOfSendPacketMember'] > 0 ? bcdiv($item['numsOfPacketsSent'],$item['numsOfSendPacketMember'],2) : 0;
+            $avgAmountOfPacket = isset($item['numsOfPacketsSent']) && $item['numsOfPacketsSent'] > 0 ?  bcdiv($item['amountOfCandySent'],$item['numsOfPacketsSent'],2) : 0;
             $item = array_add($item,'sentPacketRate',number_format($sentPacketRate,2,'.',','));
             $item = array_add($item,'avgAmountOfPacket',number_format($avgAmountOfPacket,2,'.',','));
             $item['amountOfCandyPicked'] = number_format($item['amountOfCandyPicked'],2,'.',',');
