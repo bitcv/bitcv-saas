@@ -17,6 +17,7 @@ class PacketStatController extends Controller
         $nowStamp = time();
         $endDate = strtotime($endDate) > $nowStamp ? date('Y-m-d',$nowStamp) : $endDate;
         $tokenId = $request->get('tokenId');
+        \Log::info('getPacektStat$tokenId'.$tokenId);
         $data = PacketStatService::getStatDataByDay($beginDate,$endDate,$tokenId);
         \Log::info('getPacektStat'.var_export($data,true));
         foreach ($data as &$item) {
