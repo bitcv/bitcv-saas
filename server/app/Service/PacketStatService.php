@@ -302,6 +302,7 @@ class PacketStatService
                 }
             } else {
                 $returnData[$currentDate] = json_decode($statData[$currentStamp],true);
+                \Log::info('getStatDataByDay$returnData[$currentDate]'.var_export($returnData,true));
             }
             $currentStamp -= 86400;
         }
