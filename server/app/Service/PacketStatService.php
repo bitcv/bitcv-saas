@@ -13,6 +13,7 @@ use App\Models\RedPacket;
 use App\Models\User;
 use App\Models\Token;
 use Illuminate\Support\Facades\Redis;
+ini_set("memory_limit","512M");
 
 class PacketStatService
 {
