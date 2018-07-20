@@ -18,6 +18,7 @@ class PacketStatController extends Controller
         $endDate = strtotime($endDate) > $nowStamp ? date('Y-m-d',$nowStamp) : $endDate;
         $tokenId = $request->get('tokenId');
         $data = PacketStatService::getStatDataByDay($beginDate,$endDate,$tokenId);
+        \Log::info('getPacektStat'.var_export($data,true));
         foreach ($data as &$item) {
             $sentPacketRate = $item['numsOfSendPacketMember'] > 0 ? bcdiv($item['numsOfPacketsSent'],$item['numsOfSendPacketMember'],2) : 0;
             $avgAmountOfPacket = $item['numsOfPacketsSent'] > 0 ?  bcdiv($item['amountOfCandySent'],$item['numsOfPacketsSent'],2) : 0;
