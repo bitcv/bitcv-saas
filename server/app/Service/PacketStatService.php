@@ -13,7 +13,7 @@ use App\Models\RedPacket;
 use App\Models\User;
 use App\Models\Token;
 use Illuminate\Support\Facades\Redis;
-ini_set("memory_limit","512M");
+//ini_set("memory_limit","512M");
 
 class PacketStatService
 {
@@ -286,6 +286,7 @@ class PacketStatService
         $statDataKey = self::STAT_DATA_KEY.$tokenId;
         $statData = $redis->zrevrangebyscore($statDataKey,$endStamp,$beginStamp,'WITHSCORES');
         $statData = array_flip($statData);
+        \Log::info('getStatDataByDay$statData'.var_export($statData,true));
         $currentStamp = $endStamp;
 
         $returnData = [];
