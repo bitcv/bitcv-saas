@@ -290,6 +290,8 @@ class PacketStatService
         $currentStamp = $endStamp;
 
         $returnData = [];
+        \Log::info('$currentStamp'.$currentStamp);
+        \Log::info('$beginStamp'.$beginStamp);
         while ($currentStamp >= $beginStamp) {
             $currentDate = date('Y-m-d',$currentStamp);
             if(!isset($statData[$currentStamp])){
@@ -303,6 +305,7 @@ class PacketStatService
             }
             $currentStamp -= 86400;
         }
+        \Log::info('getStatDataByDay$returnData'.var_export($returnData,true));
         return $returnData;
     }
 
