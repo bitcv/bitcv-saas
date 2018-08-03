@@ -55,12 +55,12 @@ class PacketStatController extends Controller
             ->orderBy('depo_box.created_at', 'desc')
             ->where('depo_box.proj_id', $params['projId'])
             ->get()->toArray();
+        \Log::info('ybb$dataList'.var_export($dataList,true));
         foreach ($dataList as $key => $value) {
             $dataList[$key]['totalAmount2'] = round($value['total_amount'],4);
             $dataList[$key]['minAmount2'] = round($value['min_amount'],4);
             $dataList[$key]['statusName'] = DictUtil::DepositBox_Status[$value['status']];
         }
-        \Log::info('$dataList'.var_export($dataList,true));
         $ids = array_values(array_unique(array_column($dataList,'id')));
         foreach ($dataList as $key => $value) {
             foreach ($ids as $k => $id) {
