@@ -190,7 +190,6 @@ class AuthUserController extends Controller
         $uid = $uinfo['uid'];
         $user = DB::table('base_authuser')->select('*')->where('uid',$uid)->get()->toArray();
         $projectid = app()->proj['proj_id'];
-        \Log::info('getSimpleAuthUserprojid'.$projectid);
 //        $projectid = 1; // 测试使用
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
         $item = DB::table('saas_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
@@ -304,7 +303,8 @@ class AuthUserController extends Controller
         }
 
         return $this->output([
-            'tokenId' => $result
+            'tokenId' => $result,
+            'projectid' => $projectid,
         ]);
     }
 
