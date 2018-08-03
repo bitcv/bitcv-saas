@@ -60,6 +60,7 @@ class PacketStatController extends Controller
             $dataList[$key]['minAmount2'] = round($value['min_amount'],4);
             $dataList[$key]['statusName'] = DictUtil::DepositBox_Status[$value['status']];
         }
+        \Log::info('$dataList'.var_export($dataList,true));
         $ids = array_values(array_unique(array_column($dataList,'id')));
         foreach ($dataList as $key => $value) {
             foreach ($ids as $k => $id) {
