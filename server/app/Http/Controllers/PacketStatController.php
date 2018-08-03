@@ -46,9 +46,9 @@ class PacketStatController extends Controller
         extract($params);
         // 测试使用
 //        $params['projId'] = 2;
-        $depositBoxModel = Model\DepositBox::join('proj_info', 'depo_box.proj_id', '=', 'proj_info.id')
-            ->join('depo_order', 'depo_box.id', '=', 'depo_order.deposit_box_id')
-            ->join('base_user', 'depo_order.user_id', '=', 'base_user.id');
+        $depositBoxModel = Model\DepositBox::leftJoin('proj_info', 'depo_box.proj_id', '=', 'proj_info.id')
+            ->leftJoin('depo_order', 'depo_box.id', '=', 'depo_order.deposit_box_id')
+            ->leftJoin('base_user', 'depo_order.user_id', '=', 'base_user.id');
         $dataCount = $depositBoxModel->count();
         $dataList = $depositBoxModel
             ->select('depo_box.id', 'depo_box.proj_id', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'depo_box.from_addr', 'depo_box.to_addr', 'depo_box.contract_addr', 'depo_box.status', 'proj_info.name_cn','base_user.mobile','depo_box.name','depo_order.order_amount')
@@ -92,6 +92,7 @@ class PacketStatController extends Controller
                 $temp[$key]['totalorder'] = array_sum(array_column($data[$key], 'order_amount'));
             }
         }
+        \Log::info('$temp'.var_export($temp,true));
         foreach ($temp as $key => $value) {
             $temp[$key]['lastamount'] = $value['totalAmount2'] - $value['totalorder'];
             $temp[$key]['rate'] = round(($value['totalorder'] / $value['totalAmount2'] * 100),2).'%';
