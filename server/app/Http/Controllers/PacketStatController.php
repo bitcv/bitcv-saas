@@ -94,7 +94,8 @@ class PacketStatController extends Controller
         }
         \Log::info('$temp'.var_export($temp,true));
         foreach ($temp as $key => $value) {
-            $temp[$key]['lastamount'] = $value['totalAmount2'] - (isset($value['totalorder']) ? $value['totalorder'] : 0);
+            $value['totalorder'] = array_key_exists('totalorder',$temp[$key]) ? $value['totalorder'] : 0 ;
+            $temp[$key]['lastamount'] = $value['totalAmount2'] - $value['totalorder'];
             $temp[$key]['rate'] = round(($value['totalorder'] / $value['totalAmount2'] * 100),2).'%';
         }
         return $this->output([
