@@ -89,7 +89,11 @@ class PacketStatController extends Controller
                 if ($k == 'stat') {
                     continue;
                 }
-                $temp[$key]['totalorder'] = array_sum(array_column($data[$key], 'order_amount'));
+                if (isset($data[$key]['order_amount'])) {
+                    $temp[$key]['totalorder'] = array_sum(array_column($data[$key], 'order_amount'));
+                } else {
+                    $temp[$key]['totalorder'] = 0;
+                }
             }
         }
         \Log::info('$temp'.var_export($temp,true));
