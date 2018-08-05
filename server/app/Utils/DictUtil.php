@@ -54,6 +54,12 @@ class DictUtil
         '3' => '已过期',
     ];
 
+    const DespositUserBox_Status = [
+        '1' => '锁仓中',
+        '2' => '可提取',
+        '3' => '已提取',
+    ];
+
     const DepositFinance_Type = [
         '1' => '购买',
         '2' => '收益',

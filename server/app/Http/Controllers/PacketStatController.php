@@ -47,15 +47,15 @@ class PacketStatController extends Controller
         // 测试使用
 //        $params['projId'] = 2;
         $depositBoxModel = Model\DepositBox::leftJoin('proj_info', 'depo_box.proj_id', '=', 'proj_info.id')
-            ->leftJoin('depo_order', 'depo_box.id', '=', 'depo_order.deposit_box_id')
-            ->leftJoin('base_user', 'depo_order.user_id', '=', 'base_user.id');
+            ->leftJoin('depo_user_box', 'depo_box.id', '=', 'depo_user_box.deposit_box_id')
+            ->leftJoin('base_user', 'depo_user_box.user_id', '=', 'base_user.id');
         $dataCount = $depositBoxModel->count();
         $dataList = $depositBoxModel
-            ->select('depo_box.id', 'depo_box.proj_id', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'depo_box.from_addr', 'depo_box.to_addr', 'depo_box.contract_addr', 'depo_box.status', 'proj_info.name_cn','base_user.mobile','depo_box.name','depo_order.order_amount')
+            ->select('depo_box.id', 'depo_box.proj_id', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'depo_box.status', 'proj_info.name_cn','base_user.mobile','depo_box.name','depo_user_box.amount')
             ->orderBy('depo_box.created_at', 'desc')
             ->where('depo_box.proj_id', $params['projId'])
+            ->where('depo_box.status', '!=', 0)
             ->get()->toArray();
-        \Log::info('ybb$dataList'.var_export($dataList,true));
         foreach ($dataList as $key => $value) {
             $dataList[$key]['totalAmount2'] = round($value['total_amount'],4);
             $dataList[$key]['minAmount2'] = round($value['min_amount'],4);
@@ -89,10 +89,10 @@ class PacketStatController extends Controller
                 if ($k == 'stat') {
                     continue;
                 }
-                $temp[$key]['totalorder'] = array_sum(array_column($data[$key], 'order_amount'));
+                $temp[$key]['countm'] = count(array_unique(array_column($data[$key],'mobile')));
+                $temp[$key]['totalorder'] = array_sum(array_column($data[$key], 'amount'));
             }
         }
-        \Log::info('$temp'.var_export($temp,true));
         foreach ($temp as $key => $value) {
             $value['totalorder'] = array_key_exists('totalorder',$temp[$key]) ? $value['totalorder'] : 0 ;
             $temp[$key]['lastamount'] = $value['totalAmount2'] - $value['totalorder'];
@@ -125,42 +125,28 @@ class PacketStatController extends Controller
         }
         $offset = $perpage * ($pageno - 1);
 
-        $query = DB::table('depo_order');
-        $query = $query->join('base_user', 'depo_order.user_id', '=', 'base_user.id');
-        $query = $query->join('depo_box', 'depo_order.deposit_box_id', '=', 'depo_box.id');
+        $query = DB::table('depo_user_box');
+        $query = $query->join('base_user', 'depo_user_box.user_id', '=', 'base_user.id');
+        $query = $query->join('depo_box', 'depo_user_box.deposit_box_id', '=', 'depo_box.id');
         $query = $query->join('proj_info', 'depo_box.proj_id', '=', 'proj_info.id');
-        $query = $query->select('depo_order.id', 'depo_order.deposit_box_id', 'depo_order.order_amount', 'depo_order.from_addr', 'depo_order.to_addr', 'depo_order.to_addr', 'depo_order.contract_addr', 'depo_order.status', 'depo_order.created_at', 'depo_box.proj_id', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile');
+        $query = $query->select('depo_user_box.id', 'depo_user_box.deposit_box_id', 'depo_user_box.amount', 'depo_user_box.status', 'depo_user_box.created_at', 'depo_box.proj_id', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile');
         if (array_key_exists('name',$allparams) && $allparams['name']) {
             $query = $query->where('depo_box.name','like','%'.$allparams['name'].'%');
         }
-        $dataList = $query->orderBy('depo_order.created_at', 'desc')
+        $dataList = $query->orderBy('depo_user_box.created_at', 'desc')
             ->where('depo_box.proj_id', $params['projId'])
             ->offset($offset)->limit($perpage)
             ->get()->toArray();
         $dataCount = $query->count();
-        /*$depositOrderModel = Model\DepositOrder::join('base_user', 'depo_order.user_id', '=', 'base_user.id')
-            ->join('depo_box', 'depo_order.deposit_box_id', '=', 'depo_box.id')
-            ->join('proj_info', 'depo_box.proj_id', '=', 'proj_info.id')
-            ->select('depo_order.id', 'depo_order.deposit_box_id', 'depo_order.order_amount', 'depo_order.from_addr', 'depo_order.to_addr', 'depo_order.to_addr', 'depo_order.contract_addr', 'depo_order.status', 'depo_order.created_at', 'depo_box.proj_id', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile');
-        $dataCount = $depositOrderModel->count();
-        $dataList = $depositOrderModel
-                ->orderBy('depo_order.created_at', 'desc')
-                ->where('depo_box.proj_id', $params['projId'])
-                ->where('depo_box.name','like','%'.$allparams['name'].'%')
-                ->offset($offset)->limit($perpage)
-                ->get()->toArray();
-        foreach ($dataList as $key => $value) {
-            $dataList[$key]['endTime'] = date('Y-m-d H:i:s',strtotime("{$value['created_at']} +".$value['lock_time']." day"));
-            $dataList[$key]['endGet'] = round($value['order_amount'] * (1 + $value['interest_rate']),4);
-        }*/
         foreach ($dataList as $key => $value) {
             $dataList[$key]->endTime = date('Y-m-d H:i:s',strtotime("{$value->created_at} +".$value->lock_time." day"));
-            $dataList[$key]->endGet = round($value->order_amount * (1 + $value->interest_rate),4);
+            $dataList[$key]->endGet = round($value->amount * (1 + $value->interest_rate),4);
+            $dataList[$key]->amount2 = round($value->amount,4);
         }
         return $this->output([
             'dataCount' => $dataCount,
             'dataList' => $dataList,
-            'statusDict' => DictUtil::DepositOrder_Status,
+            'statusDict' => DictUtil::DespositUserBox_Status,
             'names' => array_unique($names), // 余币宝名称
         ]);
     }
