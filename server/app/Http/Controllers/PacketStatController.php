@@ -147,7 +147,7 @@ class PacketStatController extends Controller
             'dataCount' => $dataCount,
             'dataList' => $dataList,
             'statusDict' => DictUtil::DespositUserBox_Status,
-            'names' => array_unique($names), // 余币宝名称
+            'names' => array_unique(array_filter($names)), // 余币宝名称
         ]);
     }
 
