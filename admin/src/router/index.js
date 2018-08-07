@@ -8,6 +8,7 @@ import ProjList from '@/components/projList/ProjList'
 import ProjData from '@/components/projdata/projdata'
 import MediaReport from '@/components/media/MediaReport'
 import Stat from '@/components/stat/redpacket'
+import YbbStat from '@/components/stat/ybbstat'
 
 Vue.use(Router)
 
@@ -46,6 +47,12 @@ export default new Router({
         requireAuth: true
       },
       component: Upload
+    }, {
+      path: '/admin/ybbstat',
+      meta: {
+        requireAuth: true
+      },
+      component: YbbStat
     }, {
       path: '/admin/stat',
       meta: {
