@@ -16,7 +16,6 @@ class AuthUserController extends Controller
         //获取请求参数
         $params = $this->validation($request, [
             'uname' => 'required',
-//            'umobile' => 'required|numeric',
             'uemail' => 'required',
         ]);
 
@@ -120,8 +119,7 @@ class AuthUserController extends Controller
         $key = 'pass_err_'.$user->email;
         // 登录密码错误五次后，一天禁止登录
         if (Redis::get($key) >= 5) {
-//            return $this->error(207);
-            return false;
+            return $this->error(207);
         }
         if(!Service::checkPwd($params['passwd'],$hash)) {
             Redis::incr($key);
@@ -186,14 +184,12 @@ class AuthUserController extends Controller
     public function getSimpleAuthUser(Request $request)
     {
         $uinfo = session()->get('authuinfo');
-        \Log::info('getSimpleAuthUser'.var_export($uinfo,true));
         $uid = $uinfo['uid'];
         $user = DB::table('base_authuser')->select('*')->where('uid',$uid)->get()->toArray();
         $projectid = app()->proj['proj_id'];
 //        $projectid = 1; // 测试使用
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
         $item = DB::table('saas_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
-        \Log::info('saas_item'.var_export($item,true));
         if (isset($result) && $result) {
             $atime = $result[0]->atime;
             $atime = date('Y-m-d H:i:s',strtotime("{$atime} +1 year"));
