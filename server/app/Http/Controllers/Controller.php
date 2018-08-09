@@ -76,13 +76,13 @@ class Controller extends BaseController
      public function error($errcode = 101, $errmsg = '', $getJson = false)
      {
          Service::log("errcode:$errcode " . $_SERVER['REQUEST_URI'] . ' => ' . json_encode($_POST), 'debug');
+         \Log::info('appenv'.env('APP_ENV'));
          $err = array_key_exists($errcode, self::ERROR) ? self::ERROR[$errcode] : self::ERROR[101];
          if ($errmsg) {
              $err['errmsg'] = $errmsg;
          }
          $errorArr = [202, 207, 301, 302, 303, 400, 401];
          if (env('APP_ENV') != 'local' && !in_array($errcode, $errorArr)) {
-             \Log::info('appenv'.env('APP_ENV'));
              Alarm::send("SaaS 站：errcode: $errcode, errmsg: ".$err['errmsg'] . ', ' . $_SERVER['REQUEST_URI'] . ': ' . json_encode($_POST));
          }
 
