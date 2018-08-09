@@ -6,6 +6,9 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+use App\Utils\Alarm;
+use App\Utils\Service;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -20,12 +23,8 @@ class Controller extends BaseController
         '101' => ['errcode' => 101, 'errmsg' => '未知错误'],
         '110' => ['errcode' => 110, 'errmsg' => '文件名称错误'],
         // 用户错误码
-        '201' => ['errcode' => 201, 'errmsg' => '用户名已注册'],
         '202' => ['errcode' => 202, 'errmsg' => '用户名或密码错误'],
         '203' => ['errcode' => 203, 'errmsg' => '用户不存在'],
-        '204' => ['errcode' => 204, 'errmsg' => '重复关注'],
-        '205' => ['errcode' => 205, 'errmsg' => '密码格式不正确'],
-        '206' => ['errcode' => 206, 'errmsg' => '验证码错误'],
         '207' => ['errcode' => 207, 'errmsg' => '登录次数过多请稍候重试'],
         // 项目错误码
         '301' => ['errcode' => 301, 'errmsg' => '项目不存在'],
@@ -66,13 +65,32 @@ class Controller extends BaseController
         return json_encode($rtnArr, JSON_UNESCAPED_UNICODE);
     }
 
-    public function error($errcode)
+    /*public function error($errcode)
     {
         if (array_key_exists($errcode, self::ERROR)) {
             return json_encode(self::ERROR[$errcode], JSON_UNESCAPED_UNICODE);
         }
         return json_encode(self::ERROR[101], JSON_UNESCAPED_UNICODE);
-    }
+    }*/
+
+     public function error($errcode = 101, $errmsg = '', $getJson = false)
+     {
+         Service::log("errcode:$errcode " . $_SERVER['REQUEST_URI'] . ' => ' . json_encode($_POST), 'debug');
+         $err = array_key_exists($errcode, self::ERROR) ? self::ERROR[$errcode] : self::ERROR[101];
+         if ($errmsg) {
+             $err['errmsg'] = $errmsg;
+         }
+         $errorArr = [202, 207, 301, 302, 303, 400, 401];
+         if (env('APP_ENV') != 'local' && !in_array($errcode, $errorArr)) {
+             Alarm::send("SaaS 站：errcode: $errcode, errmsg: ".$err['errmsg'] . ', ' . $_SERVER['REQUEST_URI'] . ': ' . json_encode($_POST));
+         }
+
+         if ($getJson) {
+             return json_encode($err, JSON_UNESCAPED_UNICODE);
+         } else {
+             return response()->json($err);
+         }
+     }
 
     public function arrayKeyToCamel (Array $array)
     {
