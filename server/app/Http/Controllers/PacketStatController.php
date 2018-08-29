@@ -62,6 +62,7 @@ class PacketStatController extends Controller
             $dataList[$key]['statusName'] = DictUtil::DepositBox_Status[$value['status']];
         }
         $ids = array_values(array_unique(array_column($dataList,'id')));
+        $data = [];
         foreach ($dataList as $key => $value) {
             foreach ($ids as $k => $id) {
                 if ($id == $value['id']) {
