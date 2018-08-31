@@ -62,9 +62,9 @@
                     <el-table-column label="预期回报额">
                         <template slot-scope="scope">{{ scope.row.endGet }}</template>
                     </el-table-column>
-                    <el-table-column label="支付地址">
+                    <el-table-column label="钱包地址">
                         <template slot-scope="scope">
-                            <a class="link" :href="'https://etherscan.io/token/' + scope.row.contractAddr + '?a=' + scope.row.fromAddr" target="_blank">{{ getShortStr(scope.row.from_addr, 5) }}</a>
+                            <a class="link" :href="'https://etherscan.io/token/0xe75ad3aab14e4b0df8c5da4286608dabb21bd864'+ '?a=' + scope.row.addr" target="_blank">{{ getShortStr(scope.row.addr, 5) }}</a>
                         </template>
                     </el-table-column>
                     <!--<el-table-column label="接收地址">

@@ -130,12 +130,14 @@ class PacketStatController extends Controller
         $query = $query->join('base_user', 'depo_user_box.user_id', '=', 'base_user.id');
         $query = $query->join('depo_box', 'depo_user_box.deposit_box_id', '=', 'depo_box.id');
         $query = $query->join('proj_info', 'depo_box.proj_id', '=', 'proj_info.id');
-        $query = $query->select('depo_user_box.id', 'depo_user_box.deposit_box_id', 'depo_user_box.amount', 'depo_user_box.status', 'depo_user_box.created_at', 'depo_box.proj_id', 'depo_box.from_addr', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile');
+        $query = $query->join('base_user_wallet', 'depo_user_box.user_id', '=', 'base_user_wallet.user_id'); // 钱包地址
+        $query = $query->select('depo_user_box.id', 'depo_user_box.deposit_box_id', 'depo_user_box.amount', 'depo_user_box.status', 'depo_user_box.created_at', 'depo_box.proj_id', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile', 'base_user_wallet.addr');
         if (array_key_exists('name',$allparams) && $allparams['name']) {
             $query = $query->where('depo_box.name','like','%'.$allparams['name'].'%');
         }
         $dataList = $query->orderBy('depo_user_box.created_at', 'desc')
             ->where('depo_box.proj_id', $params['projId'])
+            ->where('base_user_wallet.token_protocol', '=', 1)
             ->offset($offset)->limit($perpage)
             ->get()->toArray();
         $dataCount = $query->count();
