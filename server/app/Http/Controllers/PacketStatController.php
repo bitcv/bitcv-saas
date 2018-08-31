@@ -130,7 +130,7 @@ class PacketStatController extends Controller
         $query = $query->join('base_user', 'depo_user_box.user_id', '=', 'base_user.id');
         $query = $query->join('depo_box', 'depo_user_box.deposit_box_id', '=', 'depo_box.id');
         $query = $query->join('proj_info', 'depo_box.proj_id', '=', 'proj_info.id');
-        $query = $query->select('depo_user_box.id', 'depo_user_box.deposit_box_id', 'depo_user_box.amount', 'depo_user_box.status', 'depo_user_box.created_at', 'depo_box.proj_id', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile');
+        $query = $query->select('depo_user_box.id', 'depo_user_box.deposit_box_id', 'depo_user_box.amount', 'depo_user_box.status', 'depo_user_box.created_at', 'depo_box.proj_id', 'depo_box.from_addr', 'depo_box.name', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'proj_info.name_cn', 'base_user.mobile');
         if (array_key_exists('name',$allparams) && $allparams['name']) {
             $query = $query->where('depo_box.name','like','%'.$allparams['name'].'%');
         }
