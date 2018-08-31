@@ -64,7 +64,6 @@
                     </el-table-column>
                     <el-table-column label="钱包地址">
                         <template slot-scope="scope">
-                            // https://etherscan.io/token/0xe75ad3aab14e4b0df8c5da4286608dabb21bd864?a=0x5ad0aa080eb88e2d560dd62fdbc2518c7071aa38
                             <a class="link" :href="'https://etherscan.io/token/0xe75ad3aab14e4b0df8c5da4286608dabb21bd864'+ '?a=' + scope.row.addr" target="_blank">{{ getShortStr(scope.row.addr, 5) }}</a>
                         </template>
                     </el-table-column>
