@@ -170,9 +170,9 @@ class PacketStatController extends Controller
             'isReal' => 'int'
         ]);
 
-        $page  = intval($param['pageno']);
-        $limit = intval($param['perpage']);
-        $coin  = strval($param['coin']);
+        $page  = intval($param['pageno']) ? $param['pageno'] : 1;
+        $limit = intval($param['perpage']) ? $param['perpage'] : 10;
+        $coin  = strval($param['coin']) ? $param['coin'] : 'AAC';
         $date =  isset($param['date'])?$param['date']:date("Ymd",time());
         $isReal  = intval($param['isReal']);
 
@@ -183,6 +183,7 @@ class PacketStatController extends Controller
             'page' => $page,
             'isReal' => $isReal,
         );
+
         $url = "https://openzp.bitcv.cn/api/apStaCoin1?".http_build_query($arr);
         //$url = "http://openzp.ucai.net//api/apStaCoin1?".http_build_query($arr);
         $retJson = BaseUtil::curlPost($url,array());
