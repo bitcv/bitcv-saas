@@ -34,9 +34,6 @@
                     <el-table-column label="数量">
                         <template slot-scope="scope">{{ scope.row.prizeAmount }}</template>
                     </el-table-column>
-                    <el-table-column label="奖品价值">
-                        <template slot-scope="scope">{{ scope.row.prizeValue }}</template>
-                    </el-table-column>
                     <el-table-column label="时间">
                         <template slot-scope="scope">{{ scope.row.updateTime }}</template>
                     </el-table-column>
