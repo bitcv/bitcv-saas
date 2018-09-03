@@ -9,6 +9,7 @@ use App\Models as Model;
 use Illuminate\Support\Facades\DB;
 use App\Utils\DictUtil;
 use App\Utils\BaseUtil;
+use App\Models\OpenUser;
 
 class PacketStatController extends Controller
 {
