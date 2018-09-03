@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models as Model;
 use Illuminate\Support\Facades\DB;
 use App\Utils\DictUtil;
+use App\Utils\BaseUtil;
 
 class PacketStatController extends Controller
 {
