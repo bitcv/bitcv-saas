@@ -296,11 +296,18 @@ class AuthUserController extends Controller
             foreach ($project as $key => $value) {
                 $result['tokenid'] = $value->token_id;
             }
-        }
 
+            $symbol = DB::table('base_token')->where('id', $result['tokenid'])->select('symbol')->get()->toArray();
+            $result2 = array();
+            foreach ($symbol as $key => $value) {
+                $result2['symbol'] = $value->symbol;
+            }
+        }
+        $symbol = isset($result2['symbol']) && $result2['symbol'] ? $result2['symbol'] : '';
         return $this->output([
             'tokenId' => $result,
             'projectid' => $projectid,
+            'symbol' => $symbol
         ]);
     }
 

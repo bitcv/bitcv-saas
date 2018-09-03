@@ -170,13 +170,15 @@ class PacketStatController extends Controller
             'perpage'  => 'int',
             'isReal' => 'int'
         ]);
-
-        $page  = intval($param['pageno']) ? $param['pageno'] : 1;
-        $limit = intval($param['perpage']) ? $param['perpage'] : 10;
-        $coin  = strval($param['coin']) ? $param['coin'] : 'AAC';
-        $date =  isset($param['date'])?$param['date']:date("Ymd",time());
-        $isReal  = intval($param['isReal']);
-
+        $allparams = $request->all();
+        $page  = intval($allparams['pageno']);
+        $limit = intval($allparams['perpage']);
+        $coin  = strval($allparams['coin']);
+        $date =  isset($allparams['date'])?$allparams['date']:date("Ymd",time());
+        $isReal  = intval($allparams['isReal']);
+        if ($allparams['isReal'] == 2) {
+            $isReal = 0;// aac $isReal = 1 是实物
+        }
         $arr = array(
             'date' =>  $date,
             'coin' => $coin,
@@ -189,17 +191,18 @@ class PacketStatController extends Controller
         //$url = "http://openzp.ucai.net//api/apStaCoin1?".http_build_query($arr);
         $retJson = BaseUtil::curlPost($url,array());
         $retArr =  json_decode($retJson,true);
-        if (is_array($retArr['data']) && count($retArr['data']) > 0) {
-            foreach ($retArr['data'] as $k=> $v){
+        if (is_array($retArr['data']['list']) && count($retArr['data']['list']) > 0) {
+            foreach ($retArr['data']['list'] as $k=> $v){
                 $openUser = OpenUser::getUserInfoByOpenId($v['openid'],1);
-                $retArr['data'][$k]['mobile'] =  isset($openUser['mobile'])?$openUser['mobile']:'';
-                $retArr['data'][$k]['nickname'] =  isset($openUser['nickname'])?$openUser['nickname']:'';
-                unset($retArr['data'][$k]['uid']);
+                $retArr['data']['list'][$k]['mobile'] =  isset($openUser['mobile'])?$openUser['mobile']:'';
+                $retArr['data']['list'][$k]['nickname'] =  isset($openUser['nickname'])?$openUser['nickname']:'';
+                unset($retArr['data']['list'][$k]['uid']);
             }
         }
 
         return $this->output([
-            'dataList' => $retArr['data'],
+            'dataList' => $retArr['data']['list'],
+            'dataCount' => $retArr['data']['count'],
         ]);
 
     }
