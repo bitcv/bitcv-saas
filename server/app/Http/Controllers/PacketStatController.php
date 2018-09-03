@@ -165,16 +165,17 @@ class PacketStatController extends Controller
         $param  = $this->validation($request, [
             'date'   =>  'string',
             'coin'   => 'string',
-            'page'   => 'int',
-            'limit'  => 'int',
+            'pageno'   => 'int',
+            'perpage'  => 'int',
             'isReal' => 'int'
         ]);
 
-        $page  = intval($param['page']);
-        $limit = intval($param['limit']);
+        $page  = intval($param['pageno']);
+        $limit = intval($param['perpage']);
         $coin  = strval($param['coin']);
         $date =  isset($param['date'])?$param['date']:date("Ymd",time());
         $isReal  = intval($param['isReal']);
+
         $arr = array(
             'date' =>  $date,
             'coin' => $coin,
