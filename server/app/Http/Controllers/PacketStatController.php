@@ -154,4 +154,50 @@ class PacketStatController extends Controller
         ]);
     }
 
+    // aac 转盘统计
+    /**
+     * 统计使用，无索引
+     *
+     * @param Request $request
+     */
+    public  function  staCoin1(Request $request){
+        $param  = $this->validation($request, [
+            'date'   =>  'string',
+            'coin'   => 'string',
+            'page'   => 'int',
+            'limit'  => 'int',
+            'isReal' => 'int'
+        ]);
+
+        $page  = intval($param['page']);
+        $limit = intval($param['limit']);
+        $coin  = strval($param['coin']);
+        $date =  isset($param['date'])?$param['date']:date("Ymd",time());
+        $isReal  = intval($param['isReal']);
+        $arr = array(
+            'date' =>  $date,
+            'coin' => $coin,
+            'limit' => $limit,
+            'page' => $page,
+            'isReal' => $isReal,
+        );
+        $url = "https://openzp.bitcv.cn/api/apStaCoin1?".http_build_query($arr);
+        //$url = "http://openzp.ucai.net//api/apStaCoin1?".http_build_query($arr);
+        $retJson = BaseUtil::curlPost($url,array());
+        $retArr =  json_decode($retJson,true);
+        if (is_array($retArr['data']) && count($retArr['data']) > 0) {
+            foreach ($retArr['data'] as $k=> $v){
+                $openUser = OpenUser::getUserInfoByOpenId($v['openid'],1);
+                $retArr['data'][$k]['mobile'] =  isset($openUser['mobile'])?$openUser['mobile']:'';
+                $retArr['data'][$k]['nickname'] =  isset($openUser['nickname'])?$openUser['nickname']:'';
+                unset($retArr['data'][$k]['uid']);
+            }
+        }
+
+        return $this->output([
+            'dataList' => $retArr['data'],
+        ]);
+
+    }
+
 }
