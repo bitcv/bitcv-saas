@@ -17,7 +17,7 @@
                         </el-select>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="success" @click.prevent="getItemList()">搜索</el-button>
+                        <el-button type="success" @click.prevent="getItemList({countPages: true})">搜索</el-button>
                     </el-form-item>
                 </el-form>
                 <el-table :data="itemList">
