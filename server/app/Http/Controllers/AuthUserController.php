@@ -110,6 +110,7 @@ class AuthUserController extends Controller
         }
         extract($params);
 
+        $projectid = app()->proj['proj_id'];
         $user = DB::table('base_authuser')->where([['email','=',$params['email']],['is_active','=',0]])->get()->toArray();
         if (!$user) {
             return $this->error(203);
@@ -117,6 +118,11 @@ class AuthUserController extends Controller
         $user = $user[0];
         $hash = $user->passwd;
         $key = 'pass_err_'.$user->email;
+        if ($params['email'] != 'xiaofei@bitcv.com') {
+            if ($projectid != $user->proj_id) {
+                return $this->error(202);
+            }
+        }
         // 登录密码错误五次后，一天禁止登录
         if (Redis::get($key) >= 5) {
             return $this->error(207);
@@ -132,7 +138,6 @@ class AuthUserController extends Controller
         }
 
         AuthUser::setLogin($tempuser);
-
         $data['uid'] = $tempuser['uid'];
         $data['uname'] = $tempuser['uname'];
         $data['email'] = $tempuser['email'];
