@@ -32,6 +32,27 @@ class Service {
         return true;
     }
 
+    /**
+     * 敏感字符串替换为星号
+     * @param $string   string  原字符串
+     * @param $front    int 前面多少位字符不替换为星号
+     * @param $end      int 后面多少位字符不替换为星号
+     * @return bool|string
+     */
+    public static function mask_string($string, $front, $end)
+    {
+        $len = strlen($string);
+        if ($len <= 0) {
+            return FALSE;
+        } else {
+            $front_string = substr($string, 0, $front);
+            $end_string = substr($string, -$end);
+            $mid_string = str_pad('', $len - $front - $end, '*');
+            $masked_string = $front_string . $mid_string . $end_string;
+        }
+        return $masked_string;
+    }
+
     //生成随机码
     public static function genRandChars($len = 6) { 
         //$chars = 'abcdefghijkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ023456789'; 

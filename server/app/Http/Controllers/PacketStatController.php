@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models as Model;
 use Illuminate\Support\Facades\DB;
 use App\Utils\DictUtil;
+use App\Utils\BaseUtil;
+use App\Models\OpenUser;
 
 class PacketStatController extends Controller
 {
@@ -152,6 +154,57 @@ class PacketStatController extends Controller
             'statusDict' => DictUtil::DespositUserBox_Status,
             'names' => array_unique(array_filter($names)), // 余币宝名称
         ]);
+    }
+
+    // aac 转盘统计
+    /**
+     * 统计使用，无索引
+     *
+     * @param Request $request
+     */
+    public  function  staCoin1(Request $request){
+        $param  = $this->validation($request, [
+            'date'   =>  'string',
+            'coin'   => 'string',
+            'pageno'   => 'int',
+            'perpage'  => 'int',
+            'isReal' => 'int'
+        ]);
+        $allparams = $request->all();
+        $page  = intval($allparams['pageno']);
+        $limit = intval($allparams['perpage']);
+        $coin  = strval($allparams['coin']);
+        $date =  isset($allparams['date'])?$allparams['date']:date("Ymd",time());
+        $isReal  = intval($allparams['isReal']);
+        if ($allparams['isReal'] == 2) {
+            $isReal = 0;// aac $isReal = 1 是实物
+        }
+        $arr = array(
+            'date' =>  $date,
+            'coin' => $coin,
+            'limit' => $limit,
+            'page' => $page,
+            'isReal' => $isReal,
+        );
+
+        $url = "https://openzp.bitcv.cn/api/apStaCoin1?".http_build_query($arr);
+        //$url = "http://openzp.ucai.net//api/apStaCoin1?".http_build_query($arr);
+        $retJson = BaseUtil::curlPost($url,array());
+        $retArr =  json_decode($retJson,true);
+        if (is_array($retArr['data']['list']) && count($retArr['data']['list']) > 0) {
+            foreach ($retArr['data']['list'] as $k=> $v){
+                $openUser = OpenUser::getUserInfoByOpenId($v['openid'],1);
+                $retArr['data']['list'][$k]['mobile'] =  isset($openUser['mobile'])?$openUser['mobile']:'';
+                $retArr['data']['list'][$k]['nickname'] =  isset($openUser['nickname'])?$openUser['nickname']:'';
+                unset($retArr['data']['list'][$k]['uid']);
+            }
+        }
+
+        return $this->output([
+            'dataList' => $retArr['data']['list'],
+            'dataCount' => $retArr['data']['count'],
+        ]);
+
     }
 
 }

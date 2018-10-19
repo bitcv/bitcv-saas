@@ -37,4 +37,7 @@ Route::post('doSignout', 'AuthUserController@doSignout');
     //余币包数据统计 -- 项目列表
     Route::post('getAdminDepositBoxList', 'PacketStatController@getAdminDepositBoxList');
     Route::post('getOrderDepositBoxList', 'PacketStatController@getOrderDepositBoxList');
+
+    // aac 转盘统计
+     Route::any('getZpstaCoin1', 'PacketStatController@staCoin1');
  });

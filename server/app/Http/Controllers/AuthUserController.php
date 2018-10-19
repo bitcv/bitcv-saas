@@ -293,6 +293,7 @@ class AuthUserController extends Controller
     public function getPid (Request $request)
     {
         $projectid = app()->proj['proj_id'];
+        \Log::info('$projectid'.$projectid);
 //        $projectid = 1; // 测试使用
         // 获取当前项目的 tokenid
         $project = DB::table('proj_info')->where('id',$projectid)->select('token_id')->get()->toArray();
@@ -301,11 +302,18 @@ class AuthUserController extends Controller
             foreach ($project as $key => $value) {
                 $result['tokenid'] = $value->token_id;
             }
-        }
 
+            $symbol = DB::table('base_token')->where('id', $result['tokenid'])->select('symbol')->get()->toArray();
+            $result2 = array();
+            foreach ($symbol as $key => $value) {
+                $result2['symbol'] = $value->symbol;
+            }
+        }
+        $symbol = isset($result2['symbol']) && $result2['symbol'] ? $result2['symbol'] : '';
         return $this->output([
             'tokenId' => $result,
             'projectid' => $projectid,
+            'symbol' => $symbol
         ]);
     }
 

@@ -9,6 +9,7 @@ import ProjData from '@/components/projdata/projdata'
 import MediaReport from '@/components/media/MediaReport'
 import Stat from '@/components/stat/redpacket'
 import YbbStat from '@/components/stat/ybbstat'
+import ZPStat from '@/components/stat/zpstat'
 
 Vue.use(Router)
 
@@ -53,6 +54,12 @@ export default new Router({
         requireAuth: true
       },
       component: YbbStat
+    }, {
+      path: '/admin/zpstat',
+      meat: {
+        requireAuth: true
+      },
+      component: ZPStat
     }, {
       path: '/admin/stat',
       meta: {
