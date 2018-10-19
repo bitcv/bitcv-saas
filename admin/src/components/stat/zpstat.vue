@@ -41,6 +41,9 @@
                 <el-pagination v-if="itemList && itemList.length > 0" class="footer-page-box" @size-change="onBoxSizeChange" @current-change="onBoxCurChange" :current-page="pageno" :page-sizes="[10, 20, 30, 40]" :page-size="perpage" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
                 </el-pagination>
             </el-tab-pane>
+            <el-tab-pane label="用户持币量统计">
+                用户持币总量：{{ totalToken }}
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>
@@ -57,7 +60,9 @@ export default {
       coin: '',
       name: '',
       all: '',
-      symbol: ''
+      symbol: '',
+      totalToken: '',
+      tokenId: ''
     }
   },
   mounted () {
@@ -69,7 +74,9 @@ export default {
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.symbol = res.data.data.symbol
+          this.tokenId = res.data.data.tokenId.tokenid
           this.getItemList({countPages: true})
+          this.getTotalToken()
         }
       })
     },
@@ -87,7 +94,15 @@ export default {
             this.dataCount = res.data.data.dataCount
           }
           this.itemList = res.data.data.dataList
-          console.log(this.itemList)
+        }
+      })
+    },
+    getTotalToken () {
+      this.$http.post('/api/getTotalToken', {
+        tokenId: this.tokenId
+      }).then((res) => {
+        if (res.data.errcode === 0) {
+          this.totalToken = res.data.data.totalToken
         }
       })
     },

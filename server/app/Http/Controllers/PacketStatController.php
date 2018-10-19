@@ -207,4 +207,18 @@ class PacketStatController extends Controller
 
     }
 
+    // 获取币的重量
+    public function getTotalToken (Request $request)
+    {
+        $params  = $this->validation($request, [
+            'tokenId'   =>  'int',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        $result = DB::table('base_user_asset')->select('amount')->where('token_id', '=', $params['tokenId'])->get()->toArray();
+        $totalToken = round(array_sum(array_column($result,'amount')),5);
+        return $this->output(['totalToken' => $totalToken]);
+    }
+
 }
