@@ -38,6 +38,7 @@ Route::post('doSignout', 'AuthUserController@doSignout');
     Route::post('getAdminDepositBoxList', 'PacketStatController@getAdminDepositBoxList');
     Route::post('getOrderDepositBoxList', 'PacketStatController@getOrderDepositBoxList');
 
-    // aac 转盘统计
+     // aac 转盘统计
      Route::any('getZpstaCoin1', 'PacketStatController@staCoin1');
+     Route::post('getTotalToken', 'PacketStatController@getTotalToken');
  });
