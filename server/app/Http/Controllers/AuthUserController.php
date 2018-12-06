@@ -263,7 +263,7 @@ class AuthUserController extends Controller
             return $this->error(100);
         }
         $data = array();
-        $data['packet_cover'] = $allparams['pic'];
+        $data['packet_cover'] = isset($allparams['pic']) && $allparams['pic'] ? $allparams['pic'] : 'http://file.ucai.net/saasPacketPic_361443504547424';
 //        $data['packet_cover'] = 'http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_810039961619194,http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_524009732861674';
         $result = DB::table('base_token')->where('id', $params['pid'])->update($data);
         if ($result !== false) {
