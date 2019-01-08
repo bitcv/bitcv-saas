@@ -221,4 +221,97 @@ class PacketStatController extends Controller
         return $this->output(['totalToken' => $totalToken]);
     }
 
+    // 资产统计
+    public function getAssetStat (Request $request)
+    {
+
+        $tokenId = $request->input('symbol');
+        /*if ($params === false) {
+            return $this->error(100);
+        }
+        $query = DB::table('base_user_asset as ua');
+        $query = $query->leftjoin('base_token as bt', 'ua.token_id', '=', 'bt.id');
+        $query = $query->where('bt.symbol', '=',$params['symbol']);
+        $query = $query->select('ua.id', 'ua.token_id', 'ua.user_id', 'ua.amount', 'bt.symbol', 'bt.price', 'bt.price_cny');
+        $dataList = $query->orderBy('ua.created_at', 'desc')
+            ->get()->toArray();
+        $tokens = array_values(array_unique(array_column($dataList, 'symbol')));
+        // 汇总
+        $middleTemp = $statData =  [];
+        if ($dataList) {
+            foreach ($dataList as $key => $list) {
+                foreach ($tokens as $k => $token) {
+                    if ($list->symbol == $token) {
+                        $middleTemp[$k][] = $list;
+                    }
+                }
+            }
+            foreach ($middleTemp as $key => $middle) {
+                $statData[$key]['symbol'] = $middle[0]->symbol;
+                $statData[$key]['countPeople'] = count($middleTemp[$key]);
+                $statData[$key]['amountTotal'] = round(array_sum(array_column($middleTemp[$key], 'amount')),6);
+                $statData[$key]['priceTotal'] = round(($middle[0]->price_cny * $statData[$key]['amountTotal']), 6);
+            }
+        }*/
+
+//        \DB::connection()->enableQueryLog(); // 开启查询日志
+        $assetList = DB::table('base_user_asset')->where([['amount', '>', 0],['token_id', '=', $tokenId]])->select(\DB::raw('token_id, sum(amount) as amount, count(*) as count'))
+            ->groupBy('token_id')->get()->toArray();
+//        $queries = \DB::getQueryLog(); // 获取查询日志
+//        print_r($queries);
+//        \Log::info('$sql'.$queries[0]['query']);
+        $tokenIdArr = array_column($assetList, 'token_id');
+        $tokenDict = DB::table('base_token')->whereIn('id', $tokenIdArr)->get()->toArray();
+//        \Log::info('$tokenDict'.var_export($tokenDict,true));
+        foreach ($assetList as $key => $assetData) {
+            foreach ($tokenDict as $token) {
+                if ($assetData->token_id == $token->id) {
+                    $assetList[$key]->symbol = $token->symbol;
+                    $assetList[$key]->value = bcmul($assetData->amount, $token->price_cny, 4);
+                }
+            }
+        }
+        return $this->output([
+            'dataList' => $assetList,
+        ]);
+    }
+
+    // OTC 统计
+    public function getOtcStatList (Request $request)
+    {
+        //获取请求参数
+        $params = $this->validation($request, [
+            'pageno' => 'required|numeric',
+            'perpage' => 'required|numeric',
+        ]);
+
+        if ($params === false) {
+            return $this->error(100);
+        }
+
+        $allparams = $request->all();
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'/getOtcStatList', [
+            'pageno' => $params['pageno'],
+            'perpage' => $params['perpage'],
+            'sdate' => array_key_exists('sdate',$allparams) && $allparams['sdate'] ? $allparams['sdate'] : '',
+            'edate' => array_key_exists('edate',$allparams) && $allparams['edate'] ? $allparams['edate'] : '',
+            'symbol' => array_key_exists('symbol',$allparams) && $allparams['symbol'] ? $allparams['symbol'] : '',
+        ]), true);
+        $resultData = [];
+        if ($data['data']['statData']) {
+            if ($params['pageno'] == 1) {
+                $resultData = array_slice($data['data']['statData'],$params['pageno'] - 1, $params['perpage']);
+            } else {
+                $offset = $params['perpage'] * ($params['pageno'] - 1);
+                $resultData = array_slice($data['data']['statData'],$offset, $params['perpage']);
+            }
+        }
+
+        return $this->output([
+            'statData' => $resultData,
+            'totalCount' => $data['data']['dataCount'],
+            'sumData' => $data['sumData'],
+        ]);
+    }
+
 }

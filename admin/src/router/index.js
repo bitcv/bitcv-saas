@@ -10,6 +10,8 @@ import MediaReport from '@/components/media/MediaReport'
 import Stat from '@/components/stat/redpacket'
 import YbbStat from '@/components/stat/ybbstat'
 import ZPStat from '@/components/stat/zpstat'
+import AssetStat from '@/components/stat/assetstat'
+import OtcStat from '@/components/stat/otcstat'
 
 Vue.use(Router)
 
@@ -60,6 +62,18 @@ export default new Router({
         requireAuth: true
       },
       component: ZPStat
+    }, {
+      path: '/admin/assetstat',
+      meat: {
+        requireAuth: true
+      },
+      component: AssetStat
+    }, {
+      path: '/admin/otcstat',
+      meat: {
+        requireAuth: true
+      },
+      component: OtcStat
     }, {
       path: '/admin/stat',
       meta: {

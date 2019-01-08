@@ -41,4 +41,8 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      // aac 转盘统计
      Route::any('getZpstaCoin1', 'PacketStatController@staCoin1');
      Route::post('getTotalToken', 'PacketStatController@getTotalToken');
+
+     // 资产统计
+     Route::post('getAssetStat', 'PacketStatController@getAssetStat');
+     Route::post('getOtcStatList', 'PacketStatController@getOtcStatList');
  });

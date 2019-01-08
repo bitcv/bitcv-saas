@@ -36,6 +36,8 @@ class AuthUser {
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '糖包数据统计'),
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/ybbstat', 'text' => '余币宝'),
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/zpstat', 'text' => '转盘/持币统计'),
+            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/otcstat', 'text' => 'OTC 统计'),
+            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/assetstat', 'text' => '资产统计'),
         )),
     );
 
