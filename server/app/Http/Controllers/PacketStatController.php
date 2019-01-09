@@ -58,6 +58,7 @@ class PacketStatController extends Controller
             ->where('depo_box.proj_id', $params['projId'])
             ->where('depo_box.status', '!=', 0)
             ->get()->toArray();
+        \Log::info('$dataList'.var_export($dataList, true));
         foreach ($dataList as $key => $value) {
             $dataList[$key]['totalAmount2'] = round($value['total_amount'],4);
             $dataList[$key]['minAmount2'] = round($value['min_amount'],4);

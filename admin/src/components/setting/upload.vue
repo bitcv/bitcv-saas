@@ -35,12 +35,11 @@
                         <el-form-item label="上传糖包儿宣传图片：" required>
                             <el-upload class="upload-demo" name="redpacket" action="/api/uploadFile" :on-success="successUpload" :on-remove="handleRemove" :file-list="fileList2" list-type="picture">
                             <el-button size="small" type="primary">点击上传</el-button>
-                            <!--<div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
                             </el-upload>
                         </el-form-item>
-                        <!--<el-form-item>-->
-                            <!--<p style="color: red">请上传 1240(宽) x 720(高) 像素，图片主色调是 fd6565，查看红包页面的红包颜色是sd ee3230</p>-->
-                        <!--</el-form-item>-->
+                        <el-form-item>
+                            <p style="color: red">请上传 1240(宽) x 720(高) 像素，图片主色调是 fd6565，查看红包页面的红包颜色是 ee3230</p>
+                        </el-form-item>
                     </el-form>
                     <div slot="footer">
                         <el-button @click="showDialog = false">取消</el-button>
