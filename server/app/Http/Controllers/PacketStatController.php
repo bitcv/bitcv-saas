@@ -40,11 +40,13 @@ class PacketStatController extends Controller
 
     public function getAdminDepositBoxList (Request $request) {
         $params = $this->validation($request, [
-            'projId' => 'required|numeric'
+            'projId' => 'required|numeric',
+            'tokenId' => 'required|numeric',
         ]);
         if ($params === false) {
             return $this->error(100);
         }
+
         extract($params);
         // 测试使用
 //        $params['projId'] = 2;
@@ -55,10 +57,11 @@ class PacketStatController extends Controller
         $dataList = $depositBoxModel
             ->select('depo_box.id', 'depo_box.proj_id', 'depo_box.total_amount', 'depo_box.min_amount', 'depo_box.remain_amount', 'depo_box.lock_time', 'depo_box.interest_rate', 'depo_box.status', 'proj_info.name_cn','base_user.mobile','depo_box.name','depo_user_box.amount')
             ->orderBy('depo_box.created_at', 'desc')
-            ->where('depo_box.proj_id', $params['projId'])
+//            ->where('depo_box.proj_id', $params['projId'])
+            ->where('depo_box.token_id', '=', $params['tokenId'])
             ->where('depo_box.status', '!=', 0)
             ->get()->toArray();
-        \Log::info('$dataList'.var_export($dataList, true));
+//        \Log::info('$dataList'.var_export($dataList, true));
         foreach ($dataList as $key => $value) {
             $dataList[$key]['totalAmount2'] = round($value['total_amount'],4);
             $dataList[$key]['minAmount2'] = round($value['min_amount'],4);
@@ -114,10 +117,12 @@ class PacketStatController extends Controller
             'perpage' => 'required|numeric',
             'pageno' => 'required|numeric',
             'projId' => 'required|numeric',
+            'tokenId' => 'required|numeric',
         ]);
         if ($params === false) {
             return $this->error(100);
         }
+
         extract($params);
         // 测试使用
 //        $params['projId'] = 2;
@@ -139,7 +144,8 @@ class PacketStatController extends Controller
             $query = $query->where('depo_box.name','like','%'.$allparams['name'].'%');
         }
         $dataList = $query->orderBy('depo_user_box.created_at', 'desc')
-            ->where('depo_box.proj_id', $params['projId'])
+//            ->where('depo_box.proj_id', $params['projId'])
+            ->where('depo_box.token_id', '=', $params['tokenId'])
             ->where('base_user_wallet.token_protocol', '=', 1)
             ->offset($offset)->limit($perpage)
             ->get()->toArray();
