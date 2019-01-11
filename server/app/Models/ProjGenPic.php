@@ -136,4 +136,11 @@ class ProjGenPic extends Model
         $image_save_func($tmp, "$targetFile.$new_image_ext");
         return "$targetFile.$new_image_ext";
     }
+
+    // 添加
+    public function addPic ($data)
+    {
+        $resultId = DB::table('proj_genpic')->insertGetId($data);
+        return $resultId;
+    }
 }

@@ -64,6 +64,12 @@ class ProjGenPicController extends Controller
             'created_at' => date('Y-m-d H:i:s', time()),
         ];
         $result = $this->gen_picture($newInfo);
-        print_r($result);
+        if ($result) {
+            $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'png';
+            $insertId = $this->genPicM->addPic($newInfo);
+            if ($insertId) {
+                return $this->output();
+            }
+        }
     }
 }
