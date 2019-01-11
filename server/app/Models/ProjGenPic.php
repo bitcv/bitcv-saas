@@ -148,7 +148,7 @@ class ProjGenPic extends Model
     // 查询
     public function getLianXunPicList ($offset, $perPage, $projId)
     {
-        $dataList = DB::table('proj_genpic')->select('id', 'title', 'content', 'pic_url','time', 'created_at')
+        $dataList = DB::table('proj_genpic')->select('id', 'title', 'no', 'content', 'pic_url','time', 'created_at')
             ->orderBy('id', 'desc')->offset($offset)
             ->where('proj_id', '=', $projId)
             ->limit($perPage)
