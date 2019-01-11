@@ -162,7 +162,7 @@ class ProjGenPic extends Model
     public function getPicInfo ($id)
     {
         $info = DB::table('proj_genpic')->select('pic_url')->where('id', $id)->get()->first();
-        $info['pic_url'] = env('APP_URL').'/storage/image/lianxun/'.$info->pic_url;
+        $info->pic_url = env('APP_URL').'/storage/image/lianxun/'.$info->pic_url;
         return $info;
     }
 }
