@@ -36,10 +36,10 @@ class ProjGenPicController extends Controller
         }
         $newsinfo['content'] = $content_lines;
         print_r($newsinfo);
-        $month = $lunar->convertSolarToLunarSimple($newsinfo['time']);
+        $month = $lunar->convertSolarToLunarSimple($newsinfo['date']);
         $month_lunar = $lunar->getLunarMonthName($month[3],$month[4]);
         $newsinfo['lunar_month'] = $month_lunar;
-        $day_lunar = $lunar->getLunarDayName($newsinfo['time']);
+        $day_lunar = $lunar->getLunarDayName($newsinfo['date']);
         $newsinfo['lunar_day'] = $day_lunar;
 
         $basePicUrl = base_path();
@@ -60,7 +60,7 @@ class ProjGenPicController extends Controller
             'no' => intval($allParams['no']),
             'title' => $allParams['title'],
             'content' => $allParams['content'],
-            'time' => $allParams['oldTime'],
+            'date' => $allParams['oldTime'],
             'proj_id' => $allParams['projId'],
             'created_at' => date('Y-m-d H:i:s', time()),
         ];
