@@ -63,6 +63,7 @@ export default {
   },
   mounted () {
     this.getPid()
+    this.getGenPicList()
   },
   methods: {
     getPid () {
@@ -74,18 +75,17 @@ export default {
       })
     },
     showAdd () {
+      this.formData.no = ''
       this.formData.title = ''
       this.formData.oldTime = ''
       this.formData.content = ''
       this.showDialog = true
     },
     submit () {
-      if (this.projId != 2) {
+      if (this.projId !== 2) {
         this.showDialog = false
       }
       this.$http.post('/api/genLianXunPic', {
-        pageno: this.pageno,
-        perpage: this.perpage,
         projId: this.projId,
         no: this.formData.no,
         title: this.formData.title,
@@ -93,6 +93,17 @@ export default {
         content: this.formData.content
       }).then((res) => {
         // this.$message({ type: 'success', message: this.mid ? '更新成功!' : '添加成功' })
+        console.log(res)
+        this.showDialog = false
+      })
+    },
+    getGenPicList () {
+      this.$http.post('/api/getLianXunPicList', {
+        pageno: this.pageno,
+        perpage: this.perpage,
+        projId: this.projId
+      }).then((res) => {
+        console.log(res)
         this.showDialog = false
       })
     }

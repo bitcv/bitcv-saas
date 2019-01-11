@@ -47,8 +47,6 @@ class ProjGenPicController extends Controller
     public function genLianXunPic(Request $request)
     {
         $params = $this->validation($request, [
-            'perpage' => 'required|numeric',
-            'pageno' => 'required|numeric',
             'projId' => 'required|numeric',
         ]);
         if ($params === false) {
@@ -65,7 +63,7 @@ class ProjGenPicController extends Controller
         ];
         $result = $this->gen_picture($newInfo);
         if ($result) {
-            $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'png';
+            $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'.png';
             unset($newInfo['date']);
             $newInfo['time'] = $allParams['oldTime'];
             $insertId = $this->genPicM->addPic($newInfo);
@@ -73,5 +71,24 @@ class ProjGenPicController extends Controller
                 return $this->output();
             }
         }
+    }
+
+    // 获取列表
+    public function getLianXunPicList (Request $request)
+    {
+        $params = $this->validation($request, [
+            'pageno' => 'required|numeric',
+            'perpage' => 'required|numeric',
+            'projId' => 'required|numeric',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+
+        $offset = $params['perpage'] * ($params['pageno'] - 1);
+        $dataList = $this->genPicM->getLianXunPicList($offset, $params['perpage'], $params['projId']);
+        return $this->output([
+           'dataList' => $dataList,
+        ]);
     }
 }
