@@ -5,7 +5,7 @@
         <div class="header-btn-area">
           <el-button type="primary" @click="showAdd()">添加</el-button>
         </div>
-        <el-table>
+        <el-table :data="PicList">
           <el-table-column label="标题">
             <template slot-scope="scope">{{ scope.row.title }}</template>
           </el-table-column>

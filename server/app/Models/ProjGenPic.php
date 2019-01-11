@@ -6,6 +6,7 @@
  * Time: 15:05
  */
 namespace App\Models;
+use App\Console\Commands\RewardReadd;
 use App\Exceptions\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -156,5 +157,12 @@ class ProjGenPic extends Model
             }
         }
         return $dataList;
+    }
+
+    public function getPicInfo ($id)
+    {
+        $info = DB::table('proj_genpic')->select('pic_url')->where('id', $id)->get()->first();
+        $info['pic_url'] = env('APP_URL').'/storage/image/lianxun/'.$info->pic_url;
+        return $info;
     }
 }
