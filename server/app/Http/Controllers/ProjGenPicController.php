@@ -18,7 +18,7 @@ class ProjGenPicController extends Controller
         $this->genPicM = new ProjGenPic();
     }
 
-    function gen_picture($newsinfo)
+    public function gen_picture($newsinfo)
     {
         $lunar = new lunar();
         $title_len = mb_strlen($newsinfo['title']);
@@ -27,7 +27,6 @@ class ProjGenPicController extends Controller
         {$title_lines[] = mb_substr($newsinfo['title'], $i*14, 14);
         }
         $newsinfo['title'] = $title_lines;
-
         $content_len = mb_strlen($newsinfo['content']);
         $content_lines = array();
         for($i=0; $i<$content_len/16; $i++)
@@ -35,7 +34,6 @@ class ProjGenPicController extends Controller
             $content_lines[] = mb_substr($newsinfo['content'], $i*16, 16);
         }
         $newsinfo['content'] = $content_lines;
-        print_r($newsinfo);
         $month = $lunar->convertSolarToLunarSimple($newsinfo['date']);
         $month_lunar = $lunar->getLunarMonthName($month[3],$month[4]);
         $newsinfo['lunar_month'] = $month_lunar;
@@ -43,7 +41,8 @@ class ProjGenPicController extends Controller
         $newsinfo['lunar_day'] = $day_lunar;
 
         $basePicUrl = base_path();
-        $this->genPicM->doit($basePicUrl.'/storage/app/public/image/lianxun/bk.png', $newsinfo);
+        $picName = $this->genPicM->doit($basePicUrl.'/storage/app/public/image/lianxun/bk.png', $newsinfo);
+        return $picName;
     }
     public function genLianXunPic(Request $request)
     {
@@ -64,6 +63,7 @@ class ProjGenPicController extends Controller
             'proj_id' => $allParams['projId'],
             'created_at' => date('Y-m-d H:i:s', time()),
         ];
-        $this->gen_picture($newInfo);
+        $result = $this->gen_picture($newInfo);
+        print_r($result);
     }
 }
