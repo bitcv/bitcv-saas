@@ -80,7 +80,7 @@ export default {
       this.showDialog = true
     },
     submit () {
-      if ($this.projId != 2) {
+      if (this.projId != 2) {
         this.showDialog = false
       }
       this.$http.post('/api/genLianXunPic', {
