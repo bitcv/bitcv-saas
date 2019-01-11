@@ -6,6 +6,9 @@
           <el-button type="primary" @click="showAdd()">添加</el-button>
         </div>
         <el-table :data="PicList">
+          <el-table-column label="期数">
+            <template slot-scope="scope">第 {{ scope.row.no }} 期</template>
+          </el-table-column>
           <el-table-column label="标题">
             <template slot-scope="scope">{{ scope.row.title }}</template>
           </el-table-column>
@@ -115,13 +118,6 @@ export default {
           this.PicList = res.data.data.dataList
         }
         this.showDialog = false
-      })
-    },
-    downPic (id) {
-      this.$http.post('/api/downPic', {
-        id: id
-      }).then((res) => {
-        
       })
     }
   }

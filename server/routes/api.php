@@ -49,5 +49,4 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      // 生成链讯图片
      Route::post('genLianXunPic', 'ProjGenPicController@genLianXunPic');
      Route::post('getLianXunPicList', 'ProjGenPicController@getLianXunPicList');
-     Route::post('downPic', 'ProjGenPicController@downPic');
  });

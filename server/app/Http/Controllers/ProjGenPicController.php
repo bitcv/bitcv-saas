@@ -91,15 +91,4 @@ class ProjGenPicController extends Controller
            'dataList' => $dataList,
         ]);
     }
-
-    // 下载
-    public function downPic (Request $request)
-    {
-        $params = $this->validation($request, [
-            'id' => 'required|numeric',
-        ]);
-        $picInfo = $this->genPicM->getPicInfo ($params['id']);
-        header('Content-type: image/png');
-        header("Content-Disposition: attachment; filename=".$picInfo->pic_url);
-    }
 }
