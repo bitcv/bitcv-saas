@@ -17,7 +17,7 @@
           </el-table-column>
           <el-table-column label="操作">
               <template slot-scope="scope">
-                  <el-button size="mini" @click="downPic(scope.row.id)">下载</el-button>
+                  <a :href="scope.row.pic_url" target="_blank"><el-button size="mini" >下载</el-button></a>
               </template>
           </el-table-column>
         </el-table>
