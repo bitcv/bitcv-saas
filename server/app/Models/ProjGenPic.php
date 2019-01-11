@@ -68,7 +68,8 @@ class ProjGenPic extends Model
         $font_size = $font_height *1280/$h;
         $font_size_large = $font_height_large *1280/$h;
         $font_size_middle = $font_height_middle *1280/$h;
-        $font = env('APP_URL').'/fonts/msyh.ttf';
+//        $font = env('APP_URL').'/fonts/msyh.ttf';
+        $font = base_path().'/public/fonts/msyh.ttf';
         $black_color = imagecolorallocatealpha($img,0,0,0,0);
         $white_color = imagecolorallocatealpha($img,255,255,255,0);
 
