@@ -100,6 +100,6 @@ class ProjGenPicController extends Controller
         ]);
         $picInfo = $this->genPicM->getPicInfo ($params['id']);
         header('Content-type: image/png');
-        header("Content-Disposition: attachment; filename=".$picInfo['pic_url']);
+        header("Content-Disposition: attachment; filename=".$picInfo->pic_url);
     }
 }
