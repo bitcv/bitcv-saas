@@ -149,7 +149,9 @@ class ProjGenPic extends Model
     public function getLianXunPicList ($offset, $perPage, $projId)
     {
         $dataList = DB::table('proj_genpic')->select('id', 'title', 'content', 'pic_url','time', 'created_at')
-            ->orderBy('id', 'desc')
+            ->orderBy('id', 'desc')->offset($offset)
+            ->where('proj_id', '=', $projId)
+            ->limit($perPage)
             ->get()->toArray();
         if ($dataList) {
             foreach ($dataList as $key => $list) {
@@ -164,5 +166,10 @@ class ProjGenPic extends Model
         $info = DB::table('proj_genpic')->select('pic_url')->where('id', $id)->get()->first();
         $info->pic_url = env('APP_URL').'/storage/image/lianxun/'.$info->pic_url;
         return $info;
+    }
+
+    public function getCountPic ()
+    {
+        return DB::table('proj_genpic')->count();
     }
 }

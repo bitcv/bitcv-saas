@@ -84,11 +84,12 @@ class ProjGenPicController extends Controller
         if ($params === false) {
             return $this->error(100);
         }
-
         $offset = $params['perpage'] * ($params['pageno'] - 1);
         $dataList = $this->genPicM->getLianXunPicList($offset, $params['perpage'], $params['projId']);
+        $count = $this->genPicM->getCountPic();
         return $this->output([
-           'dataList' => $dataList,
+            'dataList' => $dataList,
+            'dataCount' => $count,
         ]);
     }
 }

@@ -24,6 +24,8 @@
               </template>
           </el-table-column>
         </el-table>
+        <el-pagination v-if="PicList && PicList.length > 0" class="footer-page-box" @size-change="onBoxSizeChange" @current-change="onBoxCurChange" :current-page="pageno" :page-sizes="[10, 20, 30, 40]" :page-size="perpage" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
+                </el-pagination>
         <el-dialog :title="'生成链讯'" :visible.sync="showDialog" center>
           <el-form label-width="120px">
              <el-form-item label="编号：">
@@ -75,7 +77,7 @@ export default {
   },
   mounted () {
     this.getPid()
-    this.getGenPicList()
+    this.getGenPicList({countPages: true})
   },
   methods: {
     getPid () {
@@ -104,21 +106,33 @@ export default {
         oldTime: this.formData.oldTime,
         content: this.formData.content
       }).then((res) => {
-        // this.$message({ type: 'success', message: this.mid ? '更新成功!' : '添加成功' })
+        console.log(res)
         this.showDialog = false
+        this.getGenPicList()
       })
     },
-    getGenPicList () {
+    getGenPicList (param) {
       this.$http.post('/api/getLianXunPicList', {
         pageno: this.pageno,
         perpage: this.perpage,
         projId: this.projId
       }).then((res) => {
         if (res.data.errcode === 0) {
+          if (param && param.countPages) {
+            this.dataCount = res.data.data.dataCount
+          }
           this.PicList = res.data.data.dataList
         }
         this.showDialog = false
       })
+    },
+    onBoxSizeChange (perpage) {
+      this.perpage = perpage
+      this.getGenPicList()
+    },
+    onBoxCurChange (pageno) {
+      this.pageno = pageno
+      this.getGenPicList()
     }
   }
 }
