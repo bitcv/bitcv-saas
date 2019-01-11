@@ -148,7 +148,8 @@ class ProjGenPic extends Model
     public function getLianXunPicList ($offset, $perPage, $projId)
     {
         $dataList = DB::table('proj_genpic')->select('id', 'title', 'content', 'pic_url','time', 'created_at')
-            ->get()->orderBy('id', 'desc')->toArray();
+            ->orderBy('id', 'desc')
+            ->get()->toArray();
         if ($dataList) {
             foreach ($dataList as $key => $list) {
                 $dataList[$key]->pic_url = env('APP_URL').'/storage/image/lianxun/'.$list->pic_url;
