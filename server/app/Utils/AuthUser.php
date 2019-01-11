@@ -21,16 +21,11 @@ class AuthUser {
     );
 
     public static $menu = array(
-        /*array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/project', 'text' => '项目管理', 'child' => array(
-            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/project', 'text' => '项目管理'),
-            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/projdata', 'text' => '项目更新'),
-            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/mediareport', 'text' => '项目动态'),
-        )),*/
         array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/setting', 'text' => '个人中心' ,'child' => array (
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/setting', 'text' => '个人中心')
         )),
-        array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/upload', 'text' => '上传图片' ,'child' => array (
-            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/upload', 'text' => '上传图片')
+        array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/upload', 'text' => '糖包定制' ,'child' => array (
+            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/upload', 'text' => '糖包定制')
         )),
         array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '数据统计' ,'child' => array (
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/stat', 'text' => '糖包数据统计'),
@@ -38,6 +33,7 @@ class AuthUser {
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/zpstat', 'text' => '转盘/持币统计'),
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/otcstat', 'text' => 'OTC 统计'),
             array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/assetstat', 'text' => '资产统计'),
+            array ('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/genpicture', 'text' => '生成链讯'),
         )),
     );
 

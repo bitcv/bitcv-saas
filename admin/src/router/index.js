@@ -12,6 +12,7 @@ import YbbStat from '@/components/stat/ybbstat'
 import ZPStat from '@/components/stat/zpstat'
 import AssetStat from '@/components/stat/assetstat'
 import OtcStat from '@/components/stat/otcstat'
+import GenPicture from '@/components/stat/genpicture'
 
 Vue.use(Router)
 
@@ -58,19 +59,25 @@ export default new Router({
       component: YbbStat
     }, {
       path: '/admin/zpstat',
-      meat: {
+      meta: {
         requireAuth: true
       },
       component: ZPStat
     }, {
       path: '/admin/assetstat',
-      meat: {
+      meta: {
         requireAuth: true
       },
       component: AssetStat
     }, {
+      path: '/admin/genpicture',
+      meta: {
+        requireAuth: true
+      },
+      component: GenPicture
+    }, {
       path: '/admin/otcstat',
-      meat: {
+      meta: {
         requireAuth: true
       },
       component: OtcStat
