@@ -6,11 +6,14 @@
           <el-button type="primary" @click="showAdd()">添加</el-button>
         </div>
         <el-table>
+          <el-table-column label="标题">
+            <template slot-scope="scope">{{ scope.row.title }}</template>
+          </el-table-column>
           <el-table-column label="图片">
-            <template slot-scope="scope"></template>
+            <template slot-scope="scope" style="width: 50px;height: 100px">{{ scope.row.pic_url }}</template>
           </el-table-column>
           <el-table-column label="生成时间">
-            <template slot-scope="scope"></template>
+            <template slot-scope="scope">{{ scope.row.created_at }}</template>
           </el-table-column>
         </el-table>
         <el-dialog :title="'生成链讯'" :visible.sync="showDialog" center>
@@ -52,6 +55,7 @@ export default {
       token: '',
       loading: true,
       showDialog: false,
+      PicList: [],
       projId: 0,
       formData: {
         oldTime: '',
@@ -93,7 +97,6 @@ export default {
         content: this.formData.content
       }).then((res) => {
         // this.$message({ type: 'success', message: this.mid ? '更新成功!' : '添加成功' })
-        console.log(res)
         this.showDialog = false
       })
     },
@@ -103,7 +106,9 @@ export default {
         perpage: this.perpage,
         projId: this.projId
       }).then((res) => {
-        console.log(res)
+        if (res.data.errcode === 0) {
+          this.PicList = res.data.data.dataList
+        }
         this.showDialog = false
       })
     }
