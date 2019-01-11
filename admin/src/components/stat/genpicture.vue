@@ -10,10 +10,15 @@
             <template slot-scope="scope">{{ scope.row.title }}</template>
           </el-table-column>
           <el-table-column label="图片">
-            <template slot-scope="scope" style="width: 50px;height: 100px">{{ scope.row.pic_url }}</template>
+            <template slot-scope="scope"><img :src="scope.row.pic_url" style="width: 50px;height: 100px"></template>
           </el-table-column>
           <el-table-column label="生成时间">
             <template slot-scope="scope">{{ scope.row.created_at }}</template>
+          </el-table-column>
+          <el-table-column label="操作">
+              <template slot-scope="scope">
+                  <el-button size="mini" @click="downPic(scope.row.id)">下载</el-button>
+              </template>
           </el-table-column>
         </el-table>
         <el-dialog :title="'生成链讯'" :visible.sync="showDialog" center>
@@ -110,6 +115,13 @@ export default {
           this.PicList = res.data.data.dataList
         }
         this.showDialog = false
+      })
+    },
+    downPic (id) {
+      this.$http.post('/api/downPic', {
+        id: id
+      }).then((res) => {
+        
       })
     }
   }
