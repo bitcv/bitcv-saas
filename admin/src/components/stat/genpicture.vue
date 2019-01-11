@@ -115,7 +115,7 @@ export default {
       this.$http.post('/api/getLianXunPicList', {
         pageno: this.pageno,
         perpage: this.perpage,
-        projId: this.projId
+        projId: 2
       }).then((res) => {
         if (res.data.errcode === 0) {
           if (param && param.countPages) {
