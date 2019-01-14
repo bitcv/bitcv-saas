@@ -151,7 +151,13 @@ class AuthUserController extends Controller
     {
         $uinfo = session()->get('authuinfo');
         \Log::info('getAuthUser$uinfo'.var_export($uinfo,true));
-        $menus = AuthUser::$menu;
+        if ($uinfo) {
+            if ($uinfo['email'] == 'bitcv@bitcv.com') {
+                $menus = AuthUser::$menu;
+            } else {
+                $menus = AuthUser::$otherMenu;
+            }
+        }
         $adminmenu = array();
         $uid = $uinfo['uid'];
         $roles = DB::table('base_authuser')->select('roles')->where('uid',$uid)->get()->toArray();
