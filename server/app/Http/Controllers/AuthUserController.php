@@ -110,7 +110,7 @@ class AuthUserController extends Controller
         }
         extract($params);
 
-        $projectid = app()->proj['proj_id'];
+        $projectid = env('PROJ_ID') ? env('PROJ_ID') :app()->proj['proj_id'];
         $user = DB::table('base_authuser')->where([['email','=',$params['email']],['is_active','=',0]])->get()->toArray();
         if (!$user) {
             return $this->error(203);
@@ -150,12 +150,11 @@ class AuthUserController extends Controller
     public function getAuthUser (Request $request)
     {
         $uinfo = session()->get('authuinfo');
-        \Log::info('getAuthUser$uinfo'.var_export($uinfo,true));
+        $menus = AuthUser::$menu;
         if ($uinfo) {
-            if ($uinfo['email'] == 'bitcv@bitcv.com') {
-                $menus = AuthUser::$menu;
-            } else {
-                $menus = AuthUser::$otherMenu;
+            if ($uinfo['email'] == 'bitcv@bitcv.com' || $uinfo['email'] == 'xiaofei@bitcv.com') {
+                $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/genpicture', 'text' => '生成链讯');
+                array_push($menus[2]['child'], $addMenu);
             }
         }
         $adminmenu = array();
@@ -197,8 +196,7 @@ class AuthUserController extends Controller
         $uinfo = session()->get('authuinfo');
         $uid = $uinfo['uid'];
         $user = DB::table('base_authuser')->select('*')->where('uid',$uid)->get()->toArray();
-        $projectid = app()->proj['proj_id'];
-//        $projectid = 1; // 测试使用
+        $projectid = env('PROJ_ID') ? env ('PROJ_ID') : app()->proj['proj_id'];
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
         $item = DB::table('saas_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
         if (isset($result) && $result) {
@@ -298,9 +296,7 @@ class AuthUserController extends Controller
     // 获取项目方 tokenid
     public function getPid (Request $request)
     {
-        $projectid = app()->proj['proj_id'];
-        \Log::info('$projectid'.$projectid);
-//        $projectid = 1; // 测试使用
+        $projectid = env('PROJ_ID') ? env('PROJ_ID') : app()->proj['proj_id'];
         // 获取当前项目的 tokenid
         $project = DB::table('proj_info')->where('id',$projectid)->select('token_id')->get()->toArray();
         if ($project) {

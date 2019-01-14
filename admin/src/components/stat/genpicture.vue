@@ -28,17 +28,20 @@
                 </el-pagination>
         <el-dialog :title="'生成链讯'" :visible.sync="showDialog" center>
           <el-form label-width="120px">
-             <el-form-item label="编号：">
-              <el-input type="number" v-model="formData.no">
-              </el-input>
+            <el-form-item label="编号：">
+              <el-input type="number" v-model="formData.no"></el-input>
+            </el-form-item>
+            <el-form-item label="类别:">
+              <el-select v-model="type" placeholder="请选择类别">
+                <el-option label="币威链闻" value=0>币威链闻</el-option>
+                <el-option label="币威链讯" value=1>币威链讯</el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="时间：">
-              <el-input type="text"  placeholder="日期格式：2019-01-01" v-model="formData.oldTime">
-              </el-input>
+              <el-input type="text"  placeholder="日期格式：2019-01-01" v-model="formData.oldTime"></el-input>
             </el-form-item>
             <el-form-item label="标题：">
-              <el-input type="text" placeholder="标题，不超过20字" v-model="formData.title">
-              </el-input>
+              <el-input type="text" placeholder="标题，不超过20字" v-model="formData.title"></el-input>
             </el-form-item>
             <el-form-item label="内容：">
               <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 12}" placeholder="内容" v-model="formData.content">
@@ -67,6 +70,7 @@ export default {
       showDialog: false,
       PicList: [],
       projId: 0,
+      type: '',
       formData: {
         oldTime: '',
         title: '',
@@ -90,6 +94,7 @@ export default {
     },
     showAdd () {
       this.formData.no = ''
+      this.type = ''
       this.formData.title = ''
       this.formData.oldTime = ''
       this.formData.content = ''
@@ -104,7 +109,8 @@ export default {
         no: this.formData.no,
         title: this.formData.title,
         oldTime: this.formData.oldTime,
-        content: this.formData.content
+        content: this.formData.content,
+        type: this.type
       }).then((res) => {
         console.log(res)
         this.showDialog = false

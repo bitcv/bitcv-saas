@@ -18,7 +18,7 @@ class ProjGenPicController extends Controller
         $this->genPicM = new ProjGenPic();
     }
 
-    public function gen_picture($newsinfo)
+    public function gen_picture($newsinfo, $type = 0)
     {
         $lunar = new lunar();
         $title_len = mb_strlen($newsinfo['title']);
@@ -39,9 +39,8 @@ class ProjGenPicController extends Controller
         $newsinfo['lunar_month'] = $month_lunar;
         $day_lunar = $lunar->getLunarDayName($newsinfo['date']);
         $newsinfo['lunar_day'] = $day_lunar;
-
-        $basePicUrl = base_path();
-        $picName = $this->genPicM->doit($basePicUrl.'/storage/app/public/image/lianxun/bk.png', $newsinfo);
+        $basePicUrl = $type == 0 ? base_path().'/storage/app/public/image/lianxun/bk.png' : base_path().'/storage/app/public/image/lianxun/bk2.png';
+        $picName = $this->genPicM->doit($basePicUrl, $newsinfo);
         return $picName;
     }
     public function genLianXunPic(Request $request)
@@ -61,7 +60,8 @@ class ProjGenPicController extends Controller
             'proj_id' => $allParams['projId'],
             'created_at' => date('Y-m-d H:i:s', time()),
         ];
-        $result = $this->gen_picture($newInfo);
+        $type = $allParams['type'];
+        $result = $this->gen_picture($newInfo, $type);
         if ($result) {
             $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'.png';
             unset($newInfo['date']);
