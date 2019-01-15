@@ -6,12 +6,16 @@
  * Time: 15:05
  */
 namespace App\Models;
-use App\Console\Commands\RewardReadd;
 use App\Exceptions\Model;
 use Illuminate\Support\Facades\DB;
+use App\Models\PHPImage;
 
 class ProjGenPic extends Model
 {
+    public function __construct()
+    {
+        $this->phpImage = new PHPImage();
+    }
     public function doit($filename,$newsinfo)
     {
         $sourcefile = $filename;
