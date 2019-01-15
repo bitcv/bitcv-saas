@@ -14,7 +14,7 @@ class ProjGenPic extends Model
 {
     public function __construct()
     {
-        $this->phpImage = new PHPImage();
+//        $this->phpImage = new PHPImage();
     }
     public function doit($filename,$newsinfo)
     {
