@@ -98,7 +98,8 @@ class ProjGenPic extends Model
             \Log::info('$font_size_middle'.$font_height_middle);
 //            imagettftext($img,$font_size_middle,0,$content_left,
 //                $content_top+($font_height_middle+15)*($i+1),$white_color,$font,$line);
-            $this->phpImage->text($line, array(
+            $image = new PHPImage($content_left, $content_top+($font_height_middle+15)*($i+1));
+            $image->text($line, array(
                 'fontSize' => $font_size_middle,
                 'x' => $content_left,
                 'y' => $content_top+($font_height_middle+15)*($i+1),

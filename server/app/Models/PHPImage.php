@@ -2,7 +2,8 @@
 
 namespace App\Models;
 use App\Exceptions\Model;
-class PHPImage extends Model {
+class PHPImage extends Model
+{
     /**
      * Canvas resource
      *
