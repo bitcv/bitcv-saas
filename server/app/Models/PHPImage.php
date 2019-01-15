@@ -190,10 +190,10 @@ class PHPImage extends Model
      *
      * $one = clone $image;
      */
-    public function __clone(){
-        $this->initialiseCanvas($this->width, $this->height);
-        imagecopy($this->img, $this->img_copy, 0, 0, 0, 0, $this->width, $this->height);
-    }
+//    public function __clone(){
+//        $this->initialiseCanvas($this->width, $this->height);
+//        imagecopy($this->img, $this->img_copy, 0, 0, 0, 0, $this->width, $this->height);
+//    }
 
 
     /**
