@@ -12,10 +12,6 @@ use App\Models\PHPImage;
 
 class ProjGenPic extends Model
 {
-    public function __construct()
-    {
-        $this->phpImage = new PHPImage(400,400);
-    }
     public function doit($filename,$newsinfo)
     {
         $sourcefile = $filename;
@@ -76,9 +72,14 @@ class ProjGenPic extends Model
         $font = base_path().'/public/fonts/msyh.ttf';
         $black_color = imagecolorallocatealpha($img,0,0,0,0);
         $white_color = imagecolorallocatealpha($img,255,255,255,0);
-
-        imagettftext($img,$font_size,0,$no_left,
-            $no_top+$font_height,$black_color,$font,"NO.".$no);
+        $image = new PHPImage(400,400);
+//        imagettftext($img,$font_size,0,$no_left,
+//            $no_top+$font_height,$black_color,$font,"NO.".$no);
+        $image->text("NO.".$no, array(
+            'fontSize' => $font_size,
+            'x' => $no_left,
+            'y' => $no_top+$font_height,
+        ));
 
         imagettftext($img,$font_size,0,$date_left,
             $date_top+$font_height,$black_color,$font,$date);
