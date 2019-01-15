@@ -72,7 +72,7 @@ class ProjGenPic extends Model
         $font = base_path().'/public/fonts/msyh.ttf';
         $black_color = imagecolorallocatealpha($img,0,0,0,0);
         $white_color = imagecolorallocatealpha($img,255,255,255,0);
-
+        \Log::info('$font_size'.$font_size);
         imagettftext($img,$font_size,0,$no_left,
             $no_top+$font_height,$black_color,$font,"NO.".$no);
 
@@ -84,12 +84,14 @@ class ProjGenPic extends Model
 
         foreach($title as $i=>$line)
         {
+            \Log::info('$font_size_large'.$font_size_large);
             imagettftext($img,$font_size_large,0,$w/2-(mb_strlen($line)*30/2),
                 $title_top+($font_height_large+20)*($i+1),$black_color,$font,$line);
         }
 
         foreach($content as $i=>$line)
         {
+            \Log::info('$font_size_middle'.$font_height_middle);
             imagettftext($img,$font_size_middle,0,$content_left,
                 $content_top+($font_height_middle+15)*($i+1),$white_color,$font,$line);
         }
