@@ -69,6 +69,7 @@ class ProjGenPicController extends Controller
             $filename = $filedir.'/'.$newInfo['no']."_".$result. '.png';
             $image->setDimensionsFromImage($filename);
             $image->draw($filename);
+            $y = $type == 0 ? 290 : 330;
             $font = base_path().'/public/fonts/msyh.ttf';
             $image->setFont($font);
             $image->setTextColor(array(0, 0, 0));
@@ -78,7 +79,7 @@ class ProjGenPicController extends Controller
                 'height' =>86,
                 'fontSize' => 39,
                 'x' => 85,
-                'y' => 300
+                'y' => $y
             ));
             $image->save(base_path().'/storage/app/public/image/lianxun/'.$newInfo['no']."_".$result. '.png');
             $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'.png';
