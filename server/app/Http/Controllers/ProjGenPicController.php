@@ -85,10 +85,11 @@ class ProjGenPicController extends Controller
             // 内容
             $image->setTextColor(array(255, 255, 255));
             $image->setStrokeWidth(0);
-            $contentY = $type == 0 ? 430 : 450;
+            $contentY = $type == 0 ? 420 : 440;
+            $contentH = $type == 0 ? 440 : 400;
             $image->textBox($newInfo['content'], array(
-                'width' => 610,
-                'height' => 440,
+                'width' => 600,
+                'height' => $contentH,
                 'fontSize' => 50,
                 'x' => 80,
                 'y' => $contentY
