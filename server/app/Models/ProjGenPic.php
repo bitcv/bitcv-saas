@@ -53,13 +53,13 @@ class ProjGenPic extends Model
 
         $no_left = 69/1.3;
 //        $no_top = 286/1.3;
-        $no_top = $type == 0 ? 286/1.3 : 276/1.3;
+        $no_top = $type == 0 ? 286/1.3 : 305/1.3;
         $date_left = 572/1.3;
 //        $date_top = 286/1.3;
-        $date_top = $type == 0 ? 286/1.3 : 276/1.3;
+        $date_top = $type == 0 ? 286/1.3 : 305/1.3;
         $lunar_text_left = 663/1.3;
         $lunar_text_top = 286/1.3;
-        $lunar_text_top = $type == 0 ? 286/1.3 : 276/1.3;
+        $lunar_text_top = $type == 0 ? 286/1.3 : 305/1.3;
 //        $title_left = 234/1.3;
 //        $title_top = 330/1.3;
 //        $content_left = 104/1.3;
