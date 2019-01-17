@@ -101,7 +101,7 @@ class ProjGenPic extends Model
             'x' => 85,
             'y' => 330
         ));
-
+        $image->save(base_path().'/storage/app/public/image/lianxun/testText.png');
         foreach($content as $i=>$line)
         {
             imagettftext($img,$font_size_middle,0,$content_left,
