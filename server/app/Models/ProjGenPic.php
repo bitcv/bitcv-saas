@@ -88,6 +88,9 @@ class ProjGenPic extends Model
             imagettftext($img,$font_size_large,0,$w/2-(mb_strlen($line)*30/2),
                 $title_top+($font_height_large+20)*($i+1),$black_color,$font,$line);
         }*/
+        $image->setDimensionsFromImage($img);
+        $image->draw($img);
+        $image->setFont($font);
         $image->setTextColor(array(0, 0, 0));
         $image->setStrokeWidth(0);
         $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管平台", array(
