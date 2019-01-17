@@ -36,13 +36,29 @@ class ProjGenPic extends Model
             imagepng($image, $markedImageFilename);
             $md5_value = md5_file($markedImageFilename);
             rename($markedImageFilename, $filedir.'/'.$newsinfo['no']."_".$md5_value. '.png');
+            // 创建完再添加标题和内容
+            $image = new PHPImage();
+            $filename = $filedir.'/'.$newsinfo['no']."_".$md5_value. '.png';
+            $image->setDimensionsFromImage($filename);
+            $image->draw($filename);
+            $font = base_path().'/public/fonts/msyh.ttf';
+            $image->setFont($font);
+            $image->setTextColor(array(0, 0, 0));
+            $image->setStrokeWidth(0);
+            $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管sssss平台", array(
+                'width' => 600,
+                'height' =>86,
+                'fontSize' => 39,
+                'x' => 85,
+                'y' => 330
+            ));
+            $image->save(base_path().'/storage/app/public/image/lianxun/'.$md5_value. '.png');
             return $md5_value;
         }
     }
 
     public function txt($img,$newsinfo)
     {
-        $image = new PHPImage();
         $time = strtotime($newsinfo['date']);
         $date = date("m", $time)."/".date("d", $time);
         $no = $newsinfo['no'];
@@ -88,25 +104,11 @@ class ProjGenPic extends Model
             imagettftext($img,$font_size_large,0,$w/2-(mb_strlen($line)*30/2),
                 $title_top+($font_height_large+20)*($i+1),$black_color,$font,$line);
         }*/
-        $image->setDimensionsFromImage($img);
-        $image->draw($img);
-        $image->setFont($font);
-        $image->setTextColor(array(0, 0, 0));
-        $image->setStrokeWidth(0);
-        $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管平台", array(
-            'width' => 600,
-            'height' =>86,
-            'fontSize' => 39,
-            'x' => 85,
-            'y' => 330
-        ));
-        $image->save(base_path().'/storage/app/public/image/lianxun/testText.png');
         foreach($content as $i=>$line)
         {
             imagettftext($img,$font_size_middle,0,$content_left,
                 $content_top+($font_height_middle+15)*($i+1),$white_color,$font,$line);
         }
-
         return $img;
     }
 
