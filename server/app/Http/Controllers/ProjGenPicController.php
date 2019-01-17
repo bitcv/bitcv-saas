@@ -76,7 +76,7 @@ class ProjGenPicController extends Controller
             $image->setTextColor(array(0, 0, 0));
             $image->setStrokeWidth(0);
             $image->textBox($newInfo['title'], array(
-                'width' => 600,
+                'width' => 580,
                 'height' =>86,
                 'fontSize' => 39,
                 'x' => 85,
@@ -88,7 +88,7 @@ class ProjGenPicController extends Controller
             $contentY = $type == 0 ? 420 : 440;
             $contentH = $type == 0 ? 440 : 400;
             $image->textBox($newInfo['content'], array(
-                'width' => 600,
+                'width' => 580,
                 'height' => $contentH,
                 'fontSize' => 50,
                 'x' => 80,
