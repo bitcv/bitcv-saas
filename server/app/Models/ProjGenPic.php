@@ -42,6 +42,7 @@ class ProjGenPic extends Model
 
     public function txt($img,$newsinfo)
     {
+        $image = new PHPImage();
         $time = strtotime($newsinfo['date']);
         $date = date("m", $time)."/".date("d", $time);
         $no = $newsinfo['no'];
@@ -82,17 +83,27 @@ class ProjGenPic extends Model
         imagettftext($img,$font_size,0,$lunar_text_left,
             $lunar_text_top+$font_height,$white_color,$font,$lunar_text);
 
-        foreach($title as $i=>$line)
+        /*foreach($title as $i=>$line)
         {
             imagettftext($img,$font_size_large,0,$w/2-(mb_strlen($line)*30/2),
                 $title_top+($font_height_large+20)*($i+1),$black_color,$font,$line);
-        }
-
+        }*/
+        $image->setTextColor(array(0, 0, 0));
+        $image->setStrokeWidth(0);
+        $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管平台", array(
+            'width' => 600,
+            'height' =>86,
+            'fontSize' => 39,
+            'x' => 85,
+            'y' => 330
+        ));
+        
         foreach($content as $i=>$line)
         {
             imagettftext($img,$font_size_middle,0,$content_left,
                 $content_top+($font_height_middle+15)*($i+1),$white_color,$font,$line);
         }
+
         return $img;
     }
 
