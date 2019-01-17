@@ -42,7 +42,7 @@ class ProjGenPic extends Model
 
     public function txt($img,$newsinfo)
     {
-        $image = new PHPImage();
+        $image = new \App\Models\PHPImage();
         $time = strtotime($newsinfo['date']);
         $date = date("m", $time)."/".date("d", $time);
         $no = $newsinfo['no'];
@@ -97,7 +97,7 @@ class ProjGenPic extends Model
             'x' => 85,
             'y' => 330
         ));
-        
+
         foreach($content as $i=>$line)
         {
             imagettftext($img,$font_size_middle,0,$content_left,
