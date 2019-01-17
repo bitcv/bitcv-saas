@@ -42,7 +42,7 @@ class ProjGenPic extends Model
 
     public function txt($img,$newsinfo)
     {
-        $image = new \App\Models\PHPImage();
+        $image = new PHPImage();
         $time = strtotime($newsinfo['date']);
         $date = date("m", $time)."/".date("d", $time);
         $no = $newsinfo['no'];

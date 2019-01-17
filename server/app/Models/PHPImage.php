@@ -46,6 +46,7 @@
  * version 0.1 2013-04-15
  * Initial release
  */
+namespace App\Models;
 
 class PHPImage {
 	/**
