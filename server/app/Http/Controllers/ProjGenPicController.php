@@ -40,7 +40,7 @@ class ProjGenPicController extends Controller
         $day_lunar = $lunar->getLunarDayName($newsinfo['date']);
         $newsinfo['lunar_day'] = $day_lunar;
         $basePicUrl = $type == 0 ? base_path().'/storage/app/public/image/lianxun/bk.png' : base_path().'/storage/app/public/image/lianxun/bk2.png';
-        $picName = $this->genPicM->doit($basePicUrl, $newsinfo);
+        $picName = $this->genPicM->doit($basePicUrl, $newsinfo, $type);
         return $picName;
     }
     public function genLianXunPic(Request $request)

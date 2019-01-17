@@ -12,7 +12,7 @@ use App\Models\PHPImage;
 
 class ProjGenPic extends Model
 {
-    public function doit($filename,$newsinfo)
+    public function doit($filename,$newsinfo, $type = 0)
     {
         $sourcefile = $filename;
         $getimagesizefilename = getimagesize($filename);
@@ -26,7 +26,7 @@ class ProjGenPic extends Model
         if($image){
             //imagefilter($image, IMG_FILTER_GRAYSCALE);
             //imagefilter($image, IMG_FILTER_BRIGHTNESS, -30);
-            $image = $this->txt($image,$newsinfo);
+            $image = $this->txt($image,$newsinfo, $type);
             //$image = $this->mask($image);
             $rand_value = md5(''.rand(0,9999999));
 
@@ -40,35 +40,38 @@ class ProjGenPic extends Model
         }
     }
 
-    public function txt($img,$newsinfo)
+    public function txt($img,$newsinfo, $type = 0)
     {
         $time = strtotime($newsinfo['date']);
         $date = date("m", $time)."/".date("d", $time);
         $no = $newsinfo['no'];
         $lunar_month = $newsinfo['lunar_month'];
         $lunar_day = $newsinfo['lunar_day'];
-        $title = $newsinfo['title'];
-        $content = $newsinfo['content'];
+//        $title = $newsinfo['title'];
+//        $content = $newsinfo['content'];
         $lunar_text = $lunar_month."月 ".$lunar_day."日";
 
         $no_left = 69/1.3;
-        $no_top = 286/1.3;
+//        $no_top = 286/1.3;
+        $no_top = $type == 0 ? 286/1.3 : 276/1.3;
         $date_left = 572/1.3;
-        $date_top = 286/1.3;
+//        $date_top = 286/1.3;
+        $date_top = $type == 0 ? 286/1.3 : 276/1.3;
         $lunar_text_left = 663/1.3;
         $lunar_text_top = 286/1.3;
-        $title_left = 234/1.3;
-        $title_top = 330/1.3;
-        $content_left = 104/1.3;
-        $content_top = 530/1.3;
+        $lunar_text_top = $type == 0 ? 286/1.3 : 276/1.3;
+//        $title_left = 234/1.3;
+//        $title_top = 330/1.3;
+//        $content_left = 104/1.3;
+//        $content_top = 530/1.3;
         $w = imagesx($img);
         $h = imagesy($img);
         $font_height = 14;
-        $font_height_large = 25;
-        $font_height_middle = 22;
+//        $font_height_large = 25;
+//        $font_height_middle = 22;
         $font_size = $font_height *1280/$h;
-        $font_size_large = $font_height_large *1280/$h;
-        $font_size_middle = $font_height_middle *1280/$h;
+//        $font_size_large = $font_height_large *1280/$h;
+//        $font_size_middle = $font_height_middle *1280/$h;
         $font = base_path().'/public/fonts/msyh.ttf';
         $black_color = imagecolorallocatealpha($img,0,0,0,0);
         $white_color = imagecolorallocatealpha($img,255,255,255,0);
