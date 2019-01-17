@@ -88,8 +88,9 @@ class ProjGenPic extends Model
             imagettftext($img,$font_size_large,0,$w/2-(mb_strlen($line)*30/2),
                 $title_top+($font_height_large+20)*($i+1),$black_color,$font,$line);
         }*/
-        $image->setDimensionsFromImage($img);
-        $image->draw($img);
+        $filename = base_path().'/storage/app/public/image/lianxun/bk.png';
+        $image->setDimensionsFromImage($filename);
+        $image->draw($filename);
         $image->setFont($font);
         $image->setTextColor(array(0, 0, 0));
         $image->setStrokeWidth(0);
