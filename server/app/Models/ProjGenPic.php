@@ -87,11 +87,11 @@ class ProjGenPic extends Model
             imagettftext($img,$font_size_large,0,$w/2-(mb_strlen($line)*30/2),
                 $title_top+($font_height_large+20)*($i+1),$black_color,$font,$line);
         }*/
-        foreach($content as $i=>$line)
+        /*foreach($content as $i=>$line)
         {
             imagettftext($img,$font_size_middle,0,$content_left,
                 $content_top+($font_height_middle+15)*($i+1),$white_color,$font,$line);
-        }
+        }*/
         return $img;
     }
 
