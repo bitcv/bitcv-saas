@@ -73,14 +73,14 @@ class ProjGenPicController extends Controller
             $image->setFont($font);
             $image->setTextColor(array(0, 0, 0));
             $image->setStrokeWidth(0);
-            $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管sssss平台", array(
+            $image->textBox($newInfo['title'], array(
                 'width' => 600,
                 'height' =>86,
                 'fontSize' => 39,
                 'x' => 85,
-                'y' => 330
+                'y' => 300
             ));
-            // $image->save(base_path().'/storage/app/public/image/lianxun/'.$md5_value. '.png');
+            $image->save(base_path().'/storage/app/public/image/lianxun/'.$newInfo['no']."_".$result. '.png');
             $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'.png';
             unset($newInfo['date']);
             $newInfo['time'] = $allParams['oldTime'];
