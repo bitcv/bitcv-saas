@@ -7,9 +7,9 @@
  */
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\ProjGenPic;
 use App\Models\lunar;
+use App\Models\PHPImage;
 
 class ProjGenPicController extends Controller
 {
@@ -63,6 +63,24 @@ class ProjGenPicController extends Controller
         $type = $allParams['type'];
         $result = $this->gen_picture($newInfo, $type);
         if ($result) {
+            // 创建完再添加标题和内容
+            $image = new PHPImage();
+            $filedir = base_path().'/storage/app/public/image/lianxun';
+            $filename = $filedir.'/'.$newInfo['no']."_".$result. '.png';
+            $image->setDimensionsFromImage($filename);
+            $image->draw($filename);
+            $font = base_path().'/public/fonts/msyh.ttf';
+            $image->setFont($font);
+            $image->setTextColor(array(0, 0, 0));
+            $image->setStrokeWidth(0);
+            $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管sssss平台", array(
+                'width' => 600,
+                'height' =>86,
+                'fontSize' => 39,
+                'x' => 85,
+                'y' => 330
+            ));
+            // $image->save(base_path().'/storage/app/public/image/lianxun/'.$md5_value. '.png');
             $newInfo['pic_url'] = $newInfo['no'].'_'.$result.'.png';
             unset($newInfo['date']);
             $newInfo['time'] = $allParams['oldTime'];

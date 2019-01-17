@@ -36,23 +36,6 @@ class ProjGenPic extends Model
             imagepng($image, $markedImageFilename);
             $md5_value = md5_file($markedImageFilename);
             rename($markedImageFilename, $filedir.'/'.$newsinfo['no']."_".$md5_value. '.png');
-            // 创建完再添加标题和内容
-            $image = new PHPImage();
-            $filename = $filedir.'/'.$newsinfo['no']."_".$md5_value. '.png';
-            $image->setDimensionsFromImage($filename);
-            $image->draw($filename);
-            $font = base_path().'/public/fonts/msyh.ttf';
-            $image->setFont($font);
-            $image->setTextColor(array(0, 0, 0));
-            $image->setStrokeWidth(0);
-            $image->textBox("币神争霸——猜BTC涨跌游戏入驻BCV数字资管sssss平台", array(
-                'width' => 600,
-                'height' =>86,
-                'fontSize' => 39,
-                'x' => 85,
-                'y' => 330
-            ));
-            $image->save(base_path().'/storage/app/public/image/lianxun/'.$md5_value. '.png');
             return $md5_value;
         }
     }
