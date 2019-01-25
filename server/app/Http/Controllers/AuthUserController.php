@@ -287,6 +287,11 @@ class AuthUserController extends Controller
         }
         $picture = DB::table('base_token')->where('id',$params['pid'])->select('packet_cover','id')->get()->toArray();
         if ($picture) {
+            foreach ($picture as $key => $pic) {
+                if ($pic->packet_cover == 'http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_361443504547424') {
+                    $picture[$key]->packet_cover = 'https://file.ucai.net/saasPacketPic_361443504547424';
+                }
+            }
             return $this->output([
                 'pic' => $picture
             ]);
