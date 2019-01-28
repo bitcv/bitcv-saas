@@ -49,4 +49,8 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      // 生成链讯图片
      Route::post('genLianXunPic', 'ProjGenPicController@genLianXunPic');
      Route::post('getLianXunPicList', 'ProjGenPicController@getLianXunPicList');
+
+     // 币币兑换统计
+     Route::post('getExchangeRecords', 'PacketStatController@getExchangeRecords');
+     Route::post('getExchangeStatData', 'PacketStatController@getExchangeStatData');
  });

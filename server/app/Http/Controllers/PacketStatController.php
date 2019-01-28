@@ -297,7 +297,7 @@ class PacketStatController extends Controller
         }
 
         $allparams = $request->all();
-        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'/getOtcStatList', [
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'otc/getOtcStatList', [
             'pageno' => $params['pageno'],
             'perpage' => $params['perpage'],
             'sdate' => array_key_exists('sdate',$allparams) && $allparams['sdate'] ? $allparams['sdate'] : '',
@@ -321,4 +321,38 @@ class PacketStatController extends Controller
         ]);
     }
 
+
+    // 币币兑换功能统计
+    public function getExchangeRecords(Request $request)
+    {
+        $params = $this->validation($request, [
+            'pageno' => 'required|numeric',
+            'perpage' => 'required|numeric',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/getExchangeRecords', [
+            'pageNo' => $params['pageno'],
+            'perPage' => $params['perpage'],
+        ]), true);
+        return $this->output($data);
+    }
+
+    public function getExchangeStatData(Request $request)
+    {
+        $params = $this->validation($request, [
+            'id' => 'required|numeric',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/getExchangeStatData', [
+            'id' => $params['id'],
+        ]), true);
+
+        return $this->output($data);
+    }
 }

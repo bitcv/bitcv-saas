@@ -157,6 +157,10 @@ class AuthUserController extends Controller
                 array_push($menus[2]['child'], $addMenu);
             }
         }
+        if ($uinfo['email'] == 'xiaofei@bitcv.com' || app()->proj['proj_id'] == 1894) { // ABCB 兑换数据统计  TODO app()->proj['proj_id'] == 1894 ||
+            $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
+            array_push($menus[2]['child'], $addMenu);
+        }
         $adminmenu = array();
         $uid = $uinfo['uid'];
         $roles = DB::table('base_authuser')->select('roles')->where('uid',$uid)->get()->toArray();

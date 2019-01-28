@@ -13,6 +13,8 @@ import ZPStat from '@/components/stat/zpstat'
 import AssetStat from '@/components/stat/assetstat'
 import OtcStat from '@/components/stat/otcstat'
 import GenPicture from '@/components/stat/genpicture'
+import BBExchange from '@/components/stat/exchange'
+import BBExchangeDetail from '@/components/stat/exchangeDetail'
 
 Vue.use(Router)
 
@@ -75,6 +77,18 @@ export default new Router({
         requireAuth: true
       },
       component: GenPicture
+    }, {
+      path: '/admin/exchange',
+      meta: {
+        requireAuth: true
+      },
+      component: BBExchange
+    }, {
+      path: '/admin/exchangeDetail/:id',
+      meta: {
+        requireAuth: true
+      },
+      component: BBExchangeDetail
     }, {
       path: '/admin/otcstat',
       meta: {
