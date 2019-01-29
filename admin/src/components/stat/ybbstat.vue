@@ -107,7 +107,8 @@ export default {
       dataCount: 0,
       projId: '',
       name: '',
-      all: ''
+      all: '',
+      tokenId: ''
     }
   },
   mounted () {
@@ -115,6 +116,7 @@ export default {
     }).then((res) => {
       if (res.data.errcode === 0) {
         this.projId = res.data.data.projectid
+        this.tokenId = res.data.data.tokenId.tokenid
         this.getItemList()
         this.getOrderList({countPages: true})
       }
@@ -123,7 +125,8 @@ export default {
   methods: {
     getItemList () {
       this.$http.post('/api/getAdminDepositBoxList', {
-        projId: this.projId
+        projId: this.projId,
+        tokenId: this.tokenId
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.itemList = res.data.data.dataList
@@ -135,6 +138,7 @@ export default {
         pageno: this.pageno,
         perpage: this.perpage,
         projId: this.projId,
+        tokenId: this.tokenId,
         name: this.name
       }).then((res) => {
         if (res.data.errcode === 0) {

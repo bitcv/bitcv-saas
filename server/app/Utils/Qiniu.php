@@ -5,7 +5,7 @@ namespace App\Utils;
 class Qiniu {
 
     public static function getUrl($key) {
-        return "http://p8k1ocuzy.bkt.clouddn.com/{$key}";
+        return "http://file.ucai.net/{$key}";
     }
 
     //prefix，文件名是随机的，可以添加一个前缀区分，例如logo_

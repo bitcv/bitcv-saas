@@ -41,4 +41,16 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      // aac 转盘统计
      Route::any('getZpstaCoin1', 'PacketStatController@staCoin1');
      Route::post('getTotalToken', 'PacketStatController@getTotalToken');
+
+     // 资产统计
+     Route::post('getAssetStat', 'PacketStatController@getAssetStat');
+     Route::post('getOtcStatList', 'PacketStatController@getOtcStatList');
+
+     // 生成链讯图片
+     Route::post('genLianXunPic', 'ProjGenPicController@genLianXunPic');
+     Route::post('getLianXunPicList', 'ProjGenPicController@getLianXunPicList');
+
+     // 币币兑换统计
+     Route::post('getExchangeRecords', 'PacketStatController@getExchangeRecords');
+     Route::post('getExchangeStatData', 'PacketStatController@getExchangeStatData');
  });

@@ -110,7 +110,7 @@ class AuthUserController extends Controller
         }
         extract($params);
 
-        $projectid = app()->proj['proj_id'];
+        $projectid = env('PROJ_ID') ? env('PROJ_ID') :app()->proj['proj_id'];
         $user = DB::table('base_authuser')->where([['email','=',$params['email']],['is_active','=',0]])->get()->toArray();
         if (!$user) {
             return $this->error(203);
@@ -150,8 +150,17 @@ class AuthUserController extends Controller
     public function getAuthUser (Request $request)
     {
         $uinfo = session()->get('authuinfo');
-        \Log::info('getAuthUser$uinfo'.var_export($uinfo,true));
         $menus = AuthUser::$menu;
+        if ($uinfo) {
+            if ($uinfo['email'] == 'bitcv@bitcv.com' || $uinfo['email'] == 'xiaofei@bitcv.com') {
+                $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/genpicture', 'text' => '生成链讯');
+                array_push($menus[2]['child'], $addMenu);
+            }
+        }
+        if ($uinfo['email'] == 'xiaofei@bitcv.com' || app()->proj['proj_id'] == 1894) { // ABCB 兑换数据统计  TODO app()->proj['proj_id'] == 1894 ||
+            $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
+            array_push($menus[2]['child'], $addMenu);
+        }
         $adminmenu = array();
         $uid = $uinfo['uid'];
         $roles = DB::table('base_authuser')->select('roles')->where('uid',$uid)->get()->toArray();
@@ -191,8 +200,7 @@ class AuthUserController extends Controller
         $uinfo = session()->get('authuinfo');
         $uid = $uinfo['uid'];
         $user = DB::table('base_authuser')->select('*')->where('uid',$uid)->get()->toArray();
-        $projectid = app()->proj['proj_id'];
-//        $projectid = 1; // 测试使用
+        $projectid = env('PROJ_ID') ? env ('PROJ_ID') : app()->proj['proj_id'];
         $result = DB::table('saas_proj')->select('atime','ctime')->where([['proj_id', '=', $projectid],['status', '=', 1]])->get()->toArray();
         $item = DB::table('saas_item')->select('proj_id')->where([['proj_id', '=', $projectid]])->get()->toArray();
         if (isset($result) && $result) {
@@ -263,7 +271,7 @@ class AuthUserController extends Controller
             return $this->error(100);
         }
         $data = array();
-        $data['packet_cover'] = $allparams['pic'];
+        $data['packet_cover'] = isset($allparams['pic']) && $allparams['pic'] ? $allparams['pic'] : 'http://file.ucai.net/saasPacketPic_361443504547424';
 //        $data['packet_cover'] = 'http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_810039961619194,http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_524009732861674';
         $result = DB::table('base_token')->where('id', $params['pid'])->update($data);
         if ($result !== false) {
@@ -283,6 +291,11 @@ class AuthUserController extends Controller
         }
         $picture = DB::table('base_token')->where('id',$params['pid'])->select('packet_cover','id')->get()->toArray();
         if ($picture) {
+            foreach ($picture as $key => $pic) {
+                if ($pic->packet_cover == 'http://p8k1ocuzy.bkt.clouddn.com/saasPacketPic_361443504547424') {
+                    $picture[$key]->packet_cover = 'https://file.ucai.net/saasPacketPic_361443504547424';
+                }
+            }
             return $this->output([
                 'pic' => $picture
             ]);
@@ -292,9 +305,7 @@ class AuthUserController extends Controller
     // 获取项目方 tokenid
     public function getPid (Request $request)
     {
-        $projectid = app()->proj['proj_id'];
-        \Log::info('$projectid'.$projectid);
-//        $projectid = 1; // 测试使用
+        $projectid = env('PROJ_ID') ? env('PROJ_ID') : app()->proj['proj_id'];
         // 获取当前项目的 tokenid
         $project = DB::table('proj_info')->where('id',$projectid)->select('token_id')->get()->toArray();
         if ($project) {

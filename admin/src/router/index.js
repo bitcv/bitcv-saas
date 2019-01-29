@@ -10,6 +10,11 @@ import MediaReport from '@/components/media/MediaReport'
 import Stat from '@/components/stat/redpacket'
 import YbbStat from '@/components/stat/ybbstat'
 import ZPStat from '@/components/stat/zpstat'
+import AssetStat from '@/components/stat/assetstat'
+import OtcStat from '@/components/stat/otcstat'
+import GenPicture from '@/components/stat/genpicture'
+import BBExchange from '@/components/stat/exchange'
+import BBExchangeDetail from '@/components/stat/exchangeDetail'
 
 Vue.use(Router)
 
@@ -56,10 +61,40 @@ export default new Router({
       component: YbbStat
     }, {
       path: '/admin/zpstat',
-      meat: {
+      meta: {
         requireAuth: true
       },
       component: ZPStat
+    }, {
+      path: '/admin/assetstat',
+      meta: {
+        requireAuth: true
+      },
+      component: AssetStat
+    }, {
+      path: '/admin/genpicture',
+      meta: {
+        requireAuth: true
+      },
+      component: GenPicture
+    }, {
+      path: '/admin/exchange',
+      meta: {
+        requireAuth: true
+      },
+      component: BBExchange
+    }, {
+      path: '/admin/exchangeDetail/:id',
+      meta: {
+        requireAuth: true
+      },
+      component: BBExchangeDetail
+    }, {
+      path: '/admin/otcstat',
+      meta: {
+        requireAuth: true
+      },
+      component: OtcStat
     }, {
       path: '/admin/stat',
       meta: {
