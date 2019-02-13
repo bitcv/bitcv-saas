@@ -12,6 +12,12 @@
           <el-table-column label="剩余额度">
             <template slot-scope="scope">{{ scope.row.remainAmount }}</template>
           </el-table-column>
+          <el-table-column label="已售出额度">
+            <template slot-scope="scope">{{ scope.row.soldOutAmount }}</template>
+          </el-table-column>
+          <el-table-column label="已赠送额度">
+            <template slot-scope="scope">{{ scope.row.extraTotalAmount }}</template>
+          </el-table-column>
           <el-table-column label="剩余比例">
             <template slot-scope="scope">{{ scope.row.remainRate }}</template>
           </el-table-column>
