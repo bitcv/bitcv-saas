@@ -35,6 +35,8 @@
             <template slot-scope="scope">{{ scope.row.createdAt }}</template>
           </el-table-column>
         </el-table>
+        <el-pagination v-if="exchangeRecords && exchangeRecords.length > 0" class="footer-page-box" @size-change="onBoxSizeChange" @current-change="onBoxCurChange" :current-page="pageno" :page-sizes="[30, 40, 50, 60]" :page-size="perpage" layout="total, sizes, prev, pager, next, jumper" :total="dataCount">
+        </el-pagination>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -49,7 +51,7 @@ export default {
       exchangeData: [],
       loading: true,
       pageno: 1,
-      perpage: 10,
+      perpage: 30,
       dataCount: 0,
       exchangeStatData: []
     }
@@ -94,6 +96,14 @@ export default {
           console.log(this.exchangeStatData)
         }
       })
+    },
+    onBoxSizeChange (perpage) {
+      this.perpage = perpage
+      this.getExchangeRecords()
+    },
+    onBoxCurChange (pageno) {
+      this.pageno = pageno
+      this.getExchangeRecords()
     }
   }
 }
