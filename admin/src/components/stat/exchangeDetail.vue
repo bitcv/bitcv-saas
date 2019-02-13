@@ -94,6 +94,7 @@ export default {
         if (res.data.errcode === 0) {
           this.exchangeStatData = res.data.data
           console.log(this.exchangeStatData)
+          this.dataCount = res.data.data.count
         }
       })
     },
