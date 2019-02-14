@@ -28,8 +28,17 @@
           <el-table-column label="卖出 Token">
             <template slot-scope="scope">{{ scope.row.sellSymbol }}</template>
           </el-table-column>
+          <el-table-column label="卖出数量">
+            <template slot-scope="scope">{{ scope.row.sellAmount }}</template>
+          </el-table-column>
           <el-table-column label="买入 Token">
             <template slot-scope="scope">{{ scope.row.buySymbol }}</template>
+          </el-table-column>
+          <el-table-column label="买入的数量">
+            <template slot-scope="scope">{{ scope.row.buyAmount }}</template>
+          </el-table-column>
+          <el-table-column label="兑换比例">
+            <template slot-scope="scope">{{ scope.row.currentRate }}</template>
           </el-table-column>
           <el-table-column label="交易时间">
             <template slot-scope="scope">{{ scope.row.createdAt }}</template>
