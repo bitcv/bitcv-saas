@@ -40,6 +40,9 @@
           <el-table-column label="兑换比例">
             <template slot-scope="scope">{{ scope.row.currentRate }}</template>
           </el-table-column>
+          <el-table-column label="对USDT价格">
+            <template slot-scope="scope">{{ scope.row.toUsdt }}</template>
+          </el-table-column>
           <el-table-column label="交易时间">
             <template slot-scope="scope">{{ scope.row.createdAt }}</template>
           </el-table-column>
@@ -67,8 +70,6 @@ export default {
   },
   mounted () {
     this.getPid()
-    this.getExchangeRecords()
-    this.getExchangeStatData()
   },
   created () {
     this.tokenId = this.$route.params.id
@@ -79,13 +80,18 @@ export default {
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.token = res.data.data.symbol
+          if (this.token) {
+            this.getExchangeRecords(this.token)
+            this.getExchangeStatData()
+          }
         }
       })
     },
-    getExchangeRecords () {
+    getExchangeRecords (token) {
       this.$http.post('/api/getExchangeRecords', {
         pageno: this.pageno,
-        perpage: this.perpage
+        perpage: this.perpage,
+        symbol: token
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.exchangeRecords = res.data.data.records
@@ -102,7 +108,6 @@ export default {
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.exchangeStatData = res.data.data
-          console.log(this.exchangeStatData)
           this.dataCount = res.data.data.count
         }
       })

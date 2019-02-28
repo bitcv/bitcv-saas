@@ -31,6 +31,19 @@
           </el-table-column>
         </el-table>
       </el-tab-pane>
+      <el-tab-pane label="月度统计">
+        <el-table :data="monthData">
+          <el-table-column label="月份">
+            <template slot-scope="scope">{{ scope.row.month }}</template>
+          </el-table-column>
+          <el-table-column label="已售出额度">
+            <template slot-scope="scope">{{ scope.row.monthBuyAmount }}</template>
+          </el-table-column>
+          <el-table-column label="已赠送额度">
+            <template slot-scope="scope">{{ scope.row.monthExtraAmount }}</template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -41,6 +54,7 @@ export default {
     return {
       token: '',
       exchangeLists: [],
+      monthData: [],
       loading: true,
       pageno: 1,
       perpage: 10,
@@ -49,7 +63,7 @@ export default {
   },
   mounted () {
     this.getPid()
-    this.getExchangeRecords()
+    // this.getExchangeRecords()
   },
   methods: {
     getPid () {
@@ -57,17 +71,21 @@ export default {
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.token = res.data.data.symbol
+          if (this.token) {
+            this.getExchangeRecords(this.token)
+          }
         }
       })
     },
-    getExchangeRecords () {
+    getExchangeRecords (token) {
       this.$http.post('/api/getExchangeRecords', {
         pageno: this.pageno,
-        perpage: this.perpage
+        perpage: this.perpage,
+        symbol: token
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.exchangeLists = res.data.data.tokenData
-          console.log(this.exchangeLists)
+          this.monthData = res.data.data.monthData
           if (this.exchangeLists) {
             this.loading = false
           }
