@@ -12,7 +12,7 @@
           <el-table-column label="剩余额度">
             <template slot-scope="scope">{{ scope.row.remainAmount }}</template>
           </el-table-column>
-          <el-table-column label="已售出额度">
+          <el-table-column label="已售出额度(包括赠送额度)">
             <template slot-scope="scope">{{ scope.row.soldOutAmount }}</template>
           </el-table-column>
           <el-table-column label="已赠送额度">
