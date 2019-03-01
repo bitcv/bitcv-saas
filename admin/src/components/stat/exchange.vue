@@ -33,7 +33,7 @@
           <el-table-column label="操作">
             <template slot-scope="scope">
               <router-link style="color: green" :to="'/admin/exchangeDetail/' + scope.row.id">详情</router-link>
-              <router-link style="color: red"  :to="'/admin/myExchange/' + scope.row.id">资产</router-link>
+              <!-- <router-link style="color: red"  :to="'/admin/myExchange/' + scope.row.id">资产</router-link> -->
             </template>
           </el-table-column>
         </el-table>
