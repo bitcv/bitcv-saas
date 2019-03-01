@@ -157,7 +157,8 @@ class AuthUserController extends Controller
                 array_push($menus[2]['child'], $addMenu);
             }
         }
-        if ($uinfo['email'] == 'xiaofei@bitcv.com' || app()->proj['proj_id'] == 1894) { // ABCB 兑换数据统计  TODO app()->proj['proj_id'] == 1894 ||
+        if ($uinfo['email'] == 'xiaofei@bitcv.com' || app()->proj['proj_id'] == 1894 || app()->proj['proj_id'] ==
+            1892) { // ABCB / TS  兑换数据统计
             array_splice($menus[2]['child'], 0, 4);
             $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
             array_push($menus[2]['child'], $addMenu);

@@ -15,6 +15,8 @@ import OtcStat from '@/components/stat/otcstat'
 import GenPicture from '@/components/stat/genpicture'
 import BBExchange from '@/components/stat/exchange'
 import BBExchangeDetail from '@/components/stat/exchangeDetail'
+import BBRechargeRecord from '@/components/stat/rechargeRecord'
+import BBMyExchange from '@/components/stat/myExchange'
 
 Vue.use(Router)
 
@@ -89,6 +91,18 @@ export default new Router({
         requireAuth: true
       },
       component: BBExchangeDetail
+    }, {
+      path: '/admin/rechargeRecord/:id',
+      meta: {
+        requireAuth: true
+      },
+      component: BBRechargeRecord
+    }, {
+      path: '/admin/myExchange/:id',
+      meta: {
+        requireAuth: true
+      },
+      component: BBMyExchange
     }, {
       path: '/admin/otcstat',
       meta: {

@@ -337,6 +337,7 @@ class PacketStatController extends Controller
             'pageNo' => $params['pageno'],
             'perPage' => $params['perpage'],
             'symbol' => $allparams['symbol'],
+//            'symbol' => 'ABCB',
         ]), true);
         return $this->output($data);
     }
@@ -351,6 +352,39 @@ class PacketStatController extends Controller
         }
 
         $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/getExchangeStatData', [
+            'id' => $params['id'],
+        ]), true);
+
+        return $this->output($data);
+    }
+
+    // 充值记录
+    public function getRechargeRecord(Request $request)
+    {
+        $params = $this->validation($request, [
+            'tokenId' => 'required',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        $data = json_decode(BaseUtil::curlPost('https://bitcv.com/api/getRechargeRecords', [
+            'tokenId' => $params['tokenId'],
+            'passwd' => md5('bitcv_saas_0301')
+        ]), true);
+        return $this->output($data);
+    }
+
+    // 我的兑换资产
+    public function getMyExchange (Request $request)
+    {
+        $params = $this->validation($request, [
+            'id' => 'required',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/getMyExchange', [
             'id' => $params['id'],
         ]), true);
 
