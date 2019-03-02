@@ -407,7 +407,7 @@ class PacketStatController extends Controller
         if (isset($allparams['airdropId']) && $allparams['airdropId']) {
             $airDropDetail = DB::table('base_airdrop_asset')->where([['airdrop_id', '=', $allparams['airdropId']],['token_id', '=', $params['tokenId']]])->orderBy('amount', 'desc')->get()->toArray();
             if ($airDropDetail) {
-                $status = ['未领取', '已领取'];
+                $status = ['未领取', '已领取', '已领取'];
                 foreach ($airDropDetail as $key => $detail) {
                     foreach ($status as $k => $s) {
                         if ($detail->status == $k) {
