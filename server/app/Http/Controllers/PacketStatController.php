@@ -390,4 +390,36 @@ class PacketStatController extends Controller
 
         return $this->output($data);
     }
+
+    // abcb 资产快照
+    public function getAssetSnapShot(Request $request)
+    {
+        $params = $this->validation($request, [
+            'tokenId' => 'required',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        $allparams = $request->all();
+//        $params['tokenId'] = 496; // 测试
+        $airDropDetail = [];
+        $result = DB::table('base_airdrop')->where([['asset_token_id', '=', $params['tokenId']]])->get()->toArray();
+        if (isset($allparams['airdropId']) && $allparams['airdropId']) {
+            $airDropDetail = DB::table('base_airdrop_asset')->where([['airdrop_id', '=', $allparams['airdropId']],['token_id', '=', $params['tokenId']]])->orderBy('amount', 'desc')->get()->toArray();
+            if ($airDropDetail) {
+                $status = ['未领取', '已领取'];
+                foreach ($airDropDetail as $key => $detail) {
+                    foreach ($status as $k => $s) {
+                        if ($detail->status == $k) {
+                            $airDropDetail[$key]->statusName = $s;
+                        }
+                    }
+                }
+            }
+        }
+        return $this->output([
+           'airDrop' => $result,
+           'airDropDetail' => $airDropDetail
+        ]);
+    }
 }

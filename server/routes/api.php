@@ -45,6 +45,7 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      // 资产统计
      Route::post('getAssetStat', 'PacketStatController@getAssetStat');
      Route::post('getOtcStatList', 'PacketStatController@getOtcStatList');
+     Route::post('getAssetSnapShot', 'PacketStatController@getAssetSnapShot');
 
      // 生成链讯图片
      Route::post('genLianXunPic', 'ProjGenPicController@genLianXunPic');

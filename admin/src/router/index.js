@@ -11,6 +11,8 @@ import Stat from '@/components/stat/redpacket'
 import YbbStat from '@/components/stat/ybbstat'
 import ZPStat from '@/components/stat/zpstat'
 import AssetStat from '@/components/stat/assetstat'
+import AssetSnapShot from '@/components/stat/snapshot'
+import SnapShotDetail from '@/components/stat/snapShotDetail'
 import OtcStat from '@/components/stat/otcstat'
 import GenPicture from '@/components/stat/genpicture'
 import BBExchange from '@/components/stat/exchange'
@@ -73,6 +75,18 @@ export default new Router({
         requireAuth: true
       },
       component: AssetStat
+    }, {
+      path: '/admin/snapshot',
+      meta: {
+        requireAuth: true
+      },
+      component: AssetSnapShot
+    }, {
+      path: '/admin/snapShotDetail/:id',
+      meta: {
+        requireAuth: true
+      },
+      component: SnapShotDetail
     }, {
       path: '/admin/genpicture',
       meta: {
