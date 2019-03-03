@@ -65,7 +65,8 @@ export default {
       pageno: 1,
       perpage: 30,
       dataCount: 0,
-      exchangeStatData: []
+      exchangeStatData: [],
+      token: ''
     }
   },
   mounted () {
@@ -114,11 +115,11 @@ export default {
     },
     onBoxSizeChange (perpage) {
       this.perpage = perpage
-      this.getExchangeRecords()
+      this.getExchangeRecords(this.token)
     },
     onBoxCurChange (pageno) {
       this.pageno = pageno
-      this.getExchangeRecords()
+      this.getExchangeRecords(this.token)
     }
   }
 }

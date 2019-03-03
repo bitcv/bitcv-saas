@@ -337,7 +337,6 @@ class PacketStatController extends Controller
             'pageNo' => $params['pageno'],
             'perPage' => $params['perpage'],
             'symbol' => $allparams['symbol'],
-//            'symbol' => 'ABCB',
         ]), true);
         return $this->output($data);
     }
