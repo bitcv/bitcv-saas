@@ -233,34 +233,6 @@ class PacketStatController extends Controller
     {
 
         $tokenId = $request->input('symbol');
-        /*if ($params === false) {
-            return $this->error(100);
-        }
-        $query = DB::table('base_user_asset as ua');
-        $query = $query->leftjoin('base_token as bt', 'ua.token_id', '=', 'bt.id');
-        $query = $query->where('bt.symbol', '=',$params['symbol']);
-        $query = $query->select('ua.id', 'ua.token_id', 'ua.user_id', 'ua.amount', 'bt.symbol', 'bt.price', 'bt.price_cny');
-        $dataList = $query->orderBy('ua.created_at', 'desc')
-            ->get()->toArray();
-        $tokens = array_values(array_unique(array_column($dataList, 'symbol')));
-        // 汇总
-        $middleTemp = $statData =  [];
-        if ($dataList) {
-            foreach ($dataList as $key => $list) {
-                foreach ($tokens as $k => $token) {
-                    if ($list->symbol == $token) {
-                        $middleTemp[$k][] = $list;
-                    }
-                }
-            }
-            foreach ($middleTemp as $key => $middle) {
-                $statData[$key]['symbol'] = $middle[0]->symbol;
-                $statData[$key]['countPeople'] = count($middleTemp[$key]);
-                $statData[$key]['amountTotal'] = round(array_sum(array_column($middleTemp[$key], 'amount')),6);
-                $statData[$key]['priceTotal'] = round(($middle[0]->price_cny * $statData[$key]['amountTotal']), 6);
-            }
-        }*/
-
 //        \DB::connection()->enableQueryLog(); // 开启查询日志
         $assetList = DB::table('base_user_asset')->where([['amount', '>', 0],['token_id', '=', $tokenId]])->select(\DB::raw('token_id, sum(amount) as amount, count(*) as count'))
             ->groupBy('token_id')->get()->toArray();
@@ -269,7 +241,6 @@ class PacketStatController extends Controller
 //        \Log::info('$sql'.$queries[0]['query']);
         $tokenIdArr = array_column($assetList, 'token_id');
         $tokenDict = DB::table('base_token')->whereIn('id', $tokenIdArr)->get()->toArray();
-//        \Log::info('$tokenDict'.var_export($tokenDict,true));
         foreach ($assetList as $key => $assetData) {
             foreach ($tokenDict as $token) {
                 if ($assetData->token_id == $token->id) {
@@ -336,9 +307,32 @@ class PacketStatController extends Controller
         $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/getExchangeRecords', [
             'pageNo' => $params['pageno'],
             'perPage' => $params['perpage'],
-            'symbol' => $allparams['symbol'],
+//            'symbol' => $allparams['symbol'],
+            'symbol' => 'ABCB',
         ]), true);
         return $this->output($data);
+    }
+
+    // 更新价格
+    public function updateTokenPrice(Request $request)
+    {
+        $params = $this->validation($request, [
+            'symbol' => 'required|string',
+            'price' => 'required',
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/updateTokenPrice', [
+//            'symbol' => 'ABCB',
+            'symbol' => $params['symbol'],
+            'passwd' => md5('2019@bbexchange'),
+            'price' => $params['price'],
+        ]), true);
+        if (isset($data['errcode'])) {
+            return $this->output($data);
+        }
+        return $this->output();
     }
 
     public function getExchangeStatData(Request $request)

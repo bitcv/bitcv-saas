@@ -54,6 +54,7 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      // 币币兑换统计
      Route::post('getExchangeRecords', 'PacketStatController@getExchangeRecords');
      Route::post('getExchangeStatData', 'PacketStatController@getExchangeStatData');
+     Route::post('updateTokenPrice', 'PacketStatController@updateTokenPrice');
      // 充值记录
      Route::post('getRechargeRecord', 'PacketStatController@getRechargeRecord');
      Route::post('getMyExchange', 'PacketStatController@getMyExchange');
