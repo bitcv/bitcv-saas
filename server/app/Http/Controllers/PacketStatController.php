@@ -307,8 +307,8 @@ class PacketStatController extends Controller
         $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/getExchangeRecords', [
             'pageNo' => $params['pageno'],
             'perPage' => $params['perpage'],
-//            'symbol' => $allparams['symbol'],
-            'symbol' => 'ABCB',
+            'symbol' => $allparams['symbol'],
+//            'symbol' => 'ABCB',
         ]), true);
         return $this->output($data);
     }
