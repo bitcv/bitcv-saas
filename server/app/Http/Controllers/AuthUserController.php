@@ -166,7 +166,11 @@ class AuthUserController extends Controller
                 $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/snapshot', 'text' => '资产快照');
                 array_push($menus[2]['child'], $addMenu);
             }
-            if (app()->proj['proj_id'] == 1892 || app()->proj['proj_id'] == 1896) {
+            if (app()->proj['proj_id'] == 1892) {
+                $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
+                array_push($menus[2]['child'], $addMenu);
+            }
+            if (app()->proj['proj_id'] == 1896) {
                 $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
                 array_push($menus[2]['child'], $addMenu);
             }
