@@ -114,7 +114,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http.post('/api/transferToken', {
-          symbol: this.currentSymbol,
+          symbol: this.token,
           extraAmount: this.extraAmount,
           extraSymbol: this.currentSymbol
         }).then((res) => {
