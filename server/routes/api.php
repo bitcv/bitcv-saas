@@ -55,6 +55,7 @@ Route::post('doSignout', 'AuthUserController@doSignout');
      Route::post('getExchangeRecords', 'PacketStatController@getExchangeRecords');
      Route::post('getExchangeStatData', 'PacketStatController@getExchangeStatData');
      Route::post('updateTokenPrice', 'PacketStatController@updateTokenPrice');
+     Route::post('transferToken', 'PacketStatController@transferToken');
      // 充值记录
      Route::post('getRechargeRecord', 'PacketStatController@getRechargeRecord');
      Route::post('getMyExchange', 'PacketStatController@getMyExchange');

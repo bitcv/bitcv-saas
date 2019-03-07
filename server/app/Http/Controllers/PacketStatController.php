@@ -308,7 +308,6 @@ class PacketStatController extends Controller
             'pageNo' => $params['pageno'],
             'perPage' => $params['perpage'],
             'symbol' => $allparams['symbol'],
-//            'symbol' => 'ABCB',
         ]), true);
         return $this->output($data);
     }
@@ -324,7 +323,6 @@ class PacketStatController extends Controller
             return $this->error(100);
         }
         $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/updateTokenPrice', [
-//            'symbol' => 'ABCB',
             'symbol' => $params['symbol'],
             'passwd' => md5('2019@bbexchange'),
             'price' => $params['price'],
@@ -394,7 +392,6 @@ class PacketStatController extends Controller
             return $this->error(100);
         }
         $allparams = $request->all();
-//        $params['tokenId'] = 496; // 测试
         $airDropDetail = [];
         $result = DB::table('base_airdrop')->where([['asset_token_id', '=', $params['tokenId']]])->get()->toArray();
         if (isset($allparams['airdropId']) && $allparams['airdropId']) {
@@ -414,5 +411,25 @@ class PacketStatController extends Controller
            'airDrop' => $result,
            'airDropDetail' => $airDropDetail
         ]);
+    }
+
+    // 提取资产
+    public function transferToken(Request $request)
+    {
+        $params = $this->validation($request, [
+            'symbol' => 'required|string',
+            'extraAmount' => 'required',
+            'extraSymbol' => 'required'
+        ]);
+        if ($params === false) {
+            return $this->error(100);
+        }
+        $data = json_decode(BaseUtil::curlPost(env('OTCAPI').'bb/bbTransferToken', [
+            'symbol' => $params['symbol'],
+            'extraAmount' => $params['extraAmount'],
+            'extraSymbol' => $params['extraSymbol'],
+            'passwd' => md5('2019@bbtransferToken'),
+        ]), true);
+        return $this->output($data);
     }
 }
