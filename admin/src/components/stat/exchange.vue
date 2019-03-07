@@ -37,7 +37,7 @@
             <template slot-scope="scope">
               <router-link style="color: green" :to="'/admin/exchangeDetail/' + scope.row.id">详情</router-link>
               <router-link style="color: red"  :to="'/admin/myExchange/' + scope.row.id">资产</router-link>
-              <!-- <el-button style="margin-left: 5px;" type="success" size="mini" @click="editShow(scope.row)">编辑</el-button> -->
+              <el-button style="margin-left: 5px;" type="success" size="mini" @click="editShow(scope.row)">编辑</el-button>
             </template>
           </el-table-column>
         </el-table>
