@@ -124,7 +124,6 @@ class AuthUserController extends Controller
             }
         }
         // 登录密码错误五次后，一天禁止登录
-        Redis::del($key);
         if (Redis::get($key) >= 5) {
             return $this->error(207);
         }
