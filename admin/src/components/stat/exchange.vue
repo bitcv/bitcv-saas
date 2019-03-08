@@ -64,7 +64,7 @@
           <span>0xa7e24e29386e6d304cc00ebf66ed690c27308e38</span>
         </el-form-item>
         <el-form-item label="提示：">
-          <span style="color: red;">建议使用币威钱包转账充值，可立即到账</span>
+          <span style="color: red;">建议使用币威钱包转账充值, 可立即到账</span>
         </el-form-item>
       </el-form>
     </el-dialog>
