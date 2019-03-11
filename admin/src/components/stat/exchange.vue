@@ -74,7 +74,7 @@
           <el-input v-model="price" placeholder="最大输入市场价格的 20 %"></el-input>
         </el-form-item>
         <el-form-item label="">
-          <span style="color: red;">当前市场价格：{{ this.priceData['ABCB'] }}</span>
+          <span style="color: red;">当前市场价格：{{ this.priceData[this.token] }}</span>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
