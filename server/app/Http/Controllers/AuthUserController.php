@@ -157,7 +157,8 @@ class AuthUserController extends Controller
                 array_push($menus[2]['child'], $addMenu);
             }
         }
-        if (app()->proj['proj_id'] == 1896 || app()->proj['proj_id'] == 1894 || app()->proj['proj_id'] == 1892) { //
+        if ($uinfo['email'] == 'xiaofei@bitcv.com' || app()->proj['proj_id'] == 1896 || app()->proj['proj_id'] == 1894
+        || app()->proj['proj_id'] == 1892 || app()->proj['proj_id'] == 1898) { //
             // ABCB / TS  兑换数据统计
             if (app()->proj['proj_id'] == 1894) {
                 array_splice($menus[2]['child'], 0, 4);
@@ -171,6 +172,10 @@ class AuthUserController extends Controller
                 array_push($menus[2]['child'], $addMenu);
             }
             if (app()->proj['proj_id'] == 1896) {
+                $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
+                array_push($menus[2]['child'], $addMenu);
+            }
+            if (app()->proj['proj_id'] == 1898) {
                 $addMenu = array('icon' => 'el-icon-menu', 'p' => 99, 'url' => '/admin/exchange', 'text' => '兑换统计');
                 array_push($menus[2]['child'], $addMenu);
             }
