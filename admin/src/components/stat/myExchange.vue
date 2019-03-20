@@ -28,7 +28,7 @@
             <span style="color: red;" v-if="this.token === 'ABCB'">提取到币威钱包 (账号：13811138084)</span>
             <span style="color: red;" v-else-if="this.token === 'TS'">提取到币威钱包 (账号：17621543259)</span>
             <span style="color: red;" v-else-if="this.token === 'SEED'">提取到币威钱包 (账号：18519667007)</span>
-            <span style="color: red;" v-else>提取到币威钱包 (账号：18612254036)</span>
+            <span style="color: red;" v-else>提取到币威钱包 (账号: 18612254036)</span>
           </el-form-item>
         </el-form>
         <div slot="footer">
