@@ -15,7 +15,8 @@
           <el-form-item label="最小购买额度：">{{ this.exchangeStatData.minAmount }}</el-form-item>
           <el-form-item label="最大购买额度：">{{ this.exchangeStatData.totalAmount }}</el-form-item>
           <el-form-item label="已购人数：">{{ this.exchangeStatData.count }}</el-form-item>
-          <el-form-item label="卖出：">BTC: {{ this.exchangeStatData.sellSymbolBTC }}, ETH：{{ this.exchangeStatData.sellSymbolETH }} BCV: {{ this.exchangeStatData.sellSymbolBCV }}, USDT: {{ this.exchangeStatData.sellSymbolUSDT }}</el-form-item>
+          <el-form-item label="剩余资产：">BTC: {{ this.exchangeStatData.sellSymbolBTC }}, ETH：{{ this.exchangeStatData.sellSymbolETH }} BCV: {{ this.exchangeStatData.sellSymbolBCV }}, USDT: {{ this.exchangeStatData.sellSymbolUSDT }}</el-form-item>
+          <el-form-item label="总资产：">{{ this.exchangeStatData.allAssets }}</el-form-item>
           <el-form-item label="平均购买：">{{ this.exchangeStatData.average }}</el-form-item>
         </el-form>
         <el-table :data="exchangeRecords" v-loading="loading">
