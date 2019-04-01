@@ -91,7 +91,6 @@ export default {
   },
   mounted () {
     this.getPid()
-    this.getOtcStatList({countPages: true})
   },
   methods: {
     getPid () {
@@ -99,6 +98,9 @@ export default {
       }).then((res) => {
         if (res.data.errcode === 0) {
           this.token = res.data.data.symbol
+          if (this.token) {
+            this.getOtcStatList({countPages: true})
+          }
         }
       })
     },
